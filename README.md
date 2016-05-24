@@ -6,9 +6,9 @@ ViewLanguage is a markup language designed to eliminate scripting in views. This
 	My ip is: ${request.client.ip}.
 - interfacing scripting logics, through tags.<br />
 	Example:
-	<standard:foreach var="${request.client}" key="${keyName}" value="${valueName}">
+	&lt;standard:foreach var="${request.client}" key="${keyName}" value="${valueName}"&gt;
 	    Value for ${keyName} is ${valueName}.
-	</standard:foreach>
+	&lt;/standard:foreach&gt;
 
 The most elegant solution for keeping views scriptless, as employed by JSP applications, is to have all scripting replaced by a language that functions as an extension of HTML. Via plugins, tags will be internally translated into relevant programming language code when output is being constructed. This insures views are not only programming-language independent, but also framework independent, which means their data can be interpreted in endless fashions, according to one’s particular needs. Regardless of view language employed, the logic how plugins work stays the same:
 
