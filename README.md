@@ -14,7 +14,5 @@ The most elegant solution for keeping views scriptless, as employed by JSP appli
 2. Calls plugin to translate view language code from response into native programming language code.
 3. Displays response.
 
-A plugin 
-
 Full documentation:<br />
 https://docs.google.com/document/d/17L3zxp8COTfogACORDYZEWc8Wiu9giY1yMTpKv3avgA/edit#
