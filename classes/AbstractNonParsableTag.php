@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Implements operations common to all non-parsable (system) tags. All system tag classes must extend it.
  */
