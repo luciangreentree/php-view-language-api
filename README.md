@@ -1,10 +1,10 @@
 # PHPViewLanguageAPI
 
 ViewLanguage is a markup language designed to eliminate scripting in views. This is achieved by:
-- interfacing scripting variables, through expressions. 
+- interfacing scripting variables, through expressions. <br />
 	Example:
 	My ip is: ${request.client.ip}.
-- interfacing scripting logics, through tags.
+- interfacing scripting logics, through tags.<br />
 	Example:
 	<standard:foreach var="${request.client}" key="${keyName}" value="${valueName}">
 	    Value for ${keyName} is ${valueName}.
@@ -16,5 +16,5 @@ The most elegant solution for keeping views scriptless, as employed by JSP appli
 2. Calls plugin to translate view language code from response into native programming language code.
 3. Displays response.
 
-Full documentation:
+Full documentation:<br />
 https://docs.google.com/document/d/17L3zxp8COTfogACORDYZEWc8Wiu9giY1yMTpKv3avgA/edit#
