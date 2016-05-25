@@ -32,8 +32,8 @@ class ViewLanguageParser {
 	/**
 	 * Parses input string of view tags & expressions, writes results in a compilation file, then returns that file.
 	 * 
-	 * @param string $strOutputStream 
-	 * @return string 
+	 * @param string $strOutput Response stream contents before view language constructs were parsed.
+	 * @return string Compilation file name, containing response stream after view language constructs were parsed.
 	 */
 	public function parse($strOutputStream) {	
 		// get view

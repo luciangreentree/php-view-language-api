@@ -10,7 +10,7 @@ class ViewLanguageResponseListener extends ResponseListener {
 		$vlp = new ViewLanguageParser($this->objApplication->getViewsPath(), $this->objResponse->getView(), self::COMPILATION_VIEWS_PATH);
 		$strCompilationPath = $vlp->parse($this->objResponse->getOutputStream()->get());
 		
-		// save changes
+		// commit back to output stream
 		ob_start();
 		$_VIEW = $this->objResponse->toArray();
 		try {
