@@ -35,7 +35,7 @@ class SystemImportTag {
 	 */
 	public function parse($strSubject) {
 		return preg_replace_callback("/<import\ file\=\"(.*?)\"\/\>/", function($tblMatches) {
-			$strFilePath = VIEWS_PATH.'/'.$tblMatches[1].'.php';
+			$strFilePath = $this->strTemplatePath.'/'.$tblMatches[1].'.php';
 			if(!file_exists($strFilePath)) throw new ViewException("Template not found: ".$strFilePath);
 			$intModificationTime = filemtime($strFilePath);
 			if($intModificationTime>$this->intModificationTime) $this->intModificationTime = $intModificationTime;
