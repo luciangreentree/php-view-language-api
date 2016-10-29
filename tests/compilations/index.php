@@ -20,4 +20,4 @@ body start
 <?php } ?>
 body end
 footer
-<?php echo json_encode($x); ?>
+<?php echo json_encode($x["y"]["z"]); ?>
