@@ -1,2 +1,2 @@
 footer
-${json_encode(${x})}
+${json_encode(${x.y.z})}
