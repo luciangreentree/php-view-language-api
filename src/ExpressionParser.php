@@ -28,7 +28,14 @@ class ExpressionParser {
 	 * @return string
 	 */
 	protected function parseCallback($tblMatches) {
-		return '<?php echo '.$this->convertToVariable($tblMatches[0]).'; ?>';
+		$paranthesisPosition = strpos($tblMatches[1],"(");
+		if($paranthesisPosition!==false) {
+			$functionName = substr($tblMatches[1],0,$paranthesisPosition);
+			$variableName = substr($tblMatches[1],$paranthesisPosition+1);
+			return '<?php echo '.$functionName.'('.$this->convertToVariable(substr($variableName,0,-1)).'); ?>';
+		} else {
+			return '<?php echo '.$this->convertToVariable($tblMatches[0]).'; ?>';
+		}
 	}
 	
 	/**

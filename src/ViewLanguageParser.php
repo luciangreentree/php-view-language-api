@@ -55,12 +55,14 @@ class ViewLanguageParser {
 		$objEscapeTag = new SystemEscapeTag();
 		$objScriptTag = new SystemScriptTag();
 		$objStyleTag = new SystemStyleTag();
+		$objPHPTag = new SystemPHPTag();
 		
 		// remove escaped content
 		if($objEscapeTag->hasContent($strOutputStream)) $strOutputStream = $objEscapeTag->removeContent($strOutputStream);
 		if($objScriptTag->hasContent($strOutputStream)) $strOutputStream = $objScriptTag->removeContent($strOutputStream);
 		if($objStyleTag->hasContent($strOutputStream)) 	$strOutputStream = $objStyleTag->removeContent($strOutputStream);
-				
+		if($objPHPTag->hasContent($strOutputStream)) 	$strOutputStream = $objPHPTag->removeContent($strOutputStream);
+		
 		// run tag parser
 		$objTagParser = new TagParser();
 		$strOutputStream=$objTagParser->parse($strOutputStream);
@@ -73,6 +75,7 @@ class ViewLanguageParser {
 		if($objEscapeTag->hasContent($strOutputStream)) $strOutputStream = $objEscapeTag->restoreContent($strOutputStream);
 		if($objScriptTag->hasContent($strOutputStream)) $strOutputStream = $objScriptTag->restoreContent($strOutputStream);
 		if($objStyleTag->hasContent($strOutputStream)) 	$strOutputStream = $objStyleTag->restoreContent($strOutputStream);
+		if($objPHPTag->hasContent($strOutputStream)) 	$strOutputStream = $objPHPTag->restoreContent($strOutputStream);
 		
 		// save compilation
 		$objCompilation->putContents($strOutputStream);
