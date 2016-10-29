@@ -1,2 +1,3 @@
 + test
-+ encapsulate ViewLanguageResponseListener and build a main program of this
++ make compilation refresh on tag changes (!!!)
++ remove hotfixes @ TagParser.parse
