@@ -21,21 +21,27 @@ class TagParser {
 	 * @return string
 	 */
 	public function parse($strSubject) {
-		// patch for attribute properties containing > character.
+		// hotfix: patch for attribute properties containing > character.
 		$strSubject = preg_replace_callback('/\"(.*)\>(.*)\"/U', function ($tblM) {
 			return str_replace(">","#GT#",$tblM[0]);
 		}, $strSubject);
 		
+		// match start & end tags
 		$strSubject = preg_replace_callback("/<([a-zA-Z0-9_]+)\:([a-zA-Z0-9_]+)(.*?)>/",array($this,"parseStartTagCallback"),$strSubject);
 		$strSubject = preg_replace_callback("/<\/([a-zA-Z0-9_]+)\:([a-zA-Z0-9_]+)>/",array($this,"parseEndTagCallback"),$strSubject);
 
-		// put back > character 
+		// hotfix: put back > character 
 		$strSubject = preg_replace_callback('/\"(.*)\#GT#(.*)\"/U', function ($tblM) {
 			return str_replace("#GT#",">",$tblM[0]);
 		}, $strSubject);
 		
-		// fix elseif / else 
+		// hotfix: elseif / else 
 		$strSubject = preg_replace('/(\?\>(\r|\n|\t|\ ){0,}\<\?php\ else\ )/','else ',$strSubject);
+		
+		// if it still contains tags, recurse until all tags are parsed
+		if(preg_match("/<([a-zA-Z0-9_]+)\:([a-zA-Z0-9_]+)(.*?)>/",$strSubject)!=0) {
+			$strSubject = $this->parse($strSubject);
+		}
 		
 		return $strSubject;
 	}

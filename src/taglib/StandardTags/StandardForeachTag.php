@@ -19,7 +19,7 @@ class StandardForeachTag extends AbstractParsableTag {
 	public function parseStartTag($tblParameters=array()) {
 		$this->checkParameters($tblParameters, array("var","value"));
 		if(!$this->isExpression($tblParameters['var'])) throw new ViewException("Value 'var' must be an expression for ".get_class($this)."!");
-		return '<?php foreach('.$this->parseExpression($tblParameters['var']).' as '.($tblParameters['key']?'$'.$tblParameters['key'].'=>':'').'$'.$tblParameters['value'].') { ?>';
+		return '<?php foreach('.$this->parseExpression($tblParameters['var']).' as '.(!empty($tblParameters['key'])?'$'.$tblParameters['key'].'=>':'').'$'.$tblParameters['value'].') { ?>';
 	}
 	
 	/**

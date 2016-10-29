@@ -35,13 +35,12 @@ class ViewLanguageParser {
 	 * @param string $strOutput Response stream contents before view language constructs were parsed.
 	 * @return string Compilation file name, containing response stream after view language constructs were parsed.
 	 */
-	public function parse($strOutputStream) {	
+	public function parse($strOutputStream="") {	
 		// get view
 		$objView = new File($this->strViewFile);
 		$objImportTag = new SystemImportTag($this->strViewsFolder, $objView->getModificationTime());
-		$strOutputStream = $objImportTag->parse($strOutputStream);
+		$strOutputStream = $objImportTag->parse($strOutputStream==""?$objView->getContents():$strOutputStream);
 		$intViewModifiedTime = $objImportTag->getModifiedTime();
-		$objImportTag = null;
 		
 		// get compilation
 		$objCompilation = new File($this->strCompilationFile);

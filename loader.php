@@ -1,3 +1,3 @@
 <?php
-require_once("classes/exceptions/ViewException.php");
-require_once("classes/ViewLanguageParser.php");
+require_once("src/exceptions/ViewException.php");
+require_once("src/ViewLanguageParser.php");
