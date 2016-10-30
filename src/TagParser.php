@@ -24,10 +24,7 @@ class TagParser {
 		// match start & end tags
 		$strSubject = preg_replace_callback("/<([a-zA-Z]+)\:([a-zA-Z]+)(\ (.*)=\"(.*)\")?\/?>/",array($this,"parseStartTagCallback"),$strSubject);
 		$strSubject = preg_replace_callback("/<\/([a-zA-Z]+)\:([a-zA-Z]+)>/",array($this,"parseEndTagCallback"),$strSubject);
-		
-		// hotfix: PHP requires closing IF in same block as ELSE
-		$strSubject = preg_replace('/(\?\>(\r|\n|\t|\ ){0,}\<\?php\ else\ )/','else ',$strSubject);
-		
+				
 		// if it still contains tags, recurse until all tags are parsed
 		if(preg_match("/<([a-zA-Z]+)\:([a-zA-Z]+)(.*?)>/",$strSubject)!=0) {
 			$strSubject = $this->parse($strSubject);
@@ -95,7 +92,7 @@ class TagParser {
 	private function getTagParameters($strParameters) {
 		$strParameters = trim($strParameters);
 		if(!$strParameters || $strParameters=="/") return array();
-		preg_match_all('/([a-zA-Z0-9_]+)[\ ]{0,}=[\ ]{0,}"(.*?)"/', $strParameters, $tblParameters, PREG_SET_ORDER);
+		preg_match_all('/([a-zA-Z]+)[\ ]{0,}=[\ ]{0,}"(.*?)"/', $strParameters, $tblParameters, PREG_SET_ORDER);
 		$tblOutput=array();
 		foreach($tblParameters as $tblValues) {
 			$tblOutput[trim($tblValues[1])]=trim($tblValues[2]);

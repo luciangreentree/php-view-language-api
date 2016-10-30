@@ -18,7 +18,7 @@ class StandardElseifTag extends AbstractParsableTag {
 	 */
 	public function parseStartTag($tblParameters=array()) {
 		$this->checkParameters($tblParameters, array("condition"));
-		return '<?php else if ('.$this->parseExpression($tblParameters['condition']).') { ?>';
+		return '<?php } else if ('.$this->parseExpression($tblParameters['condition']).') { ?>';
 	}
 	
 	/**
@@ -26,6 +26,6 @@ class StandardElseifTag extends AbstractParsableTag {
 	 * @see AbstractParsableTag::parseEndTag()
 	 */
 	public function parseEndTag() {
-		return '<?php } ?>';
+		return "\n";
 	}
 }
