@@ -13,8 +13,8 @@ abstract class AbstractNonParsableTag {
 	 * @param string $strOutputStream
 	 * @return boolean
 	 */
-	public function hasContent($strOutputStream) {
-		return (stripos($strOutputStream, "<".$this->strTagName.">")!==false || stripos($strOutputStream, "<".$this->strTagName." ")!==false?true:false);
+	public function hasContent($strSubject) {
+		return (stripos($strSubject, "<".$this->strTagName.">")!==false || stripos($strSubject, "<".$this->strTagName." ")!==false?true:false);
 	}
 	
 	/**
@@ -23,13 +23,12 @@ abstract class AbstractNonParsableTag {
 	 * @param string $strSubject
 	 * @return string
 	 */
-	public function removeContent($strSubject) {
+	public function removeContent(&$strSubject) {
 		preg_match_all("/\<".$this->strTagName."(.*?)\>(.*?)\<\/".$this->strTagName."\>/si",$strSubject,$tblMatches,PREG_PATTERN_ORDER);
 		foreach($tblMatches[0] as $intIndex=>$strValue) {
 			$strSubject = str_replace($strValue, "<".$this->strTagName.">$intIndex</".$this->strTagName.">", $strSubject);
 		}
 		$this->tblMatches = $tblMatches;
-		return $strSubject;
 	}
 	
 	/**
@@ -38,7 +37,7 @@ abstract class AbstractNonParsableTag {
 	 * @param string $strSubject
 	 * @return string
 	 */
-	public function restoreContent($strSubject) {
+	public function restoreContent(&$strSubject) {
 		foreach($this->tblMatches[0] as $intIndex=>$strValue) {
 			if($this->blnKeepTag) {
 				$strSubject = str_replace("<".$this->strTagName.">".$intIndex."</".$this->strTagName.">", "<".$this->strTagName." ".$this->tblMatches[1][$intIndex].">".$this->tblMatches[2][$intIndex]."</".$this->strTagName.">", $strSubject);
@@ -46,6 +45,5 @@ abstract class AbstractNonParsableTag {
 				$strSubject = str_replace("<".$this->strTagName.">".$intIndex."</".$this->strTagName.">", $this->tblMatches[2][$intIndex], $strSubject);
 			}
 		}
-		return $strSubject;
 	}
 }
