@@ -4,10 +4,25 @@ require_once("ExpressionParser.php");
 require_once("TagParser.php");
 require_once("AbstractNonParsableTag.php");
 require_once("taglib/StandardTags/loader.php");
-require_once("taglib/SystemTags/loader.php");
+require_once("taglib/SystemTags/SystemTags.php");
 
 /**
  * Performs the logic of view language parsing, delegating to tag and expressions parser
+ * 
+ * Algorithm:
+1	opens view file
+2	imports templates recursively (from view to its children)
+3	gets latest modified time of templates above
+4	opens compilation file (same name as view file, only different folder)
+5	if date @ compilation file >= date @ templates
+		returns compilation file
+	else
+		6	backs-up system tags
+		7	parses for standard & user-defined tags recursively
+		8	parses for expressions recursively
+		9	restores system tags
+		10	writes to compilation file the new content
+		returns compilate file
  */
 class ViewLanguageParser {
 	private $strViewsFolder;
@@ -52,16 +67,10 @@ class ViewLanguageParser {
 		}
 		
 		// start looking for tags whose values should be escaped
-		$objEscapeTag = new SystemEscapeTag();
-		$objScriptTag = new SystemScriptTag();
-		$objStyleTag = new SystemStyleTag();
-		$objPHPTag = new SystemPHPTag();
+		$objSystemTags = new SystemTags();
 		
 		// remove escaped content
-		if($objEscapeTag->hasContent($strOutputStream)) $strOutputStream = $objEscapeTag->removeContent($strOutputStream);
-		if($objScriptTag->hasContent($strOutputStream)) $strOutputStream = $objScriptTag->removeContent($strOutputStream);
-		if($objStyleTag->hasContent($strOutputStream)) 	$strOutputStream = $objStyleTag->removeContent($strOutputStream);
-		if($objPHPTag->hasContent($strOutputStream)) 	$strOutputStream = $objPHPTag->removeContent($strOutputStream);
+		$objSystemTags->backup($strOutputStream);
 		
 		// run tag parser
 		$objTagParser = new TagParser();
@@ -72,10 +81,7 @@ class ViewLanguageParser {
 		$strOutputStream=$objExpressionParser->parse($strOutputStream);
 		
 		// restore escaped content
-		if($objEscapeTag->hasContent($strOutputStream)) $strOutputStream = $objEscapeTag->restoreContent($strOutputStream);
-		if($objScriptTag->hasContent($strOutputStream)) $strOutputStream = $objScriptTag->restoreContent($strOutputStream);
-		if($objStyleTag->hasContent($strOutputStream)) 	$strOutputStream = $objStyleTag->restoreContent($strOutputStream);
-		if($objPHPTag->hasContent($strOutputStream)) 	$strOutputStream = $objPHPTag->restoreContent($strOutputStream);
+		$objSystemTags->restore($strOutputStream);
 		
 		// save compilation
 		$objCompilation->putContents($strOutputStream);

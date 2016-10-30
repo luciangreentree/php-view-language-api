@@ -1,3 +1,4 @@
-+ test
-+ make compilation refresh on tag changes (!!!)
-+ remove hotfixes @ TagParser.parse
+test
+make compilation refresh on tag changes (!)
+find patterns that repeat @ tag (?)
+decide whether or not you should use pass by reference @ system tags
