@@ -17,7 +17,7 @@ class StandardElseTag extends AbstractParsableTag {
 	 * @see AbstractParsableTag::parseStartTag()
 	 */
 	public function parseStartTag($tblParameters=array()) {
-		return '<?php else { ?>';
+		return '<?php } else { ?>';
 	}
 	
 	/**
@@ -25,6 +25,6 @@ class StandardElseTag extends AbstractParsableTag {
 	 * @see AbstractParsableTag::parseEndTag()
 	 */
 	public function parseEndTag() {
-		return '<?php } ?>';
+		return "\n";
 	}
 }
