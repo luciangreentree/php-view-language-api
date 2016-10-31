@@ -18,7 +18,7 @@ class ExpressionParser {
 		if(strpos($strSubject,'${')===false) {
 			return $strSubject;
 		}
-		return preg_replace_callback("/[\$]\{((.*)\()?((?:(?>[^{}]+?)|(?R))*?)\)?\}/",array($this,"parseCallback"),$strSubject);
+		return preg_replace_callback("/[\$]\{((?:(?>[^{}]+?)|(?R))*?)\}/",array($this,"parseCallback"),$strSubject);
 	}
 	
 	/**
@@ -28,8 +28,9 @@ class ExpressionParser {
 	 * @return string
 	 */
 	protected function parseCallback($tblMatches) {
-		if($tblMatches[2]) { 
-			return '<?php echo '.$tblMatches[2]."(".$this->convertToVariable($tblMatches[3]).'); ?>';
+		$position = strpos($tblMatches[1],"(");
+		if($position!==false) { 
+			return '<?php echo '.substr($tblMatches[1],0,$position).$this->convertToVariable(substr($tblMatches[1],$position)).'; ?>';
 		} else {
 			return '<?php echo '.$this->convertToVariable($tblMatches[0]).'; ?>';
 		}
