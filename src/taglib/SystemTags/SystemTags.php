@@ -1,6 +1,5 @@
 <?php
 require_once("SystemEscapeTag.php");
-require_once("SystemImportTag.php");
 require_once("SystemScriptTag.php");
 require_once("SystemStyleTag.php");
 
@@ -11,7 +10,6 @@ class SystemTags {
 	private $objEscapeTag;
 	private $objScriptTag;
 	private $objStyleTag;
-	private $objPHPTag;
 	
 	public function __construct() {
 		$this->objEscapeTag = new SystemEscapeTag();
