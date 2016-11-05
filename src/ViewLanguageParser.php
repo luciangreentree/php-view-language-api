@@ -4,74 +4,59 @@ require_once("ExpressionParser.php");
 require_once("TagParser.php");
 require_once("AbstractNonParsableTag.php");
 require_once("taglib/StandardTags/loader.php");
-require_once("taglib/SystemTags/SystemTags.php");
+require_once("taglib/SystemTags/loader.php");
 
 /**
- * Performs the logic of view language parsing, delegating to tag and expressions parser
- * 
- * Algorithm:
-1	opens view file
-2	imports templates recursively (from view to its children)
-3	gets latest modified time of templates above
-4	opens compilation file (same name as view file, only different folder)
-5	if date @ compilation file >= date @ templates
-		returns compilation file
-	else
-		6	backs-up system tags
-		7	parses for standard & user-defined tags recursively
-		8	parses for expressions recursively
-		9	restores system tags
-		10	writes to compilation file the new content
-		returns compilate file
+ * Performs the logic of view language parsing, delegating to tag and expressions parser.
  */
 class ViewLanguageParser {
-	private $strViewsFolder;
-	private $strViewFile;
-	private $strCompilationsFolder;
-	private $strCompilationFile;
+	private $strTemplatesFolder;
+	private $strTemplatePath;
+	private $strTemplatesExtension;
 	
 	/**
 	 * Constructs a view language parser.
 	 * 
-	 * @param string $strViewsFolder Absolute location of views folder on disk.
-	 * @param string $strViewFile Location of view file relative to views folder. 
-	 * @param string $strCompilationsFolder Absolute location of compilations folder on disk.
+	 * @param string $strTemplatesFolder Location of templates folder on disk.
+	 * @param string $strTemplatePath Location of template file relative to views folder (without extension). 
+	 * @param string $strTemplatesExtension Extension of template files without dot (eg: php). 
 	 */
-	public function __construct($strViewsFolder, $strViewFile, $strCompilationsFolder) {
-		$this->strCompilationsFolder = $strCompilationsFolder;
-		$this->strViewsFolder = $strViewsFolder;
-		$this->strViewFile = $strViewsFolder."/".$strViewFile.".php";
-		$this->strCompilationFile = $strCompilationsFolder."/".$strViewFile.".php";
+	public function __construct($strTemplatesFolder, $strTemplatePath, $strTemplatesExtension) {
+		$this->strTemplatesFolder = $strTemplatesFolder;
+		$this->strTemplatePath = $strTemplatePath;
+		$this->strTemplatesExtension = $strTemplatesExtension;
 	}
 	
 	/**
 	 * Parses input string of view tags & expressions, writes results in a compilation file, then returns that file.
 	 * 
-	 * @param string $strOutput Response stream contents before view language constructs were parsed.
+	 * @param string $strCompilationsFolder Absolute location of compilations folder on disk.
+	 * @param string $strOutputStream Response stream contents before view language constructs were parsed.
 	 * @return string Compilation file name, containing response stream after view language constructs were parsed.
 	 */
-	public function parse($strOutputStream="") {	
-		// get view
-		$objView = new File($this->strViewFile);
-		$objImportTag = new SystemImportTag($this->strViewsFolder, $objView->getModificationTime());
-		$strOutputStream = $objImportTag->parse($strOutputStream==""?$objView->getContents():$strOutputStream);
+	public function compile($strCompilationsFolder, $strOutputStream="") {	
+		// includes dependant tree of templates
+		$objImportTag = new SystemImportTag($this->strTemplatesFolder, $this->strTemplatesExtension);
+		$strOutputStream = $objImportTag->parse($this->strTemplatePath, $strOutputStream);
 		$intViewModifiedTime = $objImportTag->getModifiedTime();
 		
 		// get compilation
-		$objCompilation = new File($this->strCompilationFile);
+	    $strCompilationFile = $strCompilationsFolder."/".$this->strTemplatePath.".".$this->strTemplatesExtension;
+		$objCompilation = new File($strCompilationFile);
 		if($objCompilation->exists()) {
 			$intCompilationModifiedTime = $objCompilation->getModificationTime();
 			if($intCompilationModifiedTime >= $intViewModifiedTime) {
-				return $this->strCompilationFile; // file already compiled and not changed
+				return $strCompilationFile; // file already compiled and not changed
 			}
 		}
 		
 		// start looking for tags whose values should be escaped
-		$objSystemTags = new SystemTags();
+		$objEscapeTag = new SystemEscapeTag();
+		$blnHasEscapedContent = $objEscapeTag->hasContent($strOutputStream);
 		
-		// remove escaped content
-		$objSystemTags->backup($strOutputStream);
-		
+		// backup escaped content
+		if($blnHasEscapedContent) $objEscapeTag->backup($strOutputStream);
+
 		// run tag parser
 		$objTagParser = new TagParser();
 		$strOutputStream=$objTagParser->parse($strOutputStream);
@@ -81,11 +66,11 @@ class ViewLanguageParser {
 		$strOutputStream=$objExpressionParser->parse($strOutputStream);
 		
 		// restore escaped content
-		$objSystemTags->restore($strOutputStream);
+		if($blnHasEscapedContent) $objEscapeTag->restore($strOutputStream);
 		
 		// save compilation
 		$objCompilation->putContents($strOutputStream);
 		
-		return $this->strCompilationFile;
+		return $strCompilationFile;
 	}
 }
