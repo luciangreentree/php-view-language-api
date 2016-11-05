@@ -12,35 +12,38 @@
  * file_get_contents(VIEWS_PATH."/"."temp/users".".php");
  */
 class SystemImportTag {	
-	private $intModificationTime;
-	private $strTemplatePath;
+	private $intModificationTime=0;
+	private $strTemplatesFolder;
+	private $strTemplatesExtension;
 	
 	/**
 	 * Sets up path in which template are looked after and the time of modification for page-specific view file.
 	 * 
-	 * @param string $strTemplatePath
+	 * @param string $strTemplatesFolder
+	 * @param string $strTemplatesExtension
 	 * @param integer $intViewModificationTime
 	 */
-	public function __construct($strTemplatePath, $intViewModificationTime) {
-		$this->strTemplatePath = $strTemplatePath;
-		$this->intModificationTime = $intViewModificationTime;
+	public function __construct($strTemplatesFolder, $strTemplatesExtension) {
+		$this->strTemplatesFolder = $strTemplatesFolder;
+		$this->strTemplatesExtension = $strTemplatesExtension;
 	}
 	
 	/**
 	 * Parses template source file for import tags recursively. For each template file loaded, modification time is adjusted to confirm to the latest.
 	 * 
 	 * @param string $strSubject
+	 * @param string $strOutputStream
 	 * @throws ViewException
 	 * @return string
 	 */
-	public function parse($strSubject) {
+	public function parse($strTemplateFile, $strOutputStream="") {
+	    $file = new File($this->strTemplatesFolder."/".$strTemplateFile.".".$this->strTemplatesExtension);
+	    $strSubject = ($strOutputStream==""?$file->getContents():$strOutputStream);
+	    $intModificationTime = $file->getModificationTime();
+	    if($intModificationTime>$this->intModificationTime) $this->intModificationTime = $intModificationTime;
+	    
 		return preg_replace_callback("/<import\ file\=\"(.*?)\"\/\>/", function($tblMatches) {
-			$strFilePath = $this->strTemplatePath.'/'.$tblMatches[1].'.php';
-			if(!file_exists($strFilePath)) throw new ViewException("Template not found: ".$strFilePath);
-			$intModificationTime = filemtime($strFilePath);
-			if($intModificationTime>$this->intModificationTime) $this->intModificationTime = $intModificationTime;
-			$strContents = file_get_contents($strFilePath);
-			return $this->parse($strContents);
+			return $this->parse($tblMatches[1]);
 		},$strSubject);
 	} 
 	
