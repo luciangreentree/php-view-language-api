@@ -38,10 +38,10 @@ class ViewLanguageParser {
 	 * @return string Compilation file name, containing response stream after view language constructs were parsed.
 	 */
 	public function compile($strCompilationsFolder, $strOutputStream="") {
-		// creates a view compilation object
+		// opens existing compilation (if exists)
 		$objViewCompilation = new ViewCompilation($strCompilationsFolder, $this->strTemplatePath, $this->strTemplatesExtension);
 		
-		// if compilation files haven't changed, do not go further
+		// if compilation components haven't changed, do not go further
 		if(!$objViewCompilation->hasChanged()) {
 			return $objViewCompilation->getCompilationPath();
 		}
@@ -68,7 +68,7 @@ class ViewLanguageParser {
 		// restore escaped content
 		if($blnHasEscapedContent) $objEscapeTag->restore($strOutputStream);
 		
-		// saves compilation checksum before compilation (to insure consistent modification times)
+		// saves new compilation
 		$objViewCompilation->save($strOutputStream);
 		
 		return $objViewCompilation->getCompilationPath();
