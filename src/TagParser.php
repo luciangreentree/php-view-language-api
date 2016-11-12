@@ -14,6 +14,20 @@ require_once("AbstractParsableTag.php");
  * 		<?php } ?>
  */
 class TagParser {	
+	private $strTagLibFolder;
+	private $objViewCompilation;
+	
+	/**
+	 * Creates a tag parser instance.
+	 * 
+	 * @param string $strTagLibFolder Folder containing user-defined taglibs.
+	 * @param ViewCompilation $objViewCompilation Object that collects components that take part in view.
+	 */
+	public function __construct($strTagLibFolder, ViewCompilation $objViewCompilation) {
+		$this->strTagLibFolder = $strTagLibFolder;
+		$this->objViewCompilation = $objViewCompilation;
+	}
+	
 	/**
 	 * Looks for tags in views and returns an answer where each found match is converted to PHP.
 	 * 
@@ -72,6 +86,12 @@ class TagParser {
 	 */
 	private function getTagInstance($tblMatches) {
 		$strClassName = ucfirst($tblMatches[1]).ucfirst($tblMatches[2]).'Tag';
+		if($tblMatches[1]!="standard") { // standard tags are always included and not subject to change
+			$strFileLocation = $this->strTagLibFolder."/".$tblMatches[1]."/".$strClassName.".php";
+			if(!file_exists($strFileLocation)) throw new ViewException("Tag not found: ".$strClassName);
+			require_once($strFileLocation);
+			$this->objViewCompilation->addComponent($strFileLocation);
+		}
 		if(!class_exists($strClassName)) throw new ViewException("Tag not found: ".$strClassName);
 		return new $strClassName();
 	}

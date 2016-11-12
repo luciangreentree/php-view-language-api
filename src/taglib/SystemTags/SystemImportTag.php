@@ -12,7 +12,7 @@
  * file_get_contents(VIEWS_PATH."/"."temp/users".".php");
  */
 class SystemImportTag {	
-	private $intModificationTime=0;
+	private $objViewCompilation;
 	private $strTemplatesFolder;
 	private $strTemplatesExtension;
 	
@@ -21,11 +21,12 @@ class SystemImportTag {
 	 * 
 	 * @param string $strTemplatesFolder
 	 * @param string $strTemplatesExtension
-	 * @param integer $intViewModificationTime
+	 * @param ViewCompilation $objViewCompilation
 	 */
-	public function __construct($strTemplatesFolder, $strTemplatesExtension) {
+	public function __construct($strTemplatesFolder, $strTemplatesExtension, ViewCompilation $objViewCompilation) {
 		$this->strTemplatesFolder = $strTemplatesFolder;
 		$this->strTemplatesExtension = $strTemplatesExtension;
+		$this->objViewCompilation = $objViewCompilation;
 	}
 	
 	/**
@@ -37,22 +38,13 @@ class SystemImportTag {
 	 * @return string
 	 */
 	public function parse($strTemplateFile, $strOutputStream="") {
-	    $file = new File($this->strTemplatesFolder."/".$strTemplateFile.".".$this->strTemplatesExtension);
+		$strPath = $this->strTemplatesFolder."/".$strTemplateFile.".".$this->strTemplatesExtension;
+	    $file = new File($strPath);
 	    $strSubject = ($strOutputStream==""?$file->getContents():$strOutputStream);
-	    $intModificationTime = $file->getModificationTime();
-	    if($intModificationTime>$this->intModificationTime) $this->intModificationTime = $intModificationTime;
+	    $this->objViewCompilation->addComponent($strPath);
 	    
 		return preg_replace_callback("/<import\ file\=\"(.*?)\"\/\>/", function($tblMatches) {
 			return $this->parse($tblMatches[1]);
 		},$strSubject);
 	} 
-	
-	/**
-	 * Gets templates used latest modification time.
-	 * 
-	 * @return integer
-	 */
-	public function getModifiedTime() {
-		return $this->intModificationTime;
-	}
 }
