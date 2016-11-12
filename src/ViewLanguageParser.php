@@ -55,7 +55,7 @@ class ViewLanguageParser {
 		$blnHasEscapedContent = $objEscapeTag->hasContent($strOutputStream);
 		
 		// backup escaped content
-		if($blnHasEscapedContent) $objEscapeTag->backup($strOutputStream);
+		if($blnHasEscapedContent) $objEscapeTag->removeContent($strOutputStream);
 
 		// run tag parser
 		$objTagParser = new TagParser($this->strTagLibFolder, $objViewCompilation);
@@ -66,7 +66,7 @@ class ViewLanguageParser {
 		$strOutputStream=$objExpressionParser->parse($strOutputStream);
 		
 		// restore escaped content
-		if($blnHasEscapedContent) $objEscapeTag->restore($strOutputStream);
+		if($blnHasEscapedContent) $objEscapeTag->restoreContent($strOutputStream);
 		
 		// saves new compilation
 		$objViewCompilation->save($strOutputStream);
