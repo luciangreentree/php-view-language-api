@@ -62,7 +62,7 @@ class ViewCompilation {
 			$intTime = filemtime($strFile);
 			if($intTime>$intLatestDate) $intLatestDate = $intTime;
 		}
-		return $latestDate;
+		return $intLatestDate;
 	}
 	
 	/**
