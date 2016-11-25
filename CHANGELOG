@@ -1,4 +1,5 @@
-test
-make compilation refresh on tag changes (!)
-find patterns that repeat @ tag (?)
-decide whether or not you should use pass by reference @ system tags
+make tags script-free (remove tag classes)
+fix standard:for bug
+make tags work on a single line
+	<standard:if condition="${data.user.name}!=''">YES<standard:else/>A<standard:set name="x" value="u"/>B</standard:if>
+	
