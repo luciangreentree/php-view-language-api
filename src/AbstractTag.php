@@ -1,29 +1,12 @@
 <?php
+require_once("StartTag.php");
+require_once("StartEndTag.php");
 require_once("TagExpressionParser.php");
 
 /**
  * Implements operations common to all parsable (non-system) tags. All parsable tag classes must extend it.
  */
-abstract class AbstractParsableTag {
-	/**
-	 * Parses start tag.
-	 *  
-	 * Example: <standard:foreach var="${ad.d}" key="K" value="V">
-	 * 
-	 * @param array(string=>string) $tblParameters
-	 * @return string
-	 */
-	abstract public function parseStartTag($tblParameters=array());
-	
-	/**
-	 * Parses end tag. 
-	 * 
-	 * Example: </standard:foreach>
-	 * 
-	 * @return string
-	 */
-	abstract public function parseEndTag();
-		
+abstract class AbstractTag {		
 	/**
 	 * Checks if tag attribute values contain expressions.
 	 * 

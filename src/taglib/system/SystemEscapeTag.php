@@ -1,25 +1,39 @@
 <?php
 /**
- * Implements operations common to all non-parsable (system) tags. All system tag classes must extend it.
- */
-abstract class AbstractNonParsableTag {
+ * Implements a tag whose body is not parsable (into other tags or expressions).
+*
+* Tag syntax:
+* <escape>BODY</escape>
+*
+* Tag example:
+* <escape>hello, asd${b}</escape>
+*
+* PHP output:
+* hello, asd${b}
+*/
+class SystemEscapeTag {
 	protected $blnKeepTag;
 	protected $strTagName;
 	protected $tblMatches;
-	
+
+	public function __construct() {
+		$this->strTagName = "escape";
+		$this->blnKeepTag = false;
+	}
+
 	/**
 	 * Checks if tag has a body.
-	 * 
+	 *
 	 * @param string $strOutputStream
 	 * @return boolean
 	 */
 	public function hasContent($strSubject) {
 		return (stripos($strSubject, "<".$this->strTagName.">")!==false || stripos($strSubject, "<".$this->strTagName." ")!==false?true:false);
 	}
-	
+
 	/**
 	 * Removes body from tag.
-	 * 
+	 *
 	 * @param string $strSubject
 	 * @return string
 	 */
@@ -30,10 +44,10 @@ abstract class AbstractNonParsableTag {
 		}
 		$this->tblMatches = $tblMatches;
 	}
-	
+
 	/**
 	 * Restores body from tag.
-	 * 
+	 *
 	 * @param string $strSubject
 	 * @return string
 	 */

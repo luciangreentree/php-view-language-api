@@ -1,15 +1,15 @@
 <?php
 /**
  * Abstracts view compilation logic.
- */
+*/
 class ViewCompilation {
 	private $strCompilationPath;
 	private $strChecksumPath;
 	private $components = array();
-	
+
 	/**
-	 * Creates a compilation instance. 
-	 * 
+	 * Creates a compilation instance.
+	 *
 	 * @param string $strCompilationsFolder
 	 * @param string $strTemplatePath
 	 * @param string $strTemplatesExtension
@@ -24,9 +24,9 @@ class ViewCompilation {
 			$this->components = explode(",", $strContents);
 		}
 	}
-	
+
 	/**
-	 * Checks if any of compilation components have changed since last update. 
+	 * Checks if any of compilation components have changed since last update.
 	 */
 	public function hasChanged() {
 		$objCompilation = new File($this->strCompilationPath);
@@ -41,19 +41,19 @@ class ViewCompilation {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Adds a compilation component (template / tag)
-	 * 
+	 *
 	 * @param string $strPath Path to component.
 	 */
 	public function addComponent($strPath) {
 		$this->components[] = $strPath;
 	}
-	
+
 	/**
 	 * Gets latest modification time of compilation components.
-	 * 
+	 *
 	 * @return integer
 	 */
 	private function getLatestModificationTime() {
@@ -64,25 +64,25 @@ class ViewCompilation {
 		}
 		return $intLatestDate;
 	}
-	
+
 	/**
 	 * Saves compilation & its checksum to disk.
-	 * 
+	 *
 	 * @param string $strOutputStream
 	 */
 	public function save($strOutputStream) {
 		// saves checksum
 		$objFile = new File($this->strChecksumPath);
 		$objFile->putContents(implode(",", $this->components));
-		
+
 		// saves compilation
 		$objCompilation = new File($this->strCompilationPath);
 		$objCompilation->putContents($strOutputStream);
 	}
-	
+
 	/**
 	 * Gets compilation file path.
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getCompilationPath() {
