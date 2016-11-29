@@ -32,7 +32,12 @@ class ViewCompilation {
 		$objCompilation = new File($this->strCompilationPath);
 		if(!empty($this->components)) {
 			if($objCompilation->exists()) {
-				if($objCompilation->getModificationTime() >= $this->getLatestModificationTime()) {
+				$intLatestModificationTime = $this->getLatestModificationTime();
+				if($intLatestModificationTime==-1) {
+					$this->components = array();
+					return true;
+				}
+				if($objCompilation->getModificationTime() >= $intLatestModificationTime) {
 					return false;
 				}
 			}
@@ -54,12 +59,14 @@ class ViewCompilation {
 	/**
 	 * Gets latest modification time of compilation components.
 	 *
-	 * @return integer
+	 * @return integer Greater than zero if all components found, -1 if at least one component is not found.
 	 */
 	private function getLatestModificationTime() {
 		$intLatestDate = 0;
 		foreach($this->components as $strFile) {
-			$intTime = filemtime($strFile);
+			$objFile = new File($strFile);
+			if(!$objFile->exists()) return -1;
+			$intTime = $objFile->getModificationTime();
 			if($intTime>$intLatestDate) $intLatestDate = $intTime;
 		}
 		return $intLatestDate;
