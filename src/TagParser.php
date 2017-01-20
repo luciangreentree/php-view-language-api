@@ -35,6 +35,9 @@ class TagParser {
 	 * @return string
 	 */
 	public function parse($strSubject) {
+		// replace short system tags (eg: <else>) with libray-indented tags (eg: <standard:else>)
+		$strSubject = $this->replaceShortTags($strSubject);
+		
 		// match start & end tags
 		$strSubject = preg_replace_callback("/<([a-zA-Z]+)\:([a-zA-Z]+)(\ (.*)=\"(.*)\")?\/?>/",array($this,"parseStartTagCallback"),$strSubject);
 		$strSubject = preg_replace_callback("/<\/([a-zA-Z]+)\:([a-zA-Z]+)>/",array($this,"parseEndTagCallback"),$strSubject);
@@ -118,5 +121,37 @@ class TagParser {
 			$tblOutput[trim($tblValues[1])]=trim($tblValues[2]);
 		}
 		return $tblOutput;
+	}
+	
+	/**
+	 * Replaces short system tags with library indented ones.
+	 * 
+	 * @param string $strSubject
+	 * @return string
+	 */
+	private function replaceShortTags($strSubject) {
+		return str_replace(array(
+				"<if ",
+				"</if>",
+				"<elseif ",
+				"<else>",
+				"<set ",
+				"<unset ",
+				"<for ",
+				"</for>",
+				"<foreach ",
+				"</foreach>"
+		), array(
+				"<standard:if ",
+				"</standard:if>",
+				"<standard:elseif ",
+				"<standard:else>",
+				"<standard:set ",
+				"<standard:unset ",
+				"<standard:for ",
+				"</standard:for>",
+				"<standard:foreach ",
+				"</standard:foreach>"
+		), $strSubject);
 	}
 }
