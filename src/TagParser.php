@@ -39,7 +39,7 @@ class TagParser {
 		$strSubject = $this->replaceShortTags($strSubject);
 		
 		// match start & end tags
-		$strSubject = preg_replace_callback("/<([a-zA-Z]+)\:([a-zA-Z]+)(\ (.*)=\"(.*)\")?\/?>/",array($this,"parseStartTagCallback"),$strSubject);
+		$strSubject = preg_replace_callback("/<([a-zA-Z]+)\:([a-zA-Z]+)(\s*(.*)\s*=\s*\"(.*)\"\s*)?\/?>/",array($this,"parseStartTagCallback"),$strSubject);
 		$strSubject = preg_replace_callback("/<\/([a-zA-Z]+)\:([a-zA-Z]+)>/",array($this,"parseEndTagCallback"),$strSubject);
 
 		// if it still contains tags, recurse until all tags are parsed
