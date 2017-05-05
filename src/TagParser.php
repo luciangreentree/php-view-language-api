@@ -36,11 +36,11 @@ class TagParser {
 	 */
 	public function parse($strSubject) {
 		// match start & end tags
-		$strSubject = preg_replace_callback("/<([a-zA-Z]+)\:([a-zA-Z]+)(\s*(.*)\s*=\s*\"(.*)\"\s*)?\/?>/",array($this,"parseStartTagCallback"),$strSubject);
-		$strSubject = preg_replace_callback("/<\/([a-zA-Z]+)\:([a-zA-Z]+)>/",array($this,"parseEndTagCallback"),$strSubject);
+		$strSubject = preg_replace_callback("/<([a-zA-Z\-]+)\:([a-zA-Z\-]+)(\s*(.*)\s*=\s*\"(.*)\"\s*)?\/?>/",array($this,"parseStartTagCallback"),$strSubject);
+		$strSubject = preg_replace_callback("/<\/([a-zA-Z\-]+)\:([a-zA-Z\-]+)>/",array($this,"parseEndTagCallback"),$strSubject);
 
 		// if it still contains tags, recurse until all tags are parsed
-		if(preg_match("/<([a-zA-Z]+)\:([a-zA-Z]+)(.*?)>/",$strSubject)!=0) {
+		if(preg_match("/<([a-zA-Z\-]+)\:([a-zA-Z\-]+)(.*?)>/",$strSubject)!=0) {
 			$strSubject = $this->parse($strSubject);
 		}
 
@@ -85,9 +85,12 @@ class TagParser {
 	 * @return AbstractTag
 	 */
 	private function getTagInstance($tblMatches) {
-		$strClassName = ucfirst($tblMatches[1]).ucfirst($tblMatches[2]).'Tag';
-		if($tblMatches[1]!="standard") { // standard tags are always included and not subject to change
-			$strFileLocation = $this->strTagLibFolder."/".$tblMatches[1]."/".$strClassName.".php";
+		$strLibraryName = str_replace(" ","",ucwords(str_replace("-"," ",strtolower($tblMatches[1]))));
+		$strTagName = str_replace(" ","",ucwords(str_replace("-"," ",strtolower($tblMatches[2]))));
+		
+		$strClassName = $strLibraryName.$strTagName.'Tag';
+		if($strLibraryName!="Standard") { // standard tags are always included and not subject to change
+			$strFileLocation = $this->strTagLibFolder."/".$strLibraryName."/".$strClassName.".php";
 			if(!file_exists($strFileLocation)) throw new ViewException("Tag not found: ".$strClassName);
 			require_once($strFileLocation);
 			$this->objViewCompilation->addComponent($strFileLocation);
