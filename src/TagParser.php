@@ -35,15 +35,12 @@ class TagParser {
 	 * @return string
 	 */
 	public function parse($strSubject) {
-		// replace short system tags (eg: <else>) with libray-indented tags (eg: <standard:else>)
-		$strSubject = $this->replaceShortTags($strSubject);
-		
 		// match start & end tags
-		$strSubject = preg_replace_callback("/<([a-zA-Z]+)\:([a-zA-Z]+)(\ (.*)=\"(.*)\")?\/?>/",array($this,"parseStartTagCallback"),$strSubject);
-		$strSubject = preg_replace_callback("/<\/([a-zA-Z]+)\:([a-zA-Z]+)>/",array($this,"parseEndTagCallback"),$strSubject);
+		$strSubject = preg_replace_callback("/<([a-zA-Z\-]+)\:([a-zA-Z\-]+)(\s*(.*)\s*=\s*\"(.*)\"\s*)?\/?>/",array($this,"parseStartTagCallback"),$strSubject);
+		$strSubject = preg_replace_callback("/<\/([a-zA-Z\-]+)\:([a-zA-Z\-]+)>/",array($this,"parseEndTagCallback"),$strSubject);
 
 		// if it still contains tags, recurse until all tags are parsed
-		if(preg_match("/<([a-zA-Z]+)\:([a-zA-Z]+)(.*?)>/",$strSubject)!=0) {
+		if(preg_match("/<([a-zA-Z\-]+)\:([a-zA-Z\-]+)(.*?)>/",$strSubject)!=0) {
 			$strSubject = $this->parse($strSubject);
 		}
 
@@ -88,9 +85,12 @@ class TagParser {
 	 * @return AbstractTag
 	 */
 	private function getTagInstance($tblMatches) {
-		$strClassName = ucfirst($tblMatches[1]).ucfirst($tblMatches[2]).'Tag';
-		if($tblMatches[1]!="standard") { // standard tags are always included and not subject to change
-			$strFileLocation = $this->strTagLibFolder."/".$tblMatches[1]."/".$strClassName.".php";
+		$strLibraryName = str_replace(" ","",ucwords(str_replace("-"," ",strtolower($tblMatches[1]))));
+		$strTagName = str_replace(" ","",ucwords(str_replace("-"," ",strtolower($tblMatches[2]))));
+		
+		$strClassName = $strLibraryName.$strTagName.'Tag';
+		if($strLibraryName!="Standard") { // standard tags are always included and not subject to change
+			$strFileLocation = $this->strTagLibFolder."/".$strLibraryName."/".$strClassName.".php";
 			if(!file_exists($strFileLocation)) throw new ViewException("Tag not found: ".$strClassName);
 			require_once($strFileLocation);
 			$this->objViewCompilation->addComponent($strFileLocation);
@@ -115,43 +115,11 @@ class TagParser {
 	private function getTagParameters($strParameters) {
 		$strParameters = trim($strParameters);
 		if(!$strParameters || $strParameters=="/") return array();
-		preg_match_all('/([a-zA-Z]+)[\ ]{0,}=[\ ]{0,}"(.*?)"/', $strParameters, $tblParameters, PREG_SET_ORDER);
+		preg_match_all('/([a-zA-Z]+)\s*=\s*"(.*?)"/', $strParameters, $tblParameters, PREG_SET_ORDER);
 		$tblOutput=array();
 		foreach($tblParameters as $tblValues) {
 			$tblOutput[trim($tblValues[1])]=trim($tblValues[2]);
 		}
 		return $tblOutput;
-	}
-	
-	/**
-	 * Replaces short system tags with library indented ones.
-	 * 
-	 * @param string $strSubject
-	 * @return string
-	 */
-	private function replaceShortTags($strSubject) {
-		return str_replace(array(
-				"<if ",
-				"</if>",
-				"<elseif ",
-				"<else>",
-				"<set ",
-				"<unset ",
-				"<for ",
-				"</for>",
-				"<foreach ",
-				"</foreach>"
-		), array(
-				"<standard:if ",
-				"</standard:if>",
-				"<standard:elseif ",
-				"<standard:else>",
-				"<standard:set ",
-				"<standard:unset ",
-				"<standard:for ",
-				"</standard:for>",
-				"<standard:foreach ",
-				"</standard:foreach>"
-		), $strSubject);
 	}
 }
