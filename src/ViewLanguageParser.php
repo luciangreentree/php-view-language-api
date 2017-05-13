@@ -11,35 +11,35 @@ require_once("taglib/system/loader.php");
  */
 class ViewLanguageParser {
 	private $strTemplatesFolder;
-	private $strTemplatePath;
+	private $strCompilationsFolder;
 	private $strTemplatesExtension;
 	private $strTagLibFolder;
 	
 	/**
 	 * Constructs a view language parser.
 	 * 
-	 * @param string $strTemplatesFolder Location of templates folder on disk.
-	 * @param string $strTemplatePath Location of template file relative to views folder (without extension). 
-	 * @param string $strTemplatesExtension Extension of template files without dot (eg: php). 
-	 * @param string $strTagLibFolder Location of user-defined tag libraries folder.
+	 * @param string $strTemplatesFolder Relative path to templates folder on disk.
+	 * @param string $strTemplatesExtension Extension of template files without dot (eg: php).
+	 * @param string $strCompilationsFolder Absolute path to compilations folder on disk 
+	 * @param string $strTagLibFolder Relative path to user-defined tag libraries folder.
 	 */
-	public function __construct($strTemplatesFolder, $strTemplatePath, $strTemplatesExtension, $strTagLibFolder = "") {
+	public function __construct($strTemplatesFolder, $strTemplatesExtension, $strCompilationsFolder, $strTagLibFolder = "") {
 		$this->strTemplatesFolder = $strTemplatesFolder;
-		$this->strTemplatePath = $strTemplatePath;
 		$this->strTemplatesExtension = $strTemplatesExtension;
+		$this->strCompilationsFolder= $strCompilationsFolder;
 		$this->strTagLibFolder = $strTagLibFolder;
 	}
 	
 	/**
-	 * Parses input string of view tags & expressions, writes results in a compilation file, then returns that file.
+	 * Compiles ViewLanguage instructions in input file/string into PHP, saves global view into a compilation file, then returns location to that file.
 	 * 
-	 * @param string $strCompilationsFolder Absolute location of compilations folder on disk.
+	 * @param string $strTemplatePath Relative path to template file that needs to be compiled within templates folder (without extension). 
 	 * @param string $strOutputStream Response stream contents before view language constructs were parsed.
 	 * @return string Compilation file name, containing response stream after view language constructs were parsed.
 	 */
-	public function compile($strCompilationsFolder, $strOutputStream="") {
+	public function compile($strTemplatePath, $strOutputStream="") {
 		// opens existing compilation (if exists)
-		$objViewCompilation = new ViewCompilation($strCompilationsFolder, $this->strTemplatePath, $this->strTemplatesExtension);
+		$objViewCompilation = new ViewCompilation($this->strCompilationsFolder, $strTemplatePath, $this->strTemplatesExtension);
 		
 		// if compilation components haven't changed, do not go further
 		if(!$objViewCompilation->hasChanged()) {
@@ -48,7 +48,7 @@ class ViewLanguageParser {
 		
 		// includes dependant tree of templates
 		$objImportTag = new SystemImportTag($this->strTemplatesFolder, $this->strTemplatesExtension, $objViewCompilation);
-		$strOutputStream = $objImportTag->parse($this->strTemplatePath, $strOutputStream);
+		$strOutputStream = $objImportTag->parse($strTemplatePath, $strOutputStream);
 		
 		// start looking for tags whose values should be escaped
 		$objEscapeTag = new SystemEscapeTag();
