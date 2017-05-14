@@ -6,7 +6,7 @@ interface StartEndTag {
 	/**
 	 * Parses start tag.
 	 *  
-	 * Example: <standard:foreach var="${ad.d}" key="K" value="V">
+	 * Example: <std:foreach var="${ad.d}" key="K" value="V">
 	 * 
 	 * @param array(string=>string) $tblParameters
 	 * @return string
@@ -16,7 +16,7 @@ interface StartEndTag {
 	/**
 	 * Parses end tag. 
 	 * 
-	 * Example: </standard:foreach>
+	 * Example: </std:foreach>
 	 * 
 	 * @return string
 	 */

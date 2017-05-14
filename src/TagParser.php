@@ -5,9 +5,9 @@ require_once("AbstractTag.php");
  * Implements logical expressions that are going to be interpreted as PHP when response is displayed to client.
  *
  * Example of tag:
- * 		<standard:if condition="${request.server.ip}=='127.0.0.1'">
+ * 		<std:if condition="${request.server.ip}=='127.0.0.1'">
  * 			You are on localhost!
- * 		</standard:if>
+ * 		</std:if>
  * Is converted to:
  * 		<?php if($request["client"]["ip"]=='127.0.0.1') { ?>
  * 			You are on localhost!
@@ -71,7 +71,7 @@ class TagParser {
 	 * Detects tag class from tag declaration.
 	 *
 	 * Example:
-	 * 		<standard:for ...>
+	 * 		<std:for ...>
 	 *
 	 * Where:
 	 * 		- "standard" is the name of tag library
@@ -103,7 +103,7 @@ class TagParser {
 	 * Detects tag attributes from tag declaration.
 	 *
 	 * Example:
-	 * 		<standard:for  var="${asd}" value="i" >
+	 * 		<std:for  var="${asd}" value="i" >
 	 *
 	 * Parameters detected will be:
 	 * 		var

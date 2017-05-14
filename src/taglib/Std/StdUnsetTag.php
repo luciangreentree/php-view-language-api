@@ -3,15 +3,15 @@
  * Implements how setting an internal variable is translated into a tag.
 *
 * Tag syntax:
-* <standard:unset name="VARNAME"/>
+* <std:unset name="VARNAME"/>
 *
 * Tag example:
-* <standard:set name="asd" value="16"/>
+* <std:set name="asd" value="16"/>
 *
 * PHP output:
 * <?php unset($asd); ?>
 */
-class StandardUnsetTag extends AbstractTag implements StartTag {
+class StdUnsetTag extends AbstractTag implements StartTag {
 	/**
 	 * (non-PHPdoc)
 	 * @see StartTag::parseStartTag()

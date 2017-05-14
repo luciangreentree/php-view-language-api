@@ -3,15 +3,15 @@
  * Implements how an ELSE clause is translated into a tag.
 *
 * Tag syntax:
-* <standard:else>BODY</standard:else>
+* <std:else>BODY</std:else>
 *
 * Tag example:
-* <standard:else>hello</standard:else>
+* <std:else>hello</std:else>
 *
 * PHP output:
 * <?php else { ?>hello<?php } ?>
 */
-class StandardElseTag extends AbstractTag implements StartTag {
+class StdElseTag extends AbstractTag implements StartTag {
 	/**
 	 * (non-PHPdoc)
 	 * @see StartTag::parseStartTag()

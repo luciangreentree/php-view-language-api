@@ -3,15 +3,15 @@
  * Implements how a WHILE clause is translated into a tag.
  *
  * Tag syntax:
- * <standard:while condition="EXPRESSION">BODY</standard:while>
+ * <std:while condition="EXPRESSION">BODY</std:while>
  *
  * Tag example:
- * <standard:while condition="${a}>2">BODY</standard:while>
+ * <std:while condition="${a}>2">BODY</std:while>
  *
  * PHP output:
  * <?php while ($a>2) { ?> BODY <?php } ?>
  */
-class StandardWhileTag extends AbstractTag implements StartEndTag {
+class StdWhileTag extends AbstractTag implements StartEndTag {
 	/**
 	 * (non-PHPdoc)
 	 * @see StartEndTag::parseStartTag()

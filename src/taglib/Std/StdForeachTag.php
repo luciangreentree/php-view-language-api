@@ -3,15 +3,15 @@
  * Implements how a FOREACH clause is translated into a tag.
 *
 * Tag syntax:
-* <standard:foreach var="EXPRESSION" key="KEYNAME" value="VALUENAME">BODY</standard:foreach>
+* <std:foreach var="EXPRESSION" key="KEYNAME" value="VALUENAME">BODY</std:foreach>
 *
 * Tag example:
-* <standard:foreach var="${a.b}" key="${keyName}" value="${valueName}">BODY</standard:foreach>
+* <std:foreach var="${a.b}" key="${keyName}" value="${valueName}">BODY</std:foreach>
 *
 * PHP output:
 * <?php foreach($a["b"] as $keyName=>$valueName) { ?> BODY <?php } ?>
 */
-class StandardForeachTag extends AbstractTag implements StartEndTag {
+class StdForeachTag extends AbstractTag implements StartEndTag {
 	/**
 	 * (non-PHPdoc)
 	 * @see StartEndTag::parseStartTag()

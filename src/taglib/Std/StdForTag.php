@@ -3,15 +3,15 @@
  * Implements how a FOR clause is translated into a tag.
 *
 * Tag syntax:
-* <standard:for var="EXPRESSION" value="VARNAME" start="EXPRESSION|INTEGER" end="EXPRESSION|INTEGER" step="INTEGER">BODY</standard:for>
+* <std:for var="EXPRESSION" value="VARNAME" start="EXPRESSION|INTEGER" end="EXPRESSION|INTEGER" step="INTEGER">BODY</std:for>
 *
 * Tag example:
-* <standard:for var="${a}" value="${i}">BODY</standard:for>
+* <std:for var="${a}" value="${i}">BODY</std:for>
 *
 * PHP output:
 * <?php for($i=0; i<count($a); $i++) { ?> BODY <?php } ?>
 */
-class StandardForTag extends AbstractTag implements StartEndTag {
+class StdForTag extends AbstractTag implements StartEndTag {
 	/**
 	 * (non-PHPdoc)
 	 * @see StartEndTag::parseStartTag()

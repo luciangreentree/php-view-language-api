@@ -3,8 +3,8 @@ require_once("File.php");
 require_once("ExpressionParser.php");
 require_once("TagParser.php");
 require_once("ViewCompilation.php");
-require_once("taglib/Standard/loader.php");
-require_once("taglib/System/loader.php");
+require_once("taglib/Std/loader.php");
+require_once("taglib/Macros/loader.php");
 
 /**
  * Performs the logic of view language parsing, delegating to tag and expressions parser.
