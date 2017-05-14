@@ -1,8 +1,13 @@
 <?php
+require_once("StandardIfTag.php");
 require_once("StandardElseifTag.php");
 require_once("StandardElseTag.php");
 require_once("StandardForeachTag.php");
 require_once("StandardForTag.php");
-require_once("StandardIfTag.php");
 require_once("StandardSetTag.php");
 require_once("StandardUnsetTag.php");
+require_once("StandardWhileTag.php");
+require_once("StandardBreakTag.php");
+require_once("StandardContinueTag.php");
+require_once("StandardSwitchTag.php");
+require_once("StandardCaseTag.php");
