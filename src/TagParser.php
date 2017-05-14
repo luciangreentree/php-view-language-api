@@ -74,11 +74,11 @@ class TagParser {
 	 * 		<std:for ...>
 	 *
 	 * Where:
-	 * 		- "standard" is the name of tag library
+	 * 		- "std" is the name of tag library
 	 * 		- "for" is the name of tag function
 	 *
 	 * Detected class name will be:
-	 * 		StandardForTag
+	 * 		StdForTag
 	 *
 	 * @param array $tblMatches
 	 * @throws ViewException
@@ -89,7 +89,7 @@ class TagParser {
 		$strTagName = str_replace(" ","",ucwords(str_replace("-"," ",strtolower($tblMatches[2]))));
 		
 		$strClassName = $strLibraryName.$strTagName.'Tag';
-		if($strLibraryName!="Standard") { // standard tags are always included and not subject to change
+		if($strLibraryName!="Std") { // std tags are always included and not subject to change
 			$strFileLocation = $this->strTagLibFolder."/".$strLibraryName."/".$strClassName.".php";
 			if(!file_exists($strFileLocation)) throw new ViewException("Tag not found: ".$strClassName);
 			require_once($strFileLocation);
