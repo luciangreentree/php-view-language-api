@@ -115,7 +115,7 @@ class TagParser {
 	private function getTagParameters($strParameters) {
 		$strParameters = trim($strParameters);
 		if(!$strParameters || $strParameters=="/") return array();
-		preg_match_all('/([a-zA-Z]+)\s*=\s*"(.*?)"/', $strParameters, $tblParameters, PREG_SET_ORDER);
+		preg_match_all('/([a-zA-Z\_]+)\s*=\s*"(.*?)"/', $strParameters, $tblParameters, PREG_SET_ORDER);
 		$tblOutput=array();
 		foreach($tblParameters as $tblValues) {
 			$tblOutput[trim($tblValues[1])]=trim($tblValues[2]);
