@@ -3,12 +3,12 @@
  * Implements a CONTINUE operation in a loop.
  *
  * Tag syntax:
- * <standard:continue/>
+ * <std:continue/>
  *
  * PHP output:
  * <?php continue; ?>
  */
-class StandardContinueTag extends AbstractTag implements StartTag {
+class StdContinueTag extends AbstractTag implements StartTag {
 	/**
 	 * (non-PHPdoc)
 	 * @see StartTag::parseStartTag()

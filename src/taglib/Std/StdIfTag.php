@@ -3,15 +3,15 @@
  * Implements how an IF clause is translated into a tag.
 *
 * Tag syntax:
-* <standard:if condition="EXPRESSION">BODY</standard:if>
+* <std:if condition="EXPRESSION">BODY</std:if>
 *
 * Tag example:
-* <standard:if condition="${a}>2">BODY</standard:if>
+* <std:if condition="${a}>2">BODY</std:if>
 *
 * PHP output:
 * <?php if ($a>2) { ?> BODY <?php } ?>
 */
-class StandardIfTag extends AbstractTag implements StartEndTag {
+class StdIfTag extends AbstractTag implements StartEndTag {
 	/**
 	 * (non-PHPdoc)
 	 * @see StartEndTag::parseStartTag()

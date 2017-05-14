@@ -3,15 +3,15 @@
  * Implements how setting an internal variable is translated into a tag.
 *
 * Tag syntax:
-* <standard:set name="VARNAME" value="EXPRESSION"/>
+* <std:set name="VARNAME" value="EXPRESSION"/>
 *
 * Tag example:
-* <standard:set name="asd" value="16"/>
+* <std:set name="asd" value="16"/>
 *
 * PHP output:
 * <?php $asd = "16"; ?>
 */
-class StandardSetTag extends AbstractTag implements StartTag {
+class StdSetTag extends AbstractTag implements StartTag {
 	/**
 	 * (non-PHPdoc)
 	 * @see StartTag::parseStartTag()

@@ -6,7 +6,7 @@ interface StartTag {
 	/**
 	 * Parses start tag.
 	 *  
-	 * Example:  <standard:set name="VARNAME" value="EXPRESSION"/>
+	 * Example:  <std:set name="VARNAME" value="EXPRESSION"/>
 	 * 
 	 * @param array(string=>string) $tblParameters
 	 * @return string

@@ -1,0 +1,13 @@
+<?php
+require_once("StdIfTag.php");
+require_once("StdElseifTag.php");
+require_once("StdElseTag.php");
+require_once("StdForeachTag.php");
+require_once("StdForTag.php");
+require_once("StdSetTag.php");
+require_once("StdUnsetTag.php");
+require_once("StdWhileTag.php");
+require_once("StdBreakTag.php");
+require_once("StdContinueTag.php");
+require_once("StdSwitchTag.php");
+require_once("StdCaseTag.php");

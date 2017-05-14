@@ -3,12 +3,12 @@
  * Implements a BREAK operation in a loop.
  *
  * Tag syntax:
- * <standard:break/>
+ * <std:break/>
  *
  * PHP output:
  * <?php break; ?>
  */
-class StandardBreakTag extends AbstractTag implements StartTag {
+class StdBreakTag extends AbstractTag implements StartTag {
 	/**
 	 * (non-PHPdoc)
 	 * @see StartTag::parseStartTag()

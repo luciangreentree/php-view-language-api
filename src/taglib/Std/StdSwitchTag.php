@@ -1,17 +1,17 @@
 <?php
 /**
- * Implements how a SWITCH clause is translated into a tag. Tag body can only contain <standard:case> tags.
+ * Implements how a SWITCH clause is translated into a tag. Tag body can only contain <std:case> tags.
  *
  * Tag syntax:
- * <standard:switch var="EXPRESSION">CASES</standard:switch>
+ * <std:switch var="EXPRESSION">CASES</std:switch>
  *
  * Tag example:
- * <standard:switch var="${a}">CASES</standard:switch>
+ * <std:switch var="${a}">CASES</std:switch>
  *
  * PHP output:
  * <?php switch ($a) { ?> ... <?php } ?>
  */
-class StandardSwitchTag extends AbstractTag implements StartEndTag {
+class StdSwitchTag extends AbstractTag implements StartEndTag {
 	/**
 	 * (non-PHPdoc)
 	 * @see StartEndTag::parseStartTag()

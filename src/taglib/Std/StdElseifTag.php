@@ -3,15 +3,15 @@
  * Implements how an ELSE IF clause is translated into a tag.
 *
 * Tag syntax:
-* <standard:elseif condition="EXPRESSION">BODY</standard:elseif>
+* <std:elseif condition="EXPRESSION">BODY</std:elseif>
 *
 * Tag example:
-* <standard:elseif condition="${a.b}>2">BODY</standard:elseif>
+* <std:elseif condition="${a.b}>2">BODY</std:elseif>
 *
 * PHP output:
 * <?php else if ($a["b"]>2) { ?> BODY <?php } ?>
 */
-class StandardElseifTag extends AbstractTag implements StartTag {
+class StdElseifTag extends AbstractTag implements StartTag {
 	/**
 	 * (non-PHPdoc)
 	 * @see StartTag::parseStartTag()

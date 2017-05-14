@@ -1,17 +1,17 @@
 <?php
 /**
- * Implements how a CASE clause is translated into a tag. Parent can only be a <standard:switch> tag.
+ * Implements how a CASE clause is translated into a tag. Parent can only be a <std:switch> tag.
  *
  * Tag syntax:
- * <standard:case value="EXPRESSION|STRING">BODY</standard:case>
+ * <std:case value="EXPRESSION|STRING">BODY</std:case>
  *
  * Tag example:
- * <standard:case value="2">BODY</standard:case>
+ * <std:case value="2">BODY</std:case>
  *
  * PHP output:
  * <?php case "2": ?> ... <?php break; ?>
  */
-class StandardCaseTag extends AbstractTag implements StartEndTag {
+class StdCaseTag extends AbstractTag implements StartEndTag {
 	/**
 	 * (non-PHPdoc)
 	 * @see StartEndTag::parseStartTag()
