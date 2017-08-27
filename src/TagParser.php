@@ -1,5 +1,6 @@
 <?php
 require_once("AbstractTag.php");
+require_once("UserTag.php");
 
 /**
  * Implements logical expressions that are going to be interpreted as PHP when response is displayed to client.
@@ -85,18 +86,20 @@ class TagParser {
 	 * @return AbstractTag
 	 */
 	private function getTagInstance($tblMatches) {
-		$strLibraryName = str_replace(" ","",ucwords(str_replace("-"," ",strtolower($tblMatches[1]))));
-		$strTagName = str_replace(" ","",ucwords(str_replace("-"," ",strtolower($tblMatches[2]))));
-		
-		$strClassName = $strLibraryName.$strTagName.'Tag';
-		if($strLibraryName!="Std") { // std tags are always included and not subject to change
-			$strFileLocation = $this->strTagLibFolder."/".$strLibraryName."/".$strClassName.".php";
-			if(!file_exists($strFileLocation)) throw new ViewException("Tag not found: ".$strClassName);
-			require_once($strFileLocation);
+		if(strtolower($tblMatches[1])=="std") {
+			$strLibraryName = str_replace(" ","",ucwords(str_replace("-"," ",strtolower($tblMatches[1]))));
+			$strTagName = str_replace(" ","",ucwords(str_replace("-"," ",strtolower($tblMatches[2]))));
+			$strClassName = $strLibraryName.$strTagName.'Tag';
+			if(!class_exists($strClassName)) throw new ViewException("Tag not found: ".$strClassName);
+			return new $strClassName();
+		} else {
+			$strLibraryName = str_replace(" ","",strtolower($tblMatches[1]));
+			$strTagName = str_replace(" ","",strtolower($tblMatches[2]));
+			$strFileLocation = $this->strTagLibFolder."/".$strLibraryName."/".$strTagName.".php";
+			if(!file_exists($strFileLocation)) throw new ViewException("Tag not found: ".$strLibraryName."/".$strTagName);
 			$this->objViewCompilation->addComponent($strFileLocation);
+			return new UserTag($strFileLocation);
 		}
-		if(!class_exists($strClassName)) throw new ViewException("Tag not found: ".$strClassName);
-		return new $strClassName();
 	}
 
 	/**
