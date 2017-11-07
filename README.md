@@ -14,5 +14,5 @@ The most elegant solution for keeping views scriptless, as employed by JSP appli
 2. Calls plugin to translate view language code from response into native programming language code.
 3. Displays response.
 
-Full documentation:<br />
+Read more here:<br />
 http://www.lucinda-framework.com/view-language
