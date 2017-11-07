@@ -3,7 +3,7 @@
     "type": "library",
     "description": "High performance templating API using tags & expressions inspired by Java JSTL and C Compiler",
     "keywords": ["templating","views","jstl"],
-    "homepage": "https://github.com/aherne/php-view-language-api",
+    "homepage": "http://www.lucinda-framework.com/view-language",
     "license": "MIT",
     "authors": [
         {
