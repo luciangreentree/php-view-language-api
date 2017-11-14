@@ -21,15 +21,14 @@ class UserTag implements StartEndTag {
 	 * @see StartEndTag::parseStartTag()
 	 */
 	public function parseStartTag($parameters=array()) {
-		ob_start();
-		include $this->strFilePath;
-		$strOutput = ob_get_contents();
-		$position = strpos($strOutput,self::BODY_TAG);
+		$strContent= file_get_contents($this->strFilePath);
+		$position = strpos($strContent,self::BODY_TAG);
 		if($position!==false) {
-			$strOutput = substr($strOutput, 0, $position);
+			$strContent = substr($strContent, 0, $position);
 		}
-		ob_end_clean();	
-		return $strOutput;
+		return preg_replace_callback("/[\$]\[([a-zA-Z]+)\]/",function($match) use($parameters){
+			return (isset($parameters[$match[1]])?$parameters[$match[1]]:null);
+		},$strContent);
 	}
 	
 	/**

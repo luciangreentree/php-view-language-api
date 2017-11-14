@@ -17,7 +17,9 @@ class StdSetTag extends AbstractTag implements StartTag {
 	 * @see StartTag::parseStartTag()
 	 */
 	public function parseStartTag($tblParameters=array()) {
-		$this->checkParameters($tblParameters, array("name","value"));
+		if(!$this->checkParameters($tblParameters, array("name","value"))) {
+			throw new ViewException("std:set requires parameters: 'name', 'value'");
+		}
 		return '<?php $'.$tblParameters['name'].' = '.($this->isExpression($tblParameters['value'])?$this->parseExpression($tblParameters['value']):"'".addslashes($tblParameters['value'])."'").'; ?>';
 	}
 }

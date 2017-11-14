@@ -17,11 +17,13 @@ class StdForTag extends AbstractTag implements StartEndTag {
 	 * @see StartEndTag::parseStartTag()
 	 */
 	public function parseStartTag($tblParameters=array()) {
-		$this->checkParameters($tblParameters, array("value"));
-		if(isset($tblParameters['var']) && !$this->isExpression($tblParameters['var'])) throw new ViewException("Value 'var' must be an expression for ".get_class($this)."!");
-		return '<?php for($'.$tblParameters['value'].'='.(isset($tblParameters['start'])?$this->parseCounter($tblParameters['start']):0)
-		.'; $'.$tblParameters['value'].'<'.(isset($tblParameters['end'])?'='.$this->parseCounter($tblParameters['end']):'sizeof('.$this->parseExpression($tblParameters['var']).')')
-		.'; $'.$tblParameters['value'].(isset($tblParameters['step'])?"=".$tblParameters['value'].($tblParameters['step']>0?"+".$tblParameters['step']:$tblParameters['step']):"++").') { ?>';
+		if(!$this->checkParameters($tblParameters, array("value")) || (isset($tblParameters['var']) && !$this->isExpression($tblParameters['var']))) {
+			return '<?php for($i=0;$i<0;$i++) { ?>';
+		} else {
+			return '<?php for($'.$tblParameters['value'].'='.(isset($tblParameters['start'])?$this->parseCounter($tblParameters['start']):0)
+			.'; $'.$tblParameters['value'].'<'.(isset($tblParameters['end'])?'='.$this->parseCounter($tblParameters['end']):'sizeof('.$this->parseExpression($tblParameters['var']).')')
+			.'; $'.$tblParameters['value'].(isset($tblParameters['step'])?"=".$tblParameters['value'].($tblParameters['step']>0?"+".$tblParameters['step']:$tblParameters['step']):"++").') { ?>';
+		}
 	}
 
 	/**
@@ -37,8 +39,13 @@ class StdForTag extends AbstractTag implements StartEndTag {
 	 * @see AbstractTag::checkParameters()
 	 */
 	protected function checkParameters($tblParameters, $tblRequiredParameters) {
-		parent::checkParameters($tblParameters, $tblRequiredParameters);
-		if(!isset($tblParameters['end']) && !isset($tblParameters['var'])) throw new ViewException("You must define either 'end' or 'var' attributes for ".get_class($this)."!");
+		$result = parent::checkParameters($tblParameters, $tblRequiredParameters);
+		if(!$result) return false;
+		if(!isset($tblParameters['end']) && !isset($tblParameters['var'])) {
+			//You must define either 'end' or 'var' attributes for ".get_class($this)."!;
+			return false;
+		}
+		return true;
 	}
 
 	/**

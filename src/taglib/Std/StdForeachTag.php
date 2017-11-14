@@ -17,9 +17,12 @@ class StdForeachTag extends AbstractTag implements StartEndTag {
 	 * @see StartEndTag::parseStartTag()
 	 */
 	public function parseStartTag($tblParameters=array()) {
-		$this->checkParameters($tblParameters, array("var","value"));
-		if(!$this->isExpression($tblParameters['var'])) throw new ViewException("Value 'var' must be an expression for ".get_class($this)."!");
-		return '<?php foreach('.$this->parseExpression($tblParameters['var']).' as '.(!empty($tblParameters['key'])?'$'.$tblParameters['key'].'=>':'').'$'.$tblParameters['value'].') { ?>';
+		if(!$this->checkParameters($tblParameters, array("var","value")) || !$this->isExpression($tblParameters['var'])) {
+			return '<?php foreach([] as $empty) { ?>';
+		} else {
+			return '<?php foreach('.$this->parseExpression($tblParameters['var']).' as '.(!empty($tblParameters['key'])?'$'.$tblParameters['key'].'=>':'').'$'.$tblParameters['value'].') { ?>';
+		}
+		
 	}
 
 	/**
