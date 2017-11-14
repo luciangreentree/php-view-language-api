@@ -17,7 +17,10 @@ class StdElseifTag extends AbstractTag implements StartTag {
 	 * @see StartTag::parseStartTag()
 	 */
 	public function parseStartTag($tblParameters=array()) {
-		$this->checkParameters($tblParameters, array("condition"));
-		return '<?php } else if ('.$this->parseExpression($tblParameters['condition']).') { ?>';
+		if(!$this->checkParameters($tblParameters, array("condition"))) {
+			return '<?php } else if (false) { ?>';
+		} else {
+			return '<?php } else if ('.$this->parseExpression($tblParameters['condition']).') { ?>';
+		}		
 	}
 }

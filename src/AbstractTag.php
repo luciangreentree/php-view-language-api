@@ -38,7 +38,7 @@ abstract class AbstractTag {
 	 */
 	protected function checkParameters($tblParameters, $tblRequiredParameters) {
 		foreach($tblRequiredParameters as $strName) {
-			if(!isset($tblParameters[$strName])) throw new ViewException("You must define '".$strName."' attribute for ".get_class($this)."!");
+			if(empty($tblParameters[$strName])) return false;
 		}
 		return true;
 	}

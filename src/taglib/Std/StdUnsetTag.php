@@ -17,7 +17,9 @@ class StdUnsetTag extends AbstractTag implements StartTag {
 	 * @see StartTag::parseStartTag()
 	 */
 	public function parseStartTag($tblParameters=array()) {
-		$this->checkParameters($tblParameters, array("name"));
+		if(!$this->checkParameters($tblParameters, array("name"))) {
+			throw new ViewException("std:unset requires parameters: 'name'");
+		}
 		return '<?php unset($'.$tblParameters['name'].'); ?>';
 	}
 }

@@ -17,8 +17,11 @@ class StdWhileTag extends AbstractTag implements StartEndTag {
 	 * @see StartEndTag::parseStartTag()
 	 */
 	public function parseStartTag($tblParameters=array()) {
-		$this->checkParameters($tblParameters, array("condition"));
-		return '<?php while ('.$this->parseExpression($tblParameters['condition']).') { ?>';
+		if(!$this->checkParameters($tblParameters, array("condition"))) {
+			return '<?php while(false) { ?>';
+		} else {
+			return '<?php while('.$this->parseExpression($tblParameters['condition']).') { ?>';
+		}		
 	}
 	
 	/**
