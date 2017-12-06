@@ -38,7 +38,7 @@ abstract class AbstractTag {
 	 */
 	protected function checkParameters($tblParameters, $tblRequiredParameters) {
 		foreach($tblRequiredParameters as $strName) {
-			if(empty($tblParameters[$strName])) return false;
+			if(!isset($tblParameters[$strName])) return false;
 		}
 		return true;
 	}
