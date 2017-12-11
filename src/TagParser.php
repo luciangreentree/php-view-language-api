@@ -16,17 +16,20 @@ require_once("UserTag.php");
  */
 class TagParser {
 	private $strTagLibFolder;
+    private $strTagExtension;
 	private $objViewCompilation;
 
 	/**
 	 * Creates a tag parser instance.
 	 *
 	 * @param string $strTagLibFolder Folder containing user-defined taglibs.
+     * @param string $strTagExtension Extension of user-defined tags.
 	 * @param ViewCompilation $objViewCompilation Object that collects components that take part in view.
 	 */
-	public function __construct($strTagLibFolder, ViewCompilation $objViewCompilation) {
+	public function __construct($strTagLibFolder, $strTagExtension, ViewCompilation $objViewCompilation) {
 		$this->strTagLibFolder = $strTagLibFolder;
-		$this->objViewCompilation = $objViewCompilation;
+        $this->strTagExtension = $strTagExtension;
+        $this->objViewCompilation = $objViewCompilation;
 	}
 
 	/**
@@ -95,7 +98,7 @@ class TagParser {
 		} else {
 			$strLibraryName = str_replace(" ","",strtolower($tblMatches[1]));
 			$strTagName = str_replace(" ","",strtolower($tblMatches[2]));
-			$strFileLocation = $this->strTagLibFolder."/".$strLibraryName."/".$strTagName.".php";
+			$strFileLocation = $this->strTagLibFolder."/".$strLibraryName."/".$strTagName.".".$this->strTagExtension;
 			if(!file_exists($strFileLocation)) throw new ViewException("Tag not found: ".$strLibraryName."/".$strTagName);
 			$this->objViewCompilation->addComponent($strFileLocation);
 			return new UserTag($strFileLocation);

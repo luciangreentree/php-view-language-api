@@ -58,7 +58,7 @@ class ViewLanguageParser {
 		if($blnHasEscapedContent) $objEscapeTag->removeContent($strOutputStream);
 
 		// run tag parser
-		$objTagParser = new TagParser($this->strTagLibFolder, $objViewCompilation);
+		$objTagParser = new TagParser($this->strTagLibFolder, $this->strTemplatesExtension, $objViewCompilation);
 		$strOutputStream=$objTagParser->parse($strOutputStream);
 		
 		// run expression parser
