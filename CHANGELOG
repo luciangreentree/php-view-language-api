@@ -1,3 +1,0 @@
-2017-05-04	Made tags and attributes work irrespective of spaces inside.
-2017-05-04	Removed short tags to insure a purely predictable tag syntax
-2017-05-05	Enforced rules for tag names (both left and right parts either single string or strings separated by "-" sign)
