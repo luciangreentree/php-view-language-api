@@ -43,7 +43,7 @@ class SystemImportTag {
 	    $strSubject = ($strOutputStream==""?$file->getContents():$strOutputStream);
 	    $this->objViewCompilation->addComponent($strPath);
 	    
-		return preg_replace_callback("/<import\ file\=\"(.*?)\"\/\>/", function($tblMatches) {
+		return preg_replace_callback("/<import\s+file\s*\=\s*\"(.*?)\"\s*\/\>/", function($tblMatches) {
 			return $this->parse($tblMatches[1]);
 		},$strSubject);
 	} 
