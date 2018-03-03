@@ -24,8 +24,8 @@ abstract class AbstractTag {
 	 * @return string
 	 */
 	protected function parseExpression($expression) {
-		$expression = new TagExpressionParser();
-		return $expression->parse($expression);
+		$expressionObject = new TagExpressionParser();
+		return $expressionObject->parse($expression);
 	}
 	
 	/**
