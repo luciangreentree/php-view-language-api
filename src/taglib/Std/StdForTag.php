@@ -16,13 +16,13 @@ class StdForTag extends AbstractTag implements StartEndTag {
 	 * (non-PHPdoc)
 	 * @see StartEndTag::parseStartTag()
 	 */
-	public function parseStartTag($tblParameters=array()) {
-		if(!$this->checkParameters($tblParameters, array("value")) || (isset($tblParameters['var']) && !$this->isExpression($tblParameters['var']))) {
+	public function parseStartTag($parameters=array()) {
+		if(!$this->checkParameters($parameters, array("value")) || (isset($parameters['var']) && !$this->isExpression($parameters['var']))) {
 			return '<?php for($i=0;$i<0;$i++) { ?>';
 		} else {
-			return '<?php for($'.$tblParameters['value'].'='.(isset($tblParameters['start'])?$this->parseCounter($tblParameters['start']):0)
-			.'; $'.$tblParameters['value'].'<'.(isset($tblParameters['end'])?'='.$this->parseCounter($tblParameters['end']):'sizeof('.$this->parseExpression($tblParameters['var']).')')
-			.'; $'.$tblParameters['value'].(isset($tblParameters['step'])?"=".$tblParameters['value'].($tblParameters['step']>0?"+".$tblParameters['step']:$tblParameters['step']):"++").') { ?>';
+			return '<?php for($'.$parameters['value'].'='.(isset($parameters['start'])?$this->parseCounter($parameters['start']):0)
+			.'; $'.$parameters['value'].'<'.(isset($parameters['end'])?'='.$this->parseCounter($parameters['end']):'sizeof('.$this->parseExpression($parameters['var']).')')
+			.'; $'.$parameters['value'].(isset($parameters['step'])?"=".$parameters['value'].($parameters['step']>0?"+".$parameters['step']:$parameters['step']):"++").') { ?>';
 		}
 	}
 
@@ -38,10 +38,10 @@ class StdForTag extends AbstractTag implements StartEndTag {
 	 * (non-PHPdoc)
 	 * @see AbstractTag::checkParameters()
 	 */
-	protected function checkParameters($tblParameters, $tblRequiredParameters) {
-		$result = parent::checkParameters($tblParameters, $tblRequiredParameters);
+	protected function checkParameters($parameters, $requiredParameters) {
+		$result = parent::checkParameters($parameters, $requiredParameters);
 		if(!$result) return false;
-		if(!isset($tblParameters['end']) && !isset($tblParameters['var'])) {
+		if(!isset($parameters['end']) && !isset($parameters['var'])) {
 			//You must define either 'end' or 'var' attributes for ".get_class($this)."!;
 			return false;
 		}
@@ -51,12 +51,12 @@ class StdForTag extends AbstractTag implements StartEndTag {
 	/**
 	 * Parses start & end attributes, which may be either integers or expressions.
 	 *
-	 * @param string $strExpression
+	 * @param string $expression
 	 * @return integer
 	 */
-	private function parseCounter($strExpression) {
-		if(is_numeric($strExpression)) 					return $strExpression;
-		else if(!$this->isExpression($strExpression)) 	return '$'.$strExpression;
-		else 											return $this->parseExpression($strExpression);
+	private function parseCounter($expression) {
+		if(is_numeric($expression)) 					return $expression;
+		else if(!$this->isExpression($expression)) 	return '$'.$expression;
+		else 											return $this->parseExpression($expression);
 	}
 }

@@ -16,11 +16,11 @@ class StdSwitchTag extends AbstractTag implements StartEndTag {
 	 * (non-PHPdoc)
 	 * @see StartEndTag::parseStartTag()
 	 */
-	public function parseStartTag($tblParameters=array()) {
-		if(!$this->checkParameters($tblParameters, array("var"))) {
+	public function parseStartTag($parameters=array()) {
+		if(!$this->checkParameters($parameters, array("var"))) {
 			return '<?php switch(null) { ?>';
 		} else {
-			return '<?php switch('.$this->parseExpression($tblParameters['var']).') { ?>';
+			return '<?php switch('.$this->parseExpression($parameters['var']).') { ?>';
 		}
 	}
 	

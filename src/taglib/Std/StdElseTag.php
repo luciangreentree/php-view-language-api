@@ -16,7 +16,7 @@ class StdElseTag extends AbstractTag implements StartTag {
 	 * (non-PHPdoc)
 	 * @see StartTag::parseStartTag()
 	 */
-	public function parseStartTag($tblParameters=array()) {
+	public function parseStartTag($parameters=array()) {
 		return '<?php } else { ?>';
 	}
 }

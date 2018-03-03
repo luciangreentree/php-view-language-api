@@ -16,11 +16,11 @@ class StdIfTag extends AbstractTag implements StartEndTag {
 	 * (non-PHPdoc)
 	 * @see StartEndTag::parseStartTag()
 	 */
-	public function parseStartTag($tblParameters=array()) {
-		if(!$this->checkParameters($tblParameters, array("condition"))) {
+	public function parseStartTag($parameters=array()) {
+		if(!$this->checkParameters($parameters, array("condition"))) {
 			return '<?php if(false) { ?>';
 		} else {
-			return '<?php if ('.$this->parseExpression($tblParameters['condition']).') { ?>';
+			return '<?php if ('.$this->parseExpression($parameters['condition']).') { ?>';
 		}
 	}
 

@@ -8,8 +8,8 @@ interface StartTag {
 	 *  
 	 * Example:  <std:set name="VARNAME" value="EXPRESSION"/>
 	 * 
-	 * @param array(string=>string) $tblParameters
+	 * @param array(string=>string) $parameters
 	 * @return string
 	 */
-	function parseStartTag($tblParameters=array());
+	function parseStartTag($parameters=array());
 }

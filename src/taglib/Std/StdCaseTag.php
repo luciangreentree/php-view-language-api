@@ -16,9 +16,9 @@ class StdCaseTag extends AbstractTag implements StartEndTag {
 	 * (non-PHPdoc)
 	 * @see StartEndTag::parseStartTag()
 	 */
-	public function parseStartTag($tblParameters=array()) {
-		if(!empty($tblParameters["value"])) {
-			return '<?php case '.($this->isExpression($tblParameters['value'])?$this->parseExpression($tblParameters['value']):"'".addslashes($tblParameters['value'])."'").': ?>';
+	public function parseStartTag($parameters=array()) {
+		if(!empty($parameters["value"])) {
+			return '<?php case '.($this->isExpression($parameters['value'])?$this->parseExpression($parameters['value']):"'".addslashes($parameters['value'])."'").': ?>';
 		} else {
 			return '<?php default: ?>';
 		}

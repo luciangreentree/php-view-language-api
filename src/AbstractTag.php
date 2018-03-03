@@ -10,35 +10,35 @@ abstract class AbstractTag {
 	/**
 	 * Checks if tag attribute values contain expressions.
 	 * 
-	 * @param string $strExpression
+	 * @param string $expression
 	 * @return boolean
 	 */
-	protected function isExpression($strExpression) {
-		return (strpos($strExpression,'${')!==false?true:false);
+	protected function isExpression($expression) {
+		return (strpos($expression,'${')!==false?true:false);
 	}
 	
 	/**
 	 * Converts expressions from tag attribute values into PHP.
 	 * 
-	 * @param string $strExpression
+	 * @param string $expression
 	 * @return string
 	 */
-	protected function parseExpression($strExpression) {
-		$objExpression = new TagExpressionParser();
-		return $objExpression->parse($strExpression);
+	protected function parseExpression($expression) {
+		$expression = new TagExpressionParser();
+		return $expression->parse($expression);
 	}
 	
 	/**
 	 * Verifies if tag has required attributes defined. 
 	 * 
-	 * @param array(string=>string) $tblParameters
-	 * @param array(string) $tblRequiredParameters
+	 * @param array(string=>string) $parameters
+	 * @param array(string) $requiredParameters
 	 * @throws ViewException
 	 * @return boolean
 	 */
-	protected function checkParameters($tblParameters, $tblRequiredParameters) {
-		foreach($tblRequiredParameters as $strName) {
-			if(!isset($tblParameters[$strName])) return false;
+	protected function checkParameters($parameters, $requiredParameters) {
+		foreach($requiredParameters as $name) {
+			if(!isset($parameters[$name])) return false;
 		}
 		return true;
 	}

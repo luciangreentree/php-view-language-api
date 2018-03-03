@@ -3,35 +3,35 @@
  * Encapsulates a file and operations on file.
  */
 class File {
-	private $strPath;
+	private $path;
 	
 	/**
 	 * Creates an object.
 	 * 
-	 * @param string $strName Complete path of file.
+	 * @param string $name Complete path of file.
 	 */
-	public function __construct($strName) {
-		$this->strPath = $strName;
+	public function __construct($name) {
+		$this->path = $name;
 	}
 	
 	/**
 	 * Writes contents to file and creates it if it doesn't exist.
 	 * 
-	 * @param string $mixContent
+	 * @param string $content
 	 * @throws ViewException If you are not allowed to write on that file.
 	 */
-	public function putContents($mixContent) {
-		$strFolder = substr($this->strPath, 0,strrpos($this->strPath,"/"));
-		if(!file_exists($strFolder)){
-			$tblParts = explode("/",$strFolder);
-			$strFolder = "";
-			foreach($tblParts as $strComponent) {
-				$strFolder .= $strComponent."/";
-				if(!file_exists($strFolder)) mkdir($strFolder);
+	public function putContents($content) {
+		$folder = substr($this->path, 0,strrpos($this->path,"/"));
+		if(!file_exists($folder)){
+			$parts = explode("/",$folder);
+			$folder = "";
+			foreach($parts as $component) {
+				$folder .= $component."/";
+				if(!file_exists($folder)) mkdir($folder);
 			}
 		}
-		$blnResponse = @file_put_contents($this->strPath, $mixContent);
-		if(!$blnResponse) throw new ViewException("Could not write to file: ".$this->strPath);
+		$response = @file_put_contents($this->path, $content);
+		if(!$response) throw new ViewException("Could not write to file: ".$this->path);
 	}
 	
 	/**
@@ -41,8 +41,8 @@ class File {
 	 * @return string
 	 */
 	public function getContents() {
-		if(!$this->exists()) throw new ViewException("File not found: ".$this->strPath);
-		return file_get_contents($this->strPath);
+		if(!$this->exists()) throw new ViewException("File not found: ".$this->path);
+		return file_get_contents($this->path);
 	}
 	
 	/**
@@ -51,7 +51,7 @@ class File {
 	 * @return boolean
 	 */
 	public function exists() {
-		return file_exists($this->strPath);
+		return file_exists($this->path);
 	}
 	
 	/**
@@ -60,6 +60,6 @@ class File {
 	 * @return integer
 	 */
 	public function getModificationTime() {
-		return filemtime($this->strPath);
+		return filemtime($this->path);
 	}
 }

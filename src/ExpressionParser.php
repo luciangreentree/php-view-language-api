@@ -11,28 +11,28 @@ class ExpressionParser {
 	/**
 	 * Looks for variable expressions in SUBJECT and returns answer where expressions are converted to PHP.
 	 * 
-	 * @param string $strSubject
+	 * @param string $subject
 	 * @return string
 	 */
-	public function parse($strSubject) {
-		if(strpos($strSubject,'${')===false) {
-			return $strSubject;
+	public function parse($subject) {
+		if(strpos($subject,'${')===false) {
+			return $subject;
 		}
-		return preg_replace_callback("/[\$]\{((?:(?>[^{}]+?)|(?R))*?)\}/",array($this,"parseCallback"),$strSubject);
+		return preg_replace_callback("/[\$]\{((?:(?>[^{}]+?)|(?R))*?)\}/",array($this,"parseCallback"),$subject);
 	}
 	
 	/**
 	 * For each macro-expression found, calls for its conversion to PHP and wraps it up as scriptlet.
 	 * 
-	 * @param array $tblMatches
+	 * @param array $matches
 	 * @return string
 	 */
-	protected function parseCallback($tblMatches) {
-		$position = strpos($tblMatches[1],"(");
+	protected function parseCallback($matches) {
+		$position = strpos($matches[1],"(");
 		if($position!==false) { 
-			return '<?php echo '.substr($tblMatches[1],0,$position).$this->convertToVariable(substr($tblMatches[1],$position)).'; ?>';
+			return '<?php echo '.substr($matches[1],0,$position).$this->convertToVariable(substr($matches[1],$position)).'; ?>';
 		} else {
-			return '<?php echo '.$this->convertToVariable($tblMatches[0]).'; ?>';
+			return '<?php echo '.$this->convertToVariable($matches[0]).'; ?>';
 		}
 	}
 	
@@ -41,14 +41,14 @@ class ExpressionParser {
 	 * 
 	 * Example: ${request.ip} is converted to $request['ip']
 	 * 
-	 * @param string $strDottedVariable
+	 * @param string $dottedVariable
 	 * @return string
 	 */
-	protected function convertToVariable($strDottedVariable) {
-		if(strpos($strDottedVariable,".")===false) {
-			return str_replace(array("{","}"),"",$strDottedVariable);
+	protected function convertToVariable($dottedVariable) {
+		if(strpos($dottedVariable,".")===false) {
+			return str_replace(array("{","}"),"",$dottedVariable);
 		} else {
-			return preg_replace(array('/\$\{([a-zA-Z0-9_]+)(\.)?/','/\}/','/\./','/\[([a-zA-Z0-9_]+)\]/','/\[\]/'),array('$$1[',']','][','["$1"]',''),$strDottedVariable);
+			return preg_replace(array('/\$\{([a-zA-Z0-9_]+)(\.)?/','/\}/','/\./','/\[([a-zA-Z0-9_]+)\]/','/\[\]/'),array('$$1[',']','][','["$1"]',''),$dottedVariable);
 		}
 	}
 }

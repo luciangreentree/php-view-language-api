@@ -3,25 +3,25 @@
  * Abstracts view compilation logic.
 */
 class ViewCompilation {
-	private $strCompilationPath;
-	private $strChecksumPath;
+	private $compilationPath;
+	private $checksumPath;
 	private $components = array();
 
 	/**
 	 * Creates a compilation instance.
 	 *
-	 * @param string $strCompilationsFolder
-	 * @param string $strTemplatePath
-	 * @param string $strTemplatesExtension
+	 * @param string $compilationsFolder
+	 * @param string $templatePath
+	 * @param string $templatesExtension
 	 */
-	public function __construct($strCompilationsFolder, $strTemplatePath, $strTemplatesExtension) {
-		$this->strCompilationPath = $strCompilationsFolder."/".$strTemplatePath.".".$strTemplatesExtension;
-		$this->strChecksumPath = $strCompilationsFolder."/checksums/".crc32($strTemplatePath).".crc";
+	public function __construct($compilationsFolder, $templatePath, $templatesExtension) {
+		$this->compilationPath = $compilationsFolder."/".$templatePath.".".$templatesExtension;
+		$this->checksumPath = $compilationsFolder."/checksums/".crc32($templatePath).".crc";
 		// preset components referenced in checksum
-		$objFile = new File($this->strChecksumPath);
-		if($objFile->exists()) {
-			$strContents = $objFile->getContents();
-			$this->components = explode(",", $strContents);
+		$file = new File($this->checksumPath);
+		if($file->exists()) {
+			$contents = $file->getContents();
+			$this->components = explode(",", $contents);
 		}
 	}
 
@@ -29,15 +29,15 @@ class ViewCompilation {
 	 * Checks if any of compilation components have changed since last update.
 	 */
 	public function hasChanged() {
-		$objCompilation = new File($this->strCompilationPath);
+		$compilation = new File($this->compilationPath);
 		if(!empty($this->components)) {
-			if($objCompilation->exists()) {
-				$intLatestModificationTime = $this->getLatestModificationTime();
-				if($intLatestModificationTime==-1) {
+			if($compilation->exists()) {
+				$latestModificationTime = $this->getLatestModificationTime();
+				if($latestModificationTime==-1) {
 					$this->components = array();
 					return true;
 				}
-				if($objCompilation->getModificationTime() >= $intLatestModificationTime) {
+				if($compilation->getModificationTime() >= $latestModificationTime) {
 					return false;
 				}
 			}
@@ -50,10 +50,10 @@ class ViewCompilation {
 	/**
 	 * Adds a compilation component (template / tag)
 	 *
-	 * @param string $strPath Path to component.
+	 * @param string $path Path to component.
 	 */
-	public function addComponent($strPath) {
-		$this->components[] = $strPath;
+	public function addComponent($path) {
+		$this->components[] = $path;
 	}
 
 	/**
@@ -62,29 +62,29 @@ class ViewCompilation {
 	 * @return integer Greater than zero if all components found, -1 if at least one component is not found.
 	 */
 	private function getLatestModificationTime() {
-		$intLatestDate = 0;
-		foreach($this->components as $strFile) {
-			$objFile = new File($strFile);
-			if(!$objFile->exists()) return -1;
-			$intTime = $objFile->getModificationTime();
-			if($intTime>$intLatestDate) $intLatestDate = $intTime;
+		$latestDate = 0;
+		foreach($this->components as $file) {
+			$file = new File($file);
+			if(!$file->exists()) return -1;
+			$time = $file->getModificationTime();
+			if($time>$latestDate) $latestDate = $time;
 		}
-		return $intLatestDate;
+		return $latestDate;
 	}
 
 	/**
 	 * Saves compilation & its checksum to disk.
 	 *
-	 * @param string $strOutputStream
+	 * @param string $outputStream
 	 */
-	public function save($strOutputStream) {
+	public function save($outputStream) {
 		// saves checksum
-		$objFile = new File($this->strChecksumPath);
-		$objFile->putContents(implode(",", $this->components));
+		$file = new File($this->checksumPath);
+		$file->putContents(implode(",", $this->components));
 
 		// saves compilation
-		$objCompilation = new File($this->strCompilationPath);
-		$objCompilation->putContents($strOutputStream);
+		$compilation = new File($this->compilationPath);
+		$compilation->putContents($outputStream);
 	}
 
 	/**
@@ -93,6 +93,6 @@ class ViewCompilation {
 	 * @return string
 	 */
 	public function getCompilationPath() {
-		return $this->strCompilationPath;
+		return $this->compilationPath;
 	}
 }

@@ -6,7 +6,7 @@ class TagExpressionParser extends ExpressionParser {
 	/**
 	 * @see ExpressionParser::parseCallback()
 	 */
-	protected function parseCallback($tblMatches) {
-		return $this->convertToVariable($tblMatches[0]);
+	protected function parseCallback($matches) {
+		return $this->convertToVariable($matches[0]);
 	}
 }

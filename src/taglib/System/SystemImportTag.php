@@ -12,39 +12,39 @@
  * file_get_contents(VIEWS_PATH."/"."temp/users".".php");
  */
 class SystemImportTag {	
-	private $objViewCompilation;
-	private $strTemplatesFolder;
-	private $strTemplatesExtension;
+	private $viewCompilation;
+	private $templatesFolder;
+	private $templatesExtension;
 	
 	/**
 	 * Sets up path in which template are looked after and the time of modification for page-specific view file.
 	 * 
-	 * @param string $strTemplatesFolder
-	 * @param string $strTemplatesExtension
-	 * @param ViewCompilation $objViewCompilation
+	 * @param string $templatesFolder
+	 * @param string $templatesExtension
+	 * @param ViewCompilation $viewCompilation
 	 */
-	public function __construct($strTemplatesFolder, $strTemplatesExtension, ViewCompilation $objViewCompilation) {
-		$this->strTemplatesFolder = $strTemplatesFolder;
-		$this->strTemplatesExtension = $strTemplatesExtension;
-		$this->objViewCompilation = $objViewCompilation;
+	public function __construct($templatesFolder, $templatesExtension, ViewCompilation $viewCompilation) {
+		$this->templatesFolder = $templatesFolder;
+		$this->templatesExtension = $templatesExtension;
+		$this->viewCompilation = $viewCompilation;
 	}
 	
 	/**
 	 * Parses template source file for import tags recursively. For each template file loaded, modification time is adjusted to confirm to the latest.
 	 * 
-	 * @param string $strSubject
-	 * @param string $strOutputStream
+	 * @param string $subject
+	 * @param string $outputStream
 	 * @throws ViewException
 	 * @return string
 	 */
-	public function parse($strTemplateFile, $strOutputStream="") {
-		$strPath = $this->strTemplatesFolder."/".$strTemplateFile.".".$this->strTemplatesExtension;
-	    $file = new File($strPath);
-	    $strSubject = ($strOutputStream==""?$file->getContents():$strOutputStream);
-	    $this->objViewCompilation->addComponent($strPath);
+	public function parse($templateFile, $outputStream="") {
+		$path = $this->templatesFolder."/".$templateFile.".".$this->templatesExtension;
+	    $file = new File($path);
+	    $subject = ($outputStream==""?$file->getContents():$outputStream);
+	    $this->viewCompilation->addComponent($path);
 	    
-		return preg_replace_callback("/<import\s+file\s*\=\s*\"(.*?)\"\s*\/\>/", function($tblMatches) {
-			return $this->parse($tblMatches[1]);
-		},$strSubject);
+		return preg_replace_callback("/<import\s+file\s*\=\s*\"(.*?)\"\s*\/\>/", function($matches) {
+			return $this->parse($matches[1]);
+		},$subject);
 	} 
 }

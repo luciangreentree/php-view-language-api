@@ -15,60 +15,60 @@ require_once("UserTag.php");
  * 		<?php } ?>
  */
 class TagParser {
-	private $strTagLibFolder;
-    private $strTagExtension;
-	private $objViewCompilation;
+	private $tagLibFolder;
+    private $tagExtension;
+	private $viewCompilation;
 
 	/**
 	 * Creates a tag parser instance.
 	 *
-	 * @param string $strTagLibFolder Folder containing user-defined taglibs.
-     * @param string $strTagExtension Extension of user-defined tags.
-	 * @param ViewCompilation $objViewCompilation Object that collects components that take part in view.
+	 * @param string $tagLibFolder Folder containing user-defined taglibs.
+     * @param string $tagExtension Extension of user-defined tags.
+	 * @param ViewCompilation $viewCompilation Object that collects components that take part in view.
 	 */
-	public function __construct($strTagLibFolder, $strTagExtension, ViewCompilation $objViewCompilation) {
-		$this->strTagLibFolder = $strTagLibFolder;
-        $this->strTagExtension = $strTagExtension;
-        $this->objViewCompilation = $objViewCompilation;
+	public function __construct($tagLibFolder, $tagExtension, ViewCompilation $viewCompilation) {
+		$this->tagLibFolder = $tagLibFolder;
+        $this->tagExtension = $tagExtension;
+        $this->viewCompilation = $viewCompilation;
 	}
 
 	/**
 	 * Looks for tags in views and returns an answer where each found match is converted to PHP.
 	 *
-	 * @param string $strSubject
+	 * @param string $subject
 	 * @return string
 	 */
-	public function parse($strSubject) {
+	public function parse($subject) {
 		// match start & end tags
-		$strSubject = preg_replace_callback("/<([a-zA-Z\-]+)\:([a-zA-Z\-]+)(\s*(.*)\s*=\s*\"(.*)\"\s*)?\/?>/",array($this,"parseStartTagCallback"),$strSubject);
-		$strSubject = preg_replace_callback("/<\/([a-zA-Z\-]+)\:([a-zA-Z\-]+)>/",array($this,"parseEndTagCallback"),$strSubject);
+		$subject = preg_replace_callback("/<([a-zA-Z\-]+)\:([a-zA-Z\-]+)(\s*(.*)\s*=\s*\"(.*)\"\s*)?\/?>/",array($this,"parseStartTagCallback"),$subject);
+		$subject = preg_replace_callback("/<\/([a-zA-Z\-]+)\:([a-zA-Z\-]+)>/",array($this,"parseEndTagCallback"),$subject);
 
 		// if it still contains tags, recurse until all tags are parsed
-		if(preg_match("/<([a-zA-Z\-]+)\:([a-zA-Z\-]+)(.*?)>/",$strSubject)!=0) {
-			$strSubject = $this->parse($strSubject);
+		if(preg_match("/<([a-zA-Z\-]+)\:([a-zA-Z\-]+)(.*?)>/",$subject)!=0) {
+			$subject = $this->parse($subject);
 		}
 
-		return $strSubject;
+		return $subject;
 	}
 
 	/**
 	 * Calls for conversion task for each start tag found and returns converted answer. This is done by delegating conversion to detected tag class.
 	 *
-	 * @param array $tblMatches
+	 * @param array $matches
 	 * @return string
 	 */
-	protected function parseStartTagCallback($tblMatches) {
-		return $this->getTagInstance($tblMatches)->parseStartTag(isset($tblMatches[3])?$this->getTagParameters($tblMatches[3]):array());
+	protected function parseStartTagCallback($matches) {
+		return $this->getTagInstance($matches)->parseStartTag(isset($matches[3])?$this->getTagParameters($matches[3]):array());
 	}
 
 	/**
 	 * Calls for conversion task for each end tag found and returns converted answer. This is done by delegating conversion to detected tag class.
 	 *
-	 * @param array $tblMatches
+	 * @param array $matches
 	 * @return string
 	 */
-	protected function parseEndTagCallback($tblMatches) {
-		return $this->getTagInstance($tblMatches)->parseEndTag();
+	protected function parseEndTagCallback($matches) {
+		return $this->getTagInstance($matches)->parseEndTag();
 	}
 
 	/**
@@ -84,24 +84,24 @@ class TagParser {
 	 * Detected class name will be:
 	 * 		StdForTag
 	 *
-	 * @param array $tblMatches
+	 * @param array $matches
 	 * @throws ViewException
 	 * @return AbstractTag
 	 */
-	private function getTagInstance($tblMatches) {
-		if(strtolower($tblMatches[1])=="std") {
-			$strLibraryName = str_replace(" ","",ucwords(str_replace("-"," ",strtolower($tblMatches[1]))));
-			$strTagName = str_replace(" ","",ucwords(str_replace("-"," ",strtolower($tblMatches[2]))));
-			$strClassName = $strLibraryName.$strTagName.'Tag';
-			if(!class_exists($strClassName)) throw new ViewException("Tag not found: ".$strClassName);
-			return new $strClassName();
+	private function getTagInstance($matches) {
+		if(strtolower($matches[1])=="std") {
+			$libraryName = str_replace(" ","",ucwords(str_replace("-"," ",strtolower($matches[1]))));
+			$tagName = str_replace(" ","",ucwords(str_replace("-"," ",strtolower($matches[2]))));
+			$className = $libraryName.$tagName.'Tag';
+			if(!class_exists($className)) throw new ViewException("Tag not found: ".$className);
+			return new $className();
 		} else {
-			$strLibraryName = str_replace(" ","",strtolower($tblMatches[1]));
-			$strTagName = str_replace(" ","",strtolower($tblMatches[2]));
-			$strFileLocation = $this->strTagLibFolder."/".$strLibraryName."/".$strTagName.".".$this->strTagExtension;
-			if(!file_exists($strFileLocation)) throw new ViewException("Tag not found: ".$strLibraryName."/".$strTagName);
-			$this->objViewCompilation->addComponent($strFileLocation);
-			return new UserTag($strFileLocation);
+			$libraryName = str_replace(" ","",strtolower($matches[1]));
+			$tagName = str_replace(" ","",strtolower($matches[2]));
+			$fileLocation = $this->tagLibFolder."/".$libraryName."/".$tagName.".".$this->tagExtension;
+			if(!file_exists($fileLocation)) throw new ViewException("Tag not found: ".$libraryName."/".$tagName);
+			$this->viewCompilation->addComponent($fileLocation);
+			return new UserTag($fileLocation);
 		}
 	}
 
@@ -115,17 +115,17 @@ class TagParser {
 	 * 		var
 	 * 		value
 	 *
-	 * @param string $strParameters
+	 * @param string $parameters
 	 * @return array
 	 */
-	private function getTagParameters($strParameters) {
-		$strParameters = trim($strParameters);
-		if(!$strParameters || $strParameters=="/") return array();
-		preg_match_all('/([a-zA-Z\_]+)\s*=\s*"(.*?)"/', $strParameters, $tblParameters, PREG_SET_ORDER);
-		$tblOutput=array();
-		foreach($tblParameters as $tblValues) {
-			$tblOutput[trim($tblValues[1])]=trim($tblValues[2]);
+	private function getTagParameters($parameters) {
+		$parameters = trim($parameters);
+		if(!$parameters || $parameters=="/") return array();
+		preg_match_all('/([a-zA-Z\_]+)\s*=\s*"(.*?)"/', $parameters, $parameters, PREG_SET_ORDER);
+		$output=array();
+		foreach($parameters as $values) {
+			$output[trim($values[1])]=trim($values[2]);
 		}
-		return $tblOutput;
+		return $output;
 	}
 }

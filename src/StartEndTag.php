@@ -8,10 +8,10 @@ interface StartEndTag {
 	 *  
 	 * Example: <std:foreach var="${ad.d}" key="K" value="V">
 	 * 
-	 * @param array(string=>string) $tblParameters
+	 * @param array(string=>string) $parameters
 	 * @return string
 	 */
-	function parseStartTag($tblParameters=array());
+	function parseStartTag($parameters=array());
 	
 	/**
 	 * Parses end tag. 

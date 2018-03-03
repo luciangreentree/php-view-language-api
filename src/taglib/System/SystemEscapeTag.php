@@ -12,51 +12,51 @@
 * hello, asd${b}
 */
 class SystemEscapeTag {
-	protected $blnKeepTag;
-	protected $strTagName;
-	protected $tblMatches;
+	protected $keepTag;
+	protected $tagName;
+	protected $matches;
 
 	public function __construct() {
-		$this->strTagName = "escape";
-		$this->blnKeepTag = false;
+		$this->tagName = "escape";
+		$this->keepTag = false;
 	}
 
 	/**
 	 * Checks if tag has a body.
 	 *
-	 * @param string $strOutputStream
+	 * @param string $outputStream
 	 * @return boolean
 	 */
-	public function hasContent($strSubject) {
-		return (stripos($strSubject, "<".$this->strTagName.">")!==false || stripos($strSubject, "<".$this->strTagName." ")!==false?true:false);
+	public function hasContent($subject) {
+		return (stripos($subject, "<".$this->tagName.">")!==false || stripos($subject, "<".$this->tagName." ")!==false?true:false);
 	}
 
 	/**
 	 * Removes body from tag.
 	 *
-	 * @param string $strSubject
+	 * @param string $subject
 	 * @return string
 	 */
-	public function removeContent(&$strSubject) {
-		preg_match_all("/\<".$this->strTagName."(.*?)\>(.*?)\<\/".$this->strTagName."\>/si",$strSubject,$tblMatches,PREG_PATTERN_ORDER);
-		foreach($tblMatches[0] as $intIndex=>$strValue) {
-			$strSubject = str_replace($strValue, "<".$this->strTagName.">$intIndex</".$this->strTagName.">", $strSubject);
+	public function removeContent(&$subject) {
+		preg_match_all("/\<".$this->tagName."(.*?)\>(.*?)\<\/".$this->tagName."\>/si",$subject,$matches,PREG_PATTERN_ORDER);
+		foreach($matches[0] as $index=>$value) {
+			$subject = str_replace($value, "<".$this->tagName.">$index</".$this->tagName.">", $subject);
 		}
-		$this->tblMatches = $tblMatches;
+		$this->matches = $matches;
 	}
 
 	/**
 	 * Restores body from tag.
 	 *
-	 * @param string $strSubject
+	 * @param string $subject
 	 * @return string
 	 */
-	public function restoreContent(&$strSubject) {
-		foreach($this->tblMatches[0] as $intIndex=>$strValue) {
-			if($this->blnKeepTag) {
-				$strSubject = str_replace("<".$this->strTagName.">".$intIndex."</".$this->strTagName.">", "<".$this->strTagName." ".$this->tblMatches[1][$intIndex].">".$this->tblMatches[2][$intIndex]."</".$this->strTagName.">", $strSubject);
+	public function restoreContent(&$subject) {
+		foreach($this->matches[0] as $index=>$value) {
+			if($this->keepTag) {
+				$subject = str_replace("<".$this->tagName.">".$index."</".$this->tagName.">", "<".$this->tagName." ".$this->matches[1][$index].">".$this->matches[2][$index]."</".$this->tagName.">", $subject);
 			} else {
-				$strSubject = str_replace("<".$this->strTagName.">".$intIndex."</".$this->strTagName.">", $this->tblMatches[2][$intIndex], $strSubject);
+				$subject = str_replace("<".$this->tagName.">".$index."</".$this->tagName.">", $this->matches[2][$index], $subject);
 			}
 		}
 	}

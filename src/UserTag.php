@@ -3,13 +3,13 @@
  * Defines a generic class to parse all user-defined procedural tags.
  */
 class UserTag implements StartTag {
-	private $strFilePath;
+	private $filePath;
 	
 	/**
-	 * @param string $strFilePath Location of tag procedural file.
+	 * @param string $filePath Location of tag procedural file.
 	 */
-	public function __construct($strFilePath) {
-		$this->strFilePath = $strFilePath;
+	public function __construct($filePath) {
+		$this->filePath = $filePath;
 	}
 	
 	/**
@@ -17,9 +17,9 @@ class UserTag implements StartTag {
 	 * @see StartEndTag::parseStartTag()
 	 */
 	public function parseStartTag($parameters=array()) {
-		$strContent= file_get_contents($this->strFilePath);
+		$content= file_get_contents($this->filePath);
 		return preg_replace_callback("/[\$]\[([a-zA-Z]+)\]/",function($match) use($parameters){
 			return (isset($parameters[$match[1]])?$parameters[$match[1]]:null);
-		},$strContent);
+		},$content);
 	}
 }
