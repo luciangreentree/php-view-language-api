@@ -45,7 +45,7 @@ class SystemImportTag {
         $subject = $escaper->backup($subject);
         $this->viewCompilation->addComponent($path);
         
-        return preg_replace_callback("/<import\s+file\s*\=\s*\"(.*?)\"\s*\/\>/", function($matches) {
+        return preg_replace_callback("/<import\s+file\s*\=\s*\"(.*?)\"\s*\/\>/", function($matches) use($escaper) {
             return $this->parse($matches[1], $escaper);
         },$subject);
     }
