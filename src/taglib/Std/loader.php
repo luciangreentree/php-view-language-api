@@ -9,5 +9,3 @@ require_once("StdUnsetTag.php");
 require_once("StdWhileTag.php");
 require_once("StdBreakTag.php");
 require_once("StdContinueTag.php");
-require_once("StdSwitchTag.php");
-require_once("StdCaseTag.php");
