@@ -100,7 +100,15 @@ class TagParser {
         } else {
             $libraryName = str_replace(" ","",strtolower($matches[1]));
             $tagName = str_replace(" ","",strtolower($matches[2]));
-            $fileLocation = $this->tagLibFolder."/".$libraryName."/".$tagName.".".$this->tagExtension;
+	    $tagFolder = $this->tagLibFolder;
+            if(!$tagFolder) {
+                if(isset($matches[3]) && preg_match('/namespace\s*=\s*"([^"]+)"/', $matches[3], $mt)) {
+                    $tagFolder = $mt[1];
+                } else {
+                    throw new ViewException("Tags folder not found!");
+                }
+            }
+            $fileLocation = $tagFolder."/".$libraryName."/".$tagName.".".$this->tagExtension;
             if(!file_exists($fileLocation)) throw new ViewException("Tag not found: ".$libraryName."/".$tagName);
             $this->viewCompilation->addComponent($fileLocation);
             return new UserTag($fileLocation);

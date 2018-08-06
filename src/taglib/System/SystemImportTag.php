@@ -39,7 +39,7 @@ class SystemImportTag {
      * @return string
      */
     public function parse($templateFile, SystemEscapeTag $escaper, $outputStream="") {
-        $path = $this->templatesFolder."/".$templateFile.".".$this->templatesExtension;
+	$path = ($this->templatesFolder?$this->templatesFolder."/":"").$templateFile.".".$this->templatesExtension;
         $file = new File($path);
         $subject = ($outputStream==""?$file->getContents():$outputStream);
         $subject = $escaper->backup($subject);
