@@ -42,7 +42,7 @@ class SystemEscapeTag {
         }
         
         // restore content of escape tags
-        return preg_replace_callback("/\<bkp\>(.*?)\<\/bkp\>/si", function($matches) use($escaper) {
+        return preg_replace_callback("/\<bkp\>(.*?)\<\/bkp\>/si", function($matches) {
             return $this->matches[$matches[1]];
         }, $subject);
     }
