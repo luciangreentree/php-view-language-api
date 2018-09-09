@@ -1,4 +1,5 @@
 <?php
+namespace Lucinda\Templating;
 /**
  * Implements how setting an internal variable is translated into a tag.
 *

@@ -1,4 +1,5 @@
 <?php
+namespace Lucinda\Templating;
 /**
  * Implements how a WHILE clause is translated into a tag.
  *

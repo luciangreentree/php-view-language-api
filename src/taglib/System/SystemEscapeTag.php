@@ -1,4 +1,5 @@
 <?php
+namespace Lucinda\Templating;
 /**
  * Implements a tag whose body is not parsable (into other tags or expressions).
  *

@@ -1,4 +1,5 @@
 <?php
+namespace Lucinda\Templating;
 /**
  * Implements a tag whose only attribute value points to a PHP (template) file whose sources are loaded.
  *

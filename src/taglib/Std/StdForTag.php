@@ -1,4 +1,5 @@
 <?php
+namespace Lucinda\Templating;
 /**
  * Implements how a FOR clause is translated into a tag.
 *

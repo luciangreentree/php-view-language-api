@@ -1,4 +1,5 @@
 <?php
+namespace Lucinda\Templating;
 /**
  * Implements how an ELSE clause is translated into a tag.
 *

@@ -1,4 +1,5 @@
 <?php
+namespace Lucinda\Templating;
 require_once("AbstractTag.php");
 require_once("UserTag.php");
 
@@ -41,8 +42,8 @@ class TagParser {
      */
     public function parse($subject, SystemEscapeTag $escaper) {
         // match start & end tags
-        $subject = preg_replace_callback("/<([a-zA-Z\-]+)\:([a-zA-Z\-]+)(\s*(.*)\s*=\s*\"(.*)\"\s*)?\/?>/",array($this,"parseStartTagCallback"),$subject);
-        $subject = preg_replace_callback("/<\/([a-zA-Z\-]+)\:([a-zA-Z\-]+)>/",array($this,"parseEndTagCallback"),$subject);
+        $subject = preg_replace_callback("/<([a-zA-Z0-9\-_.]+)\:([a-zA-Z0-9\-_.]+)(\s*(.*)\s*=\s*\"(.*)\"\s*)?\/?>/",array($this,"parseStartTagCallback"),$subject);
+        $subject = preg_replace_callback("/<\/([a-zA-Z0-9\-_.]+)\:([a-zA-Z0-9\-_.]+)>/",array($this,"parseEndTagCallback"),$subject);
         $subject = $escaper->backup($subject);
         
         // if it still contains tags, recurse until all tags are parsed
@@ -100,7 +101,7 @@ class TagParser {
         } else {
             $libraryName = str_replace(" ","",strtolower($matches[1]));
             $tagName = str_replace(" ","",strtolower($matches[2]));
-	    $tagFolder = $this->tagLibFolder;
+            $tagFolder = $this->tagLibFolder;
             if(!$tagFolder) {
                 if(isset($matches[3]) && preg_match('/namespace\s*=\s*"([^"]+)"/', $matches[3], $mt)) {
                     $tagFolder = $mt[1];
@@ -131,7 +132,7 @@ class TagParser {
     private function getTagParameters($parameters) {
         $parameters = trim($parameters);
         if(!$parameters || $parameters=="/") return array();
-        preg_match_all('/([a-zA-Z\_]+)\s*=\s*"(.*?)"/', $parameters, $parameters, PREG_SET_ORDER);
+        preg_match_all('/([a-zA-Z0-9\-_.]+)\s*=\s*"([^"]+)"/', $parameters, $parameters, PREG_SET_ORDER);
         $output=array();
         foreach($parameters as $values) {
             $output[trim($values[1])]=trim($values[2]);

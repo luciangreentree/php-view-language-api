@@ -1,4 +1,5 @@
 <?php
+namespace Lucinda\Templating;
 /**
  * Encapsulates a file and operations on file.
  */

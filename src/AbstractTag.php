@@ -1,4 +1,6 @@
 <?php
+namespace Lucinda\Templating;
+
 require_once("StartTag.php");
 require_once("StartEndTag.php");
 require_once("TagExpressionParser.php");

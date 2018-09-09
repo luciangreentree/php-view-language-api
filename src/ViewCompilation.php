@@ -1,4 +1,5 @@
 <?php
+namespace Lucinda\Templating;
 /**
  * Abstracts view compilation logic.
 */
