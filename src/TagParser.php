@@ -95,7 +95,7 @@ class TagParser {
         if(strtolower($matches[1])=="std") {
             $libraryName = str_replace(" ","",ucwords(str_replace("-"," ",strtolower($matches[1]))));
             $tagName = str_replace(" ","",ucwords(str_replace("-"," ",strtolower($matches[2]))));
-            $className = $libraryName.$tagName.'Tag';
+            $className = "\\Lucinda\\Templating\\".$libraryName.$tagName.'Tag';
             if(!class_exists($className)) throw new ViewException("Tag not found: ".$className);
             return new $className();
         } else {
