@@ -6,9 +6,6 @@ namespace Lucinda\Templating;
  *
  * Tag syntax:
  * <:continue/>
- *
- * PHP output:
- * <?php continue; ?>
  */
 class StdContinueTag extends SystemTag implements StartTag {
 	/**

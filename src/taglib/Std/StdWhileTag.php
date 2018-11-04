@@ -5,13 +5,7 @@ namespace Lucinda\Templating;
  * Implements how a WHILE clause is translated into a tag.
  *
  * Tag syntax:
- * <:while condition="EXPRESSION">BODY</:while>
- *
- * Tag example:
- * <:while condition="${a}>2">BODY</:while>
- *
- * PHP output:
- * <?php while ($a>2) { ?> BODY <?php } ?>
+ * <:while test="EXPRESSION">BODY</:while>
  */
 class StdWhileTag extends SystemTag implements StartEndTag {
 	/**
@@ -19,10 +13,10 @@ class StdWhileTag extends SystemTag implements StartEndTag {
 	 * @see StartEndTag::parseStartTag()
 	 */
 	public function parseStartTag($parameters=array()) {
-		if(!$this->checkParameters($parameters, array("condition"))) {
+		if(!$this->checkParameters($parameters, array("test"))) {
 			return '<?php while(false) { ?>';
 		} else {
-			return '<?php while('.$this->parseExpression($parameters['condition']).') { ?>';
+			return '<?php while('.$this->parseExpression($parameters['test']).') { ?>';
 		}		
 	}
 	

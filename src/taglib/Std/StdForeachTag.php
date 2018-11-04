@@ -2,16 +2,10 @@
 namespace Lucinda\Templating;
 
 /**
- * Implements how a FOREACH clause is translated into a tag.
+* Implements how a FOREACH clause is translated into a tag.
 *
 * Tag syntax:
-* <:foreach var="EXPRESSION" key="KEYNAME" value="VALUENAME">BODY</:foreach>
-*
-* Tag example:
-* <:foreach var="${a.b}" key="${keyName}" value="${valueName}">BODY</:foreach>
-*
-* PHP output:
-* <?php foreach($a["b"] as $keyName=>$valueName) { ?> BODY <?php } ?>
+* <:foreach var="EXPRESSION" key="KEYNAME" val="VALUENAME">BODY</:foreach>
 */
 class StdForeachTag extends SystemTag implements StartEndTag {
 	/**
@@ -19,10 +13,10 @@ class StdForeachTag extends SystemTag implements StartEndTag {
 	 * @see StartEndTag::parseStartTag()
 	 */
 	public function parseStartTag($parameters=array()) {
-		if(!$this->checkParameters($parameters, array("var","value")) || !$this->isExpression($parameters['var'])) {
+		if(!$this->checkParameters($parameters, array("var","val")) || !$this->isExpression($parameters['var'])) {
 			return '<?php foreach([] as $empty) { ?>';
 		} else {
-			return '<?php foreach('.$this->parseExpression($parameters['var']).' as '.(!empty($parameters['key'])?'$'.$parameters['key'].'=>':'').'$'.$parameters['value'].') { ?>';
+			return '<?php foreach('.$this->parseExpression($parameters['var']).' as '.(!empty($parameters['key'])?'$'.$parameters['key'].'=>':'').'$'.$parameters['val'].') { ?>';
 		}
 		
 	}

@@ -6,13 +6,7 @@ namespace Lucinda\Templating;
  * Implements how setting an internal variable is translated into a tag.
 *
 * Tag syntax:
-* <:unset name="VARNAME"/>
-*
-* Tag example:
-* <:set name="asd" value="16"/>
-*
-* PHP output:
-* <?php unset($asd); ?>
+* <:unset var="VARNAME"/>
 */
 class StdUnsetTag extends SystemTag implements StartTag {
 	/**
@@ -20,9 +14,9 @@ class StdUnsetTag extends SystemTag implements StartTag {
 	 * @see StartTag::parseStartTag()
 	 */
 	public function parseStartTag($parameters=array()) {
-		if(!$this->checkParameters($parameters, array("name"))) {
-			throw new ViewException(":unset requires parameters: 'name'");
+		if(!$this->checkParameters($parameters, array("var"))) {
+			throw new ViewException(":unset requires parameters: 'var'");
 		}
-		return '<?php unset($'.$parameters['name'].'); ?>';
+		return '<?php unset($'.$parameters['var'].'); ?>';
 	}
 }

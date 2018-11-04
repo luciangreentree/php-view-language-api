@@ -5,13 +5,7 @@ namespace Lucinda\Templating;
  * Implements how setting an internal variable is translated into a tag.
 *
 * Tag syntax:
-* <:set name="VARNAME" value="EXPRESSION"/>
-*
-* Tag example:
-* <:set name="asd" value="16"/>
-*
-* PHP output:
-* <?php $asd = "16"; ?>
+* <:set var="VARNAME" val="EXPRESSION"/>
 */
 class StdSetTag extends SystemTag implements StartTag {
 	/**
@@ -19,9 +13,9 @@ class StdSetTag extends SystemTag implements StartTag {
 	 * @see StartTag::parseStartTag()
 	 */
 	public function parseStartTag($parameters=array()) {
-		if(!$this->checkParameters($parameters, array("name","value"))) {
-			throw new ViewException(":set requires parameters: 'name', 'value'");
+		if(!$this->checkParameters($parameters, array("var","val"))) {
+			throw new ViewException(":set requires parameters: 'var', 'val'");
 		}
-		return '<?php $'.$parameters['name'].' = '.($this->isExpression($parameters['value'])?$this->parseExpression($parameters['value']):"'".addslashes($parameters['value'])."'").'; ?>';
+		return '<?php $'.$parameters['var'].' = '.($this->isExpression($parameters['val'])?$this->parseExpression($parameters['val']):"'".addslashes($parameters['val'])."'").'; ?>';
 	}
 }
