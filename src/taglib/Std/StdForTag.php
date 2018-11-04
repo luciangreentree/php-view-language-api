@@ -13,13 +13,10 @@ class StdForTag extends SystemTag implements StartEndTag {
 	 * @see StartEndTag::parseStartTag()
 	 */
 	public function parseStartTag($parameters=array()) {
-		if(!$this->checkParameters($parameters, array("var", "start", "end"))) {
-			return '<?php for($i=0;$i<0;$i++) { ?>';
-		} else {
-			return '<?php for($'.$parameters['var'].'='.$this->parseCounter($parameters['start'])
-			.'; $'.$parameters['var'].'<='.$this->parseCounter($parameters['end'])
-			.'; $'.$parameters['var'].(isset($parameters['step'])?($parameters['step']>0?"+":"-")."=".$parameters['step']:"++").') { ?>';
-		}
+	    $this->checkParameters($parameters, array("var", "start", "end"));
+		return '<?php for($'.$parameters['var'].'='.$this->parseCounter($parameters['start'])
+		.'; $'.$parameters['var'].'<='.$this->parseCounter($parameters['end'])
+		.'; $'.$parameters['var'].(isset($parameters['step'])?($parameters['step']>0?"+":"-")."=".$parameters['step']:"++").') { ?>';
 	}
 
 	/**

@@ -13,9 +13,7 @@ class StdSetTag extends SystemTag implements StartTag {
 	 * @see StartTag::parseStartTag()
 	 */
 	public function parseStartTag($parameters=array()) {
-		if(!$this->checkParameters($parameters, array("var","val"))) {
-			throw new ViewException(":set requires parameters: 'var', 'val'");
-		}
+	    $this->checkParameters($parameters, array("var","val"));
 		return '<?php $'.$parameters['var'].' = '.($this->isExpression($parameters['val'])?$this->parseExpression($parameters['val']):"'".addslashes($parameters['val'])."'").'; ?>';
 	}
 }

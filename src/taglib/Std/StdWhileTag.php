@@ -13,11 +13,8 @@ class StdWhileTag extends SystemTag implements StartEndTag {
 	 * @see StartEndTag::parseStartTag()
 	 */
 	public function parseStartTag($parameters=array()) {
-		if(!$this->checkParameters($parameters, array("test"))) {
-			return '<?php while(false) { ?>';
-		} else {
-			return '<?php while('.$this->parseExpression($parameters['test']).') { ?>';
-		}		
+	    $this->checkParameters($parameters, array("test"));
+		return '<?php while('.$this->parseExpression($parameters['test']).') { ?>';
 	}
 	
 	/**

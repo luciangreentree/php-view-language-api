@@ -35,13 +35,11 @@ abstract class SystemTag {
 	 * 
 	 * @param array(string=>string) $parameters
 	 * @param array(string) $requiredParameters
-	 * @throws ViewException
-	 * @return boolean
+	 * @throws ViewException If a required attribute is not found.
 	 */
 	protected function checkParameters($parameters, $requiredParameters) {
 		foreach($requiredParameters as $name) {
-			if(!isset($parameters[$name])) return false;
+			if(!isset($parameters[$name])) throw new ViewException("Tag requires attribute: ".$name);
 		}
-		return true;
 	}
 }

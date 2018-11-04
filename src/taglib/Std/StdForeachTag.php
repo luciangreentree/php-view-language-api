@@ -12,13 +12,9 @@ class StdForeachTag extends SystemTag implements StartEndTag {
 	 * (non-PHPdoc)
 	 * @see StartEndTag::parseStartTag()
 	 */
-	public function parseStartTag($parameters=array()) {
-		if(!$this->checkParameters($parameters, array("var","val")) || !$this->isExpression($parameters['var'])) {
-			return '<?php foreach([] as $empty) { ?>';
-		} else {
-			return '<?php foreach('.$this->parseExpression($parameters['var']).' as '.(!empty($parameters['key'])?'$'.$parameters['key'].'=>':'').'$'.$parameters['val'].') { ?>';
-		}
-		
+    public function parseStartTag($parameters=array()) {
+        $this->checkParameters($parameters, array("var","val"));
+		return '<?php foreach('.$this->parseExpression($parameters['var']).' as '.(!empty($parameters['key'])?'$'.$parameters['key'].'=>':'').'$'.$parameters['val'].') { ?>';	
 	}
 
 	/**
@@ -27,5 +23,17 @@ class StdForeachTag extends SystemTag implements StartEndTag {
 	 */
 	public function parseEndTag() {
 		return '<?php } ?>';
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 * @see SystemTag::checkParameters()
+	 */
+	protected function checkParameters($parameters, $requiredParameters) {
+	    parent::checkParameters($parameters, $requiredParameters);
+	    if(!$this->isExpression($parameters['var'])) {
+	        throw new ViewException("Value of 'var' attribute must be an expression");
+	    }
+	    return true;
 	}
 }

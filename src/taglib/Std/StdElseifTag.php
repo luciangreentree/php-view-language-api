@@ -13,10 +13,7 @@ class StdElseifTag extends SystemTag implements StartTag {
 	 * @see StartTag::parseStartTag()
 	 */
 	public function parseStartTag($parameters=array()) {
-		if(!$this->checkParameters($parameters, array("test"))) {
-			return '<?php } else if (false) { ?>';
-		} else {
-			return '<?php } else if ('.$this->parseExpression($parameters['test']).') { ?>';
-		}		
+		$this->checkParameters($parameters, array("test"));
+		return '<?php } else if ('.$this->parseExpression($parameters['test']).') { ?>';
 	}
 }

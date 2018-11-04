@@ -14,9 +14,7 @@ class StdUnsetTag extends SystemTag implements StartTag {
 	 * @see StartTag::parseStartTag()
 	 */
 	public function parseStartTag($parameters=array()) {
-		if(!$this->checkParameters($parameters, array("var"))) {
-			throw new ViewException(":unset requires parameters: 'var'");
-		}
+	    $this->checkParameters($parameters, array("var"));
 		return '<?php unset($'.$parameters['var'].'); ?>';
 	}
 }

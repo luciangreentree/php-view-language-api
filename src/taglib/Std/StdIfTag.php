@@ -13,11 +13,8 @@ class StdIfTag extends SystemTag implements StartEndTag {
 	 * @see StartEndTag::parseStartTag()
 	 */
 	public function parseStartTag($parameters=array()) {
-		if(!$this->checkParameters($parameters, array("test"))) {
-			return '<?php if(false) { ?>';
-		} else {
-			return '<?php if ('.$this->parseExpression($parameters['test']).') { ?>';
-		}
+	    $this->checkParameters($parameters, array("test"));
+		return '<?php if ('.$this->parseExpression($parameters['test']).') { ?>';
 	}
 
 	/**
