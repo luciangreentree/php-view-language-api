@@ -1,18 +1,19 @@
 <?php
 namespace Lucinda\Templating;
+
 /**
  * Implements how a FOREACH clause is translated into a tag.
 *
 * Tag syntax:
-* <std:foreach var="EXPRESSION" key="KEYNAME" value="VALUENAME">BODY</std:foreach>
+* <:foreach var="EXPRESSION" key="KEYNAME" value="VALUENAME">BODY</:foreach>
 *
 * Tag example:
-* <std:foreach var="${a.b}" key="${keyName}" value="${valueName}">BODY</std:foreach>
+* <:foreach var="${a.b}" key="${keyName}" value="${valueName}">BODY</:foreach>
 *
 * PHP output:
 * <?php foreach($a["b"] as $keyName=>$valueName) { ?> BODY <?php } ?>
 */
-class StdForeachTag extends AbstractTag implements StartEndTag {
+class StdForeachTag extends SystemTag implements StartEndTag {
 	/**
 	 * (non-PHPdoc)
 	 * @see StartEndTag::parseStartTag()

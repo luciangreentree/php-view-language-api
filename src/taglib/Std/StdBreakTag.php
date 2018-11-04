@@ -1,15 +1,13 @@
 <?php
 namespace Lucinda\Templating;
+
 /**
  * Implements a BREAK operation in a loop.
  *
  * Tag syntax:
- * <std:break/>
- *
- * PHP output:
- * <?php break; ?>
+ * <:break/>
  */
-class StdBreakTag extends AbstractTag implements StartTag {
+class StdBreakTag extends SystemTag implements StartTag {
 	/**
 	 * (non-PHPdoc)
 	 * @see StartTag::parseStartTag()

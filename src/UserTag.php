@@ -1,5 +1,8 @@
 <?php
 namespace Lucinda\Templating;
+
+require_once("StartTag.php");
+
 /**
  * Defines a generic class to parse all user-defined procedural tags.
  */
@@ -19,6 +22,7 @@ class UserTag implements StartTag {
 	 */
 	public function parseStartTag($parameters=array()) {
 		$content= file_get_contents($this->filePath);
+		// TODO: implement @required tag
 		return preg_replace_callback("/[\$]\[([a-zA-Z0-9\-_.]+)\]/",function($match) use($parameters){
 			return (isset($parameters[$match[1]])?$parameters[$match[1]]:null);
 		},$content);

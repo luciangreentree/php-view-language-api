@@ -8,7 +8,7 @@ require_once("TagExpressionParser.php");
 /**
  * Implements operations common to all parsable (non-system) tags. All parsable tag classes must extend it.
  */
-abstract class AbstractTag {		
+abstract class SystemTag {		
 	/**
 	 * Checks if tag attribute values contain expressions.
 	 * 

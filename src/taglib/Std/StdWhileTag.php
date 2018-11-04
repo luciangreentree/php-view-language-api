@@ -1,18 +1,19 @@
 <?php
 namespace Lucinda\Templating;
+
 /**
  * Implements how a WHILE clause is translated into a tag.
  *
  * Tag syntax:
- * <std:while condition="EXPRESSION">BODY</std:while>
+ * <:while condition="EXPRESSION">BODY</:while>
  *
  * Tag example:
- * <std:while condition="${a}>2">BODY</std:while>
+ * <:while condition="${a}>2">BODY</:while>
  *
  * PHP output:
  * <?php while ($a>2) { ?> BODY <?php } ?>
  */
-class StdWhileTag extends AbstractTag implements StartEndTag {
+class StdWhileTag extends SystemTag implements StartEndTag {
 	/**
 	 * (non-PHPdoc)
 	 * @see StartEndTag::parseStartTag()

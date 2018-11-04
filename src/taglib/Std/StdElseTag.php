@@ -1,18 +1,19 @@
 <?php
 namespace Lucinda\Templating;
+
 /**
  * Implements how an ELSE clause is translated into a tag.
 *
 * Tag syntax:
-* <std:else>BODY</std:else>
+* <:else>BODY</:else>
 *
 * Tag example:
-* <std:else>hello</std:else>
+* <:else>hello</:else>
 *
 * PHP output:
 * <?php else { ?>hello<?php } ?>
 */
-class StdElseTag extends AbstractTag implements StartTag {
+class StdElseTag extends SystemTag implements StartTag {
 	/**
 	 * (non-PHPdoc)
 	 * @see StartTag::parseStartTag()

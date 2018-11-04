@@ -7,7 +7,7 @@ interface StartEndTag {
 	/**
 	 * Parses start tag.
 	 *  
-	 * Example: <std:foreach var="${ad.d}" key="K" value="V">
+	 * Example: <:foreach var="${ad.d}" key="K" value="V">
 	 * 
 	 * @param array(string=>string) $parameters
 	 * @return string
@@ -17,7 +17,7 @@ interface StartEndTag {
 	/**
 	 * Parses end tag. 
 	 * 
-	 * Example: </std:foreach>
+	 * Example: </:foreach>
 	 * 
 	 * @return string
 	 */

@@ -1,11 +1,11 @@
 <?php
 namespace Lucinda\Templating;
-require_once("File.php");
-require_once("ExpressionParser.php");
-require_once("TagParser.php");
 require_once("ViewCompilation.php");
-require_once("taglib/Std/loader.php");
+require_once("AttributesParser.php");
 require_once("taglib/System/loader.php");
+require_once("UserTagParser.php");
+require_once("SystemTagParser.php");
+require_once("ExpressionParser.php");
 
 /**
  * Performs the logic of view language parsing, delegating to tag and expressions parser.
@@ -54,16 +54,26 @@ class ViewLanguageParser {
         $importTag = new SystemImportTag($this->templatesFolder, $this->templatesExtension, $viewCompilation);
         $outputStream = $importTag->parse($templatePath, $escapeTag, $outputStream);
         
-        // run tag parser
-        $tagParser = new TagParser($this->tagLibFolder, $this->templatesExtension, $viewCompilation);
-        $outputStream=$tagParser->parse($outputStream, $escapeTag);
+        $helperTag = new SystemHelperTag();
+        $outputStream = $helperTag->parse($outputStream);
         
+        $namespaceTag = new SystemNamespaceTag($this->tagLibFolder);
+        $outputStream = $namespaceTag->parse($outputStream);
+        
+        // run user tag parser
+        $userTagParser = new UserTagParser($namespaceTag, $this->templatesExtension, $viewCompilation);
+        $outputStream = $userTagParser->parse($outputStream, $escapeTag);
+        
+        // run system tag parser
+        $systemTagParser = new SystemTagParser();
+        $outputStream = $systemTagParser->parse($outputStream);
+                
         // run expression parser
         $expressionParser = new ExpressionParser();
-        $outputStream=$expressionParser->parse($outputStream);
+        $outputStream = $expressionParser->parse($outputStream);
         
         // restore escaped content
-        $outputStream=$escapeTag->restore($outputStream);
+        $outputStream = $escapeTag->restore($outputStream);
         
         // saves new compilation
         $viewCompilation->save($outputStream);

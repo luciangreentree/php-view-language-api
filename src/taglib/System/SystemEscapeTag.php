@@ -4,13 +4,7 @@ namespace Lucinda\Templating;
  * Implements a tag whose body is not parsable (into other tags or expressions).
  *
  * Tag syntax:
- * <escape>BODY</escape>
- *
- * Tag example:
- * <escape>hello, asd${b}</escape>
- *
- * PHP output:
- * hello, asd${b}
+ * <:escape>BODY</:escape>
  */
 class SystemEscapeTag {
     private $matches=array();
@@ -23,10 +17,10 @@ class SystemEscapeTag {
      * @return string
      */
     public function backup($subject) {
-        return preg_replace_callback("/\<escape\>(.*?)\<\/escape\>/si", function($matches) {
+        return preg_replace_callback("/\<:escape\>(.*?)\<\/:escape\>/si", function($matches) {
             $this->matches[] = $matches[1];
             ++$this->counter;
-            return "<bkp>".($this->counter-1)."</bkp>";
+            return "<:bkp>".($this->counter-1)."</:bkp>";
         }, $subject);
     }
     
@@ -43,7 +37,7 @@ class SystemEscapeTag {
         }
         
         // restore content of escape tags
-        return preg_replace_callback("/\<bkp\>(.*?)\<\/bkp\>/si", function($matches) {
+        return preg_replace_callback("/\<:bkp\>(.*?)\<\/:bkp\>/si", function($matches) {
             return $this->matches[$matches[1]];
         }, $subject);
     }

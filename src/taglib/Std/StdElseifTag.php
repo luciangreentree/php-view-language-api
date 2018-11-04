@@ -1,18 +1,13 @@
 <?php
 namespace Lucinda\Templating;
+
 /**
  * Implements how an ELSE IF clause is translated into a tag.
 *
 * Tag syntax:
-* <std:elseif condition="EXPRESSION">BODY</std:elseif>
-*
-* Tag example:
-* <std:elseif condition="${a.b}>2">BODY</std:elseif>
-*
-* PHP output:
-* <?php else if ($a["b"]>2) { ?> BODY <?php } ?>
+* <:elseif test="EXPRESSION">BODY</:elseif>
 */
-class StdElseifTag extends AbstractTag implements StartTag {
+class StdElseifTag extends SystemTag implements StartTag {
 	/**
 	 * (non-PHPdoc)
 	 * @see StartTag::parseStartTag()

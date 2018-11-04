@@ -1,15 +1,16 @@
 <?php
 namespace Lucinda\Templating;
+
 /**
  * Implements a CONTINUE operation in a loop.
  *
  * Tag syntax:
- * <std:continue/>
+ * <:continue/>
  *
  * PHP output:
  * <?php continue; ?>
  */
-class StdContinueTag extends AbstractTag implements StartTag {
+class StdContinueTag extends SystemTag implements StartTag {
 	/**
 	 * (non-PHPdoc)
 	 * @see StartTag::parseStartTag()

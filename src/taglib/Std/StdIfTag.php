@@ -1,18 +1,19 @@
 <?php
 namespace Lucinda\Templating;
+
 /**
  * Implements how an IF clause is translated into a tag.
 *
 * Tag syntax:
-* <std:if condition="EXPRESSION">BODY</std:if>
+* <:if condition="EXPRESSION">BODY</:if>
 *
 * Tag example:
-* <std:if condition="${a}>2">BODY</std:if>
+* <:if condition="${a}>2">BODY</:if>
 *
 * PHP output:
 * <?php if ($a>2) { ?> BODY <?php } ?>
 */
-class StdIfTag extends AbstractTag implements StartEndTag {
+class StdIfTag extends SystemTag implements StartEndTag {
 	/**
 	 * (non-PHPdoc)
 	 * @see StartEndTag::parseStartTag()
