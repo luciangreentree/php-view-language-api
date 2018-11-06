@@ -26,8 +26,8 @@ class SystemTagParser {
      */
     public function parse($subject) {
         // match start & end tags
-        $subject = preg_replace_callback("/<:([a-z]+)(\s*(.*)\s*=\s*\"(.*)\"\s*)?\/?>/",function($matches) {
-            return $this->getTagInstance($matches)->parseStartTag(isset($matches[3])?$this->attributesParser->parse($matches[3]):array());
+        $subject = preg_replace_callback("/<:([a-z]+)\s*((.*)\s*=\s*\"(.*)\"\s*)?\/?>/",function($matches) {
+            return $this->getTagInstance($matches)->parseStartTag(isset($matches[2])?$this->attributesParser->parse($matches[2]):array());
         },$subject);
         $subject = preg_replace_callback("/<\/:([a-z]+)>/",function($matches) {
             return $this->getTagInstance($matches)->parseEndTag();
@@ -50,13 +50,14 @@ class SystemTagParser {
      *
      * @param array $matches
      * @throws ViewException
-     * @return SystemTag
+     * @return StartEndTag
      */
     private function getTagInstance($matches) {
         $className = "Std".ucwords($matches[1])."Tag";
-        $fileLocation = __DIR__."/taglib/System/".$className.".php";
+        $fileLocation = __DIR__."/taglib/Std/".$className.".php";
         if(!file_exists($fileLocation)) throw new ViewException("System tag not found: ".$matches[1]);
         require_once($fileLocation);
+        $className = __NAMESPACE__."\\".$className;
         return new $className();
     }
 }

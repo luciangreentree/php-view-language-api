@@ -11,6 +11,7 @@ interface StartEndTag {
 	 * 
 	 * @param array(string=>string) $parameters
 	 * @return string
+     * @throws ViewException If required parameters aren't supplied
 	 */
 	function parseStartTag($parameters=array());
 	

@@ -37,6 +37,7 @@ class ViewLanguageParser {
      * @param string $templatePath Relative path to template file that needs to be compiled within templates folder (without extension).
      * @param string $outputStream Response stream contents before view language constructs were parsed.
      * @return string Compilation file name, containing response stream after view language constructs were parsed.
+     * @throws ViewException If compilation fails
      */
     public function compile($templatePath, $outputStream="") {
         // opens existing compilation (if exists)
@@ -54,16 +55,13 @@ class ViewLanguageParser {
         $importTag = new SystemImportTag($this->templatesFolder, $this->templatesExtension, $viewCompilation);
         $outputStream = $importTag->parse($templatePath, $escapeTag, $outputStream);
         
-        $helperTag = new SystemHelperTag();
-        $outputStream = $helperTag->parse($outputStream);
-        
         $namespaceTag = new SystemNamespaceTag($this->tagLibFolder);
         $outputStream = $namespaceTag->parse($outputStream);
         
         // run user tag parser
         $userTagParser = new UserTagParser($namespaceTag, $this->templatesExtension, $viewCompilation);
         $outputStream = $userTagParser->parse($outputStream, $escapeTag);
-        
+
         // run system tag parser
         $systemTagParser = new SystemTagParser();
         $outputStream = $systemTagParser->parse($outputStream);
