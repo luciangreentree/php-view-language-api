@@ -8,6 +8,8 @@ class AttributesParser {
     private $required = array();
     
     /**
+     * Constructs parser from required attributes.
+     * 
      * @param string[] $required Required attributes for tag.
      */
     public function __construct($required=array()) {
@@ -19,7 +21,7 @@ class AttributesParser {
      * 
      * @param string $parameters
      * @throws ViewException If string doesn't included attributes required by tag
-     * @return array[string:string] Attributes by name and value.
+     * @return string[string] Attributes by name and value.
      */
     public function parse($parameters) {
         if(!$parameters || $parameters=="/") {

@@ -9,7 +9,7 @@ namespace Lucinda\Templating;
  */
 class StdWhileTag extends SystemTag implements StartEndTag {
 	/**
-	 * (non-PHPdoc)
+	 * {@inheritDoc}
 	 * @see StartEndTag::parseStartTag()
 	 */
 	public function parseStartTag($parameters=array()) {
@@ -18,7 +18,7 @@ class StdWhileTag extends SystemTag implements StartEndTag {
 	}
 	
 	/**
-	 * (non-PHPdoc)
+	 * {@inheritDoc}
 	 * @see StartEndTag::parseEndTag()
 	 */
 	public function parseEndTag() {

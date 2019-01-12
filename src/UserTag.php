@@ -10,6 +10,8 @@ class UserTag implements StartTag {
 	private $filePath;
 	
 	/**
+     * Constructs parser based on user-defined tag location.
+     * 
 	 * @param string $filePath Location of tag procedural file.
 	 */
 	public function __construct($filePath) {
@@ -17,12 +19,15 @@ class UserTag implements StartTag {
 	}
 	
 	/**
-	 * {@inheritDoc}
-	 * @see StartEndTag::parseStartTag()
+	 * Parses start tag.
+	 *
+	 * Example:  <:set name="VARNAME" value="EXPRESSION"/>
+	 *
+	 * @param array(string=>string) $parameters
+	 * @return string
 	 */
 	public function parseStartTag($parameters=array()) {
 		$content= file_get_contents($this->filePath);
-		// TODO: implement @required tag
 		return preg_replace_callback("/[\$]\[([a-zA-Z0-9\-_.]+)\]/",function($match) use($parameters){
 			return (isset($parameters[$match[1]])?$parameters[$match[1]]:null);
 		},$content);

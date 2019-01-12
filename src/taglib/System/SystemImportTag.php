@@ -28,10 +28,9 @@ class SystemImportTag {
     /**
      * Parses template source file for import tags recursively. For each template file loaded, modification time is adjusted to confirm to the latest.
      *
-     * @param string $subject
+     * @param string $templateFile
      * @param SystemEscapeTag $escaper
      * @param string $outputStream
-     * @throws ViewException
      * @return string
      */
     public function parse($templateFile, SystemEscapeTag $escaper, $outputStream="") {

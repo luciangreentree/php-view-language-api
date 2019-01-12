@@ -9,7 +9,7 @@ interface StartTag {
 	 *  
 	 * Example:  <:set name="VARNAME" value="EXPRESSION"/>
 	 * 
-	 * @param array(string=>string) $parameters
+	 * @param string[string] $parameters
 	 * @return string
 	 */
 	function parseStartTag($parameters=array());

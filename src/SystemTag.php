@@ -33,8 +33,8 @@ abstract class SystemTag {
 	/**
 	 * Verifies if tag has required attributes defined. 
 	 * 
-	 * @param array(string=>string) $parameters
-	 * @param array(string) $requiredParameters
+	 * @param string[string] $parameters
+	 * @param string[] $requiredParameters
 	 * @throws ViewException If a required attribute is not found.
 	 */
 	protected function checkParameters($parameters, $requiredParameters) {

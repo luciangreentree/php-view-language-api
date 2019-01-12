@@ -9,7 +9,7 @@ namespace Lucinda\Templating;
 */
 class StdElseTag extends SystemTag implements StartTag {
 	/**
-	 * (non-PHPdoc)
+	 * {@inheritDoc}
 	 * @see StartTag::parseStartTag()
 	 */
 	public function parseStartTag($parameters=array()) {

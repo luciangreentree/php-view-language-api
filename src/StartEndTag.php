@@ -9,7 +9,7 @@ interface StartEndTag {
 	 *  
 	 * Example: <:foreach var="${ad.d}" key="K" value="V">
 	 * 
-	 * @param array(string=>string) $parameters
+	 * @param string[string] $parameters
 	 * @return string
      * @throws ViewException If required parameters aren't supplied
 	 */

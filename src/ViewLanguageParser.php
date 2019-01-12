@@ -8,7 +8,11 @@ require_once("SystemTagParser.php");
 require_once("ExpressionParser.php");
 
 /**
- * Performs the logic of view language parsing, delegating to tag and expressions parser.
+ * Compiles a ViewLanguage template recursively into a PHP file on disk based on:
+ * - folder templates are located into (can be relative or absolute)
+ * - extension template files are using (eg: html)
+ * - folder in which PHP compilation file will be saved
+ * - folder in which user-defined tag libraries will be located
  */
 class ViewLanguageParser {
     private $templatesFolder;
