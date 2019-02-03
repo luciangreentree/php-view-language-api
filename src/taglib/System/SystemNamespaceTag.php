@@ -5,7 +5,7 @@ namespace Lucinda\Templating;
  * Implements a tag that tracks location of user defined tag libraries.
  * 
  * Tag syntax:
- * <:namespace taglib="NAME" folder="FOLDERPATH">
+ * <namespace taglib="NAME" folder="FOLDERPATH">
  */
 class SystemNamespaceTag {
     private $taglibFolder;
@@ -29,7 +29,7 @@ class SystemNamespaceTag {
      * @return string Output stream without <:namespace ...> tag declarations.
      */
     public function parse($outputStream) {
-        return preg_replace_callback("/<:namespace\s+(.*)\s*\/?>/", function($matches){            
+        return preg_replace_callback("/<namespace\s+(.*)\s*\/?>/", function($matches){            
             $parameters = $this->attributesParser->parse($matches[1]);
             if(!file_exists($parameters["folder"])) throw new ViewException("File not found: ".$parameters["folder"]);
             $this->namespaces[$parameters["taglib"]] = $parameters["folder"];

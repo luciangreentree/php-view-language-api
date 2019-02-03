@@ -5,7 +5,7 @@ namespace Lucinda\Templating;
  * Implements a tag whose only attribute value points to a PHP (template) file whose sources are loaded.
  *
  * Tag syntax:
- * <:import file="FILEPATH"/>
+ * <import file="FILEPATH"/>
  */
 class SystemImportTag {
     private $viewCompilation;
@@ -40,7 +40,7 @@ class SystemImportTag {
         $subject = $escaper->backup($subject);
         $this->viewCompilation->addComponent($path);
         
-        return preg_replace_callback("/<:import\s+file\s*\=\s*\"(.*?)\"\s*\/\>/", function($matches) use($escaper) {
+        return preg_replace_callback("/<import\s+file\s*\=\s*\"(.*?)\"\s*\/\>/", function($matches) use($escaper) {
             return $this->parse($matches[1], $escaper);
         },$subject);
     }
