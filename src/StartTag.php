@@ -6,8 +6,6 @@ namespace Lucinda\Templating;
 interface StartTag {
 	/**
 	 * Parses start tag.
-	 *  
-	 * Example:  <:set name="VARNAME" value="EXPRESSION"/>
 	 * 
 	 * @param string[string] $parameters
 	 * @return string

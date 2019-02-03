@@ -38,16 +38,6 @@ class SystemTagParser {
     /**
      * Detects tag class from tag declaration.
      *
-     * Example:
-     * 		<:for ...>
-     *
-     * Where:
-     * 		- "std" is the name of tag library
-     * 		- "for" is the name of tag function
-     *
-     * Detected class name will be:
-     * 		StdForTag
-     *
      * @param array $matches
      * @throws ViewException
      * @return StartEndTag

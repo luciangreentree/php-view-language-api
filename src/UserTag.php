@@ -21,8 +21,6 @@ class UserTag implements StartTag {
 	/**
 	 * Parses start tag.
 	 *
-	 * Example:  <:set name="VARNAME" value="EXPRESSION"/>
-	 *
 	 * @param array(string=>string) $parameters
 	 * @return string
 	 */

@@ -6,8 +6,6 @@ namespace Lucinda\Templating;
 interface StartEndTag {
 	/**
 	 * Parses start tag.
-	 *  
-	 * Example: <:foreach var="${ad.d}" key="K" value="V">
 	 * 
 	 * @param string[string] $parameters
 	 * @return string
@@ -17,8 +15,6 @@ interface StartEndTag {
 	
 	/**
 	 * Parses end tag. 
-	 * 
-	 * Example: </:foreach>
 	 * 
 	 * @return string
 	 */

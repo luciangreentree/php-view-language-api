@@ -53,13 +53,6 @@ class UserTagParser {
     /**
      * Detects tag instance from tag declaration.
      *
-     * Example:
-     * 		<foo:bar ...>
-     *
-     * Where:
-     * 		- "foo" is the name of tag library
-     * 		- "bar" is the name of tag function
-     *
      * @param array $matches
      * @throws ViewException
      * @return UserTag

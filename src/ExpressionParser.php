@@ -40,8 +40,6 @@ class ExpressionParser {
 	/**
 	 * Performs conversion of expression to PHP.
 	 * 
-	 * Example: ${request.ip} is converted to $request['ip']
-	 * 
 	 * @param string $dottedVariable
 	 * @return string
 	 */

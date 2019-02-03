@@ -20,7 +20,7 @@ class SystemEscapeTag {
         return preg_replace_callback("/\<escape\>(.*?)\<\/escape\>/si", function($matches) {
             $this->matches[] = $matches[1];
             ++$this->counter;
-            return "<:bkp>".($this->counter-1)."</:bkp>";
+            return "<bkp>".($this->counter-1)."</bkp>";
         }, $subject);
     }
     
