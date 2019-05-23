@@ -14,6 +14,6 @@ class StdSetTag extends SystemTag implements StartTag {
      */
     public function parseStartTag($parameters=array()) {
         $this->checkParameters($parameters, array("var"));
-        return '<?php $'.$parameters['var'].' = '.(!empty($parameters['val'])?($this->isExpression($parameters['val'])?$this->parseExpression($parameters['val']):"'".addslashes($parameters['val'])."'"):"null").'; ?>';
+        return '<?php $'.$parameters['var'].' = '.(isset($parameters['val'])?($this->isExpression($parameters['val'])?$this->parseExpression($parameters['val']):"'".addslashes($parameters['val'])."'"):"null").'; ?>';
     }
 }
