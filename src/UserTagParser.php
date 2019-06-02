@@ -37,7 +37,7 @@ class UserTagParser {
      */
     public function parse($subject, SystemEscapeTag $escaper) {
         // match start & end tags
-        $subject = preg_replace_callback("/<([a-zA-Z0-9\-_.]+)\:([a-zA-Z0-9\-_.]+)(\s*(.*)\s*=\s*\"(.*)\"\s*)?\/?>/", function($matches) {
+        $subject = preg_replace_callback("/<([a-zA-Z0-9\-_.]+)\:([a-zA-Z0-9\-_.]+)\s*([^\/>]+)?\s*\/>/", function($matches) {
             return $this->getTagInstance($matches)->parseStartTag(isset($matches[3])?$this->attributesParser->parse($matches[3]):array());
         }, $subject);
         $subject = $escaper->backup($subject);
