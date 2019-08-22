@@ -7,12 +7,14 @@ namespace Lucinda\Templating;
  * Tag syntax:
  * <:set var="VARNAME" val="EXPRESSION"/>
  */
-class StdSetTag extends SystemTag implements StartTag {
+class StdSetTag extends SystemTag implements StartTag
+{
     /**
      * {@inheritDoc}
      * @see StartTag::parseStartTag()
      */
-    public function parseStartTag($parameters=array()) {
+    public function parseStartTag($parameters=array())
+    {
         $this->checkParameters($parameters, array("var"));
         return '<?php $'.$parameters['var'].' = '.(isset($parameters['val'])?($this->isExpression($parameters['val'])?$this->parseExpression($parameters['val']):"'".addslashes($parameters['val'])."'"):"null").'; ?>';
     }

@@ -7,12 +7,14 @@ namespace Lucinda\Templating;
  * Tag syntax:
  * <:continue/>
  */
-class StdContinueTag extends SystemTag implements StartTag {
-	/**
-	 * {@inheritDoc}
-	 * @see StartTag::parseStartTag()
-	 */
-	public function parseStartTag($parameters=array()) {
-		return '<?php continue; ?>';
-	}
+class StdContinueTag extends SystemTag implements StartTag
+{
+    /**
+     * {@inheritDoc}
+     * @see StartTag::parseStartTag()
+     */
+    public function parseStartTag($parameters=array())
+    {
+        return '<?php continue; ?>';
+    }
 }

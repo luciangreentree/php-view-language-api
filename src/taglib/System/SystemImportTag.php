@@ -7,7 +7,8 @@ namespace Lucinda\Templating;
  * Tag syntax:
  * <import file="FILEPATH"/>
  */
-class SystemImportTag {
+class SystemImportTag
+{
     private $viewCompilation;
     private $templatesFolder;
     private $templatesExtension;
@@ -19,7 +20,8 @@ class SystemImportTag {
      * @param string $templatesExtension
      * @param ViewCompilation $viewCompilation
      */
-    public function __construct($templatesFolder, $templatesExtension, ViewCompilation $viewCompilation) {
+    public function __construct($templatesFolder, $templatesExtension, ViewCompilation $viewCompilation)
+    {
         $this->templatesFolder = $templatesFolder;
         $this->templatesExtension = $templatesExtension;
         $this->viewCompilation = $viewCompilation;
@@ -33,15 +35,16 @@ class SystemImportTag {
      * @param string $outputStream
      * @return string
      */
-    public function parse($templateFile, SystemEscapeTag $escaper, $outputStream="") {
+    public function parse($templateFile, SystemEscapeTag $escaper, $outputStream="")
+    {
         $path = ($this->templatesFolder?$this->templatesFolder."/":"").$templateFile.".".$this->templatesExtension;
         $file = new File($path);
         $subject = ($outputStream==""?$file->getContents():$outputStream);
         $subject = $escaper->backup($subject);
         $this->viewCompilation->addComponent($path);
         
-        return preg_replace_callback("/<import\s+file\s*\=\s*\"(.*?)\"\s*\/\>/", function($matches) use($escaper) {
+        return preg_replace_callback("/<import\s+file\s*\=\s*\"(.*?)\"\s*\/\>/", function ($matches) use ($escaper) {
             return $this->parse($matches[1], $escaper);
-        },$subject);
+        }, $subject);
     }
 }

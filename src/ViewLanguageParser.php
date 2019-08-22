@@ -1,5 +1,6 @@
 <?php
 namespace Lucinda\Templating;
+
 require_once("ViewCompilation.php");
 require_once("AttributesParser.php");
 require_once("taglib/System/loader.php");
@@ -14,7 +15,8 @@ require_once("ExpressionParser.php");
  * - folder in which PHP compilation file will be saved
  * - folder in which user-defined tag libraries will be located
  */
-class ViewLanguageParser {
+class ViewLanguageParser
+{
     private $templatesFolder;
     private $compilationsFolder;
     private $templatesExtension;
@@ -28,7 +30,8 @@ class ViewLanguageParser {
      * @param string $compilationsFolder Absolute path to compilations folder on disk
      * @param string $tagLibFolder Relative path to user-defined tag libraries folder.
      */
-    public function __construct($templatesFolder, $templatesExtension, $compilationsFolder, $tagLibFolder = "") {
+    public function __construct($templatesFolder, $templatesExtension, $compilationsFolder, $tagLibFolder = "")
+    {
         $this->templatesFolder = $templatesFolder;
         $this->templatesExtension = $templatesExtension;
         $this->compilationsFolder= $compilationsFolder;
@@ -43,12 +46,13 @@ class ViewLanguageParser {
      * @return string Compilation file name, containing response stream after view language constructs were parsed.
      * @throws ViewException If compilation fails
      */
-    public function compile($templatePath, $outputStream="") {
+    public function compile($templatePath, $outputStream="")
+    {
         // opens existing compilation (if exists)
         $viewCompilation = new ViewCompilation($this->compilationsFolder, $templatePath, $this->templatesExtension);
         
         // if compilation components haven't changed, do not go further
-        if(!$viewCompilation->hasChanged()) {
+        if (!$viewCompilation->hasChanged()) {
             return $viewCompilation->getCompilationPath();
         }
         

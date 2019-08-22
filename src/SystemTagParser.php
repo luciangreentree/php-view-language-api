@@ -7,13 +7,15 @@ require_once("AttributesParser.php");
 /**
  * Parses system tags and appends them to compilation
  */
-class SystemTagParser {
+class SystemTagParser
+{
     private $attributesParser;
     
     /**
      * Constructor instancing attributes parser
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->attributesParser = new AttributesParser();
     }
     
@@ -24,14 +26,15 @@ class SystemTagParser {
      * @param SystemEscapeTag $escaper
      * @return string
      */
-    public function parse($subject) {
+    public function parse($subject)
+    {
         // match start & end tags
-        $subject = preg_replace_callback("/<:([a-z]+)\s*((.*)\s*=\s*\"(.*)\"\s*)?\/?>/",function($matches) {
+        $subject = preg_replace_callback("/<:([a-z]+)\s*((.*)\s*=\s*\"(.*)\"\s*)?\/?>/", function ($matches) {
             return $this->getTagInstance($matches)->parseStartTag(isset($matches[2])?$this->attributesParser->parse($matches[2]):array());
-        },$subject);
-        $subject = preg_replace_callback("/<\/:([a-z]+)>/",function($matches) {
+        }, $subject);
+        $subject = preg_replace_callback("/<\/:([a-z]+)>/", function ($matches) {
             return $this->getTagInstance($matches)->parseEndTag();
-        },$subject);
+        }, $subject);
         return $subject;
     }
     
@@ -42,10 +45,13 @@ class SystemTagParser {
      * @throws ViewException
      * @return StartEndTag
      */
-    private function getTagInstance($matches) {
+    private function getTagInstance($matches)
+    {
         $className = "Std".ucwords($matches[1])."Tag";
         $fileLocation = __DIR__."/taglib/Std/".$className.".php";
-        if(!file_exists($fileLocation)) throw new ViewException("System tag not found: ".$matches[1]);
+        if (!file_exists($fileLocation)) {
+            throw new ViewException("System tag not found: ".$matches[1]);
+        }
         require_once($fileLocation);
         $className = __NAMESPACE__."\\".$className;
         return new $className();

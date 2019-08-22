@@ -7,12 +7,14 @@ namespace Lucinda\Templating;
  * Tag syntax:
  * <:break/>
  */
-class StdBreakTag extends SystemTag implements StartTag {
-	/**
-	 * {@inheritDoc}
-	 * @see StartTag::parseStartTag()
-	 */
-	public function parseStartTag($parameters=array()) {
-		return '<?php break; ?>';
-	}
+class StdBreakTag extends SystemTag implements StartTag
+{
+    /**
+     * {@inheritDoc}
+     * @see StartTag::parseStartTag()
+     */
+    public function parseStartTag($parameters=array())
+    {
+        return '<?php break; ?>';
+    }
 }
