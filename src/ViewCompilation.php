@@ -1,7 +1,7 @@
 <?php
 namespace Lucinda\Templating;
 
-require_once("File.php");
+require("File.php");
 
 /**
  * Abstracts view compilation logic.

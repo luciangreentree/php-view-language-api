@@ -1,12 +1,12 @@
 <?php
 namespace Lucinda\Templating;
 
-require_once("ViewCompilation.php");
-require_once("AttributesParser.php");
-require_once("taglib/System/loader.php");
-require_once("UserTagParser.php");
-require_once("SystemTagParser.php");
-require_once("ExpressionParser.php");
+require("ViewCompilation.php");
+require("AttributesParser.php");
+require("ExpressionParser.php");
+require("taglib/System/loader.php");
+require("UserTagParser.php");
+require("SystemTagParser.php");
 
 /**
  * Compiles a ViewLanguage template recursively into a PHP file on disk based on:

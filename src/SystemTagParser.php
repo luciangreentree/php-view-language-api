@@ -1,8 +1,7 @@
 <?php
 namespace Lucinda\Templating;
 
-require_once("SystemTag.php");
-require_once("AttributesParser.php");
+require("SystemTag.php");
 
 /**
  * Parses system tags and appends them to compilation

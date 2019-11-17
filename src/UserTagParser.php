@@ -1,8 +1,7 @@
 <?php
 namespace Lucinda\Templating;
 
-require_once("UserTag.php");
-require_once("AttributesParser.php");
+require("UserTag.php");
 
 /**
  * Parses user-defined tags and appends them to compilation
