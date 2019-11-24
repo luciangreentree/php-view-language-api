@@ -20,7 +20,7 @@ class NamespaceTag
      * Creates an instance with default user defined tag library location. This will be used if no <:namespace> declaration is declared for that tag library
      * @param string $taglibFolder Default location of tag libraries on disk.
      */
-    public function __construct($taglibFolder)
+    public function __construct(string $taglibFolder): void
     {
         $this->taglibFolder = $taglibFolder;
         $this->attributesParser = new AttributesParser(array("taglib", "folder"));
@@ -33,7 +33,7 @@ class NamespaceTag
      * @throws ViewException If referenced fikder could not be located on disk.
      * @return string Output stream without <:namespace ...> tag declarations.
      */
-    public function parse($outputStream)
+    public function parse(string $outputStream): string
     {
         return preg_replace_callback("/<namespace\s+(.*)\s*\/?>/", function ($matches) {
             $parameters = $this->attributesParser->parse($matches[1]);
@@ -51,7 +51,7 @@ class NamespaceTag
      * @param string $tagLib Name of tag library.
      * @return string Folder tag library folder lies into.
      */
-    public function get($tagLib)
+    public function get(string $tagLib): string
     {
         return (!empty($this->namespaces) && isset($this->namespaces[$tagLib])?$this->namespaces[$tagLib]:$this->taglibFolder);
     }

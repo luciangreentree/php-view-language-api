@@ -13,7 +13,7 @@ class UserTag implements StartTag
      *
      * @param string $filePath Location of tag procedural file.
      */
-    public function __construct($filePath)
+    public function __construct(string $filePath): void
     {
         $this->filePath = $filePath;
     }
@@ -21,10 +21,10 @@ class UserTag implements StartTag
     /**
      * Parses start tag.
      *
-     * @param array(string=>string) $parameters
+     * @param string[string] $parameters
      * @return string
      */
-    public function parseStartTag($parameters=array())
+    public function parseStartTag(array $parameters=array()): string
     {
         $content= file_get_contents($this->filePath);
         return preg_replace_callback("/[\$]\[([a-zA-Z0-9\-_.]+)\]/", function ($match) use ($parameters) {

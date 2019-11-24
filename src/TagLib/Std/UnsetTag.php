@@ -13,10 +13,12 @@ use Lucinda\Templating\StartTag;
 class UnsetTag extends SystemTag implements StartTag
 {
     /**
-     * {@inheritDoc}
-     * @see StartTag::parseStartTag()
+     * Parses start tag.
+     *
+     * @param string[string] $parameters
+     * @return string
      */
-    public function parseStartTag($parameters=array())
+    public function parseStartTag(array $parameters=array()): string
     {
         $this->checkParameters($parameters, array("var"));
         return '<?php unset($'.$parameters['var'].'); ?>';

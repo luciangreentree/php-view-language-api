@@ -13,12 +13,12 @@ interface StartEndTag
      * @return string
      * @throws ViewException If required parameters aren't supplied
      */
-    public function parseStartTag($parameters=array());
+    public function parseStartTag(array $parameters=array()): string;
     
     /**
      * Parses end tag.
      *
      * @return string
      */
-    public function parseEndTag();
+    public function parseEndTag(): string;
 }

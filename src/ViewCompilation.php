@@ -17,7 +17,7 @@ class ViewCompilation
      * @param string $templatePath
      * @param string $templatesExtension
      */
-    public function __construct($compilationsFolder, $templatePath, $templatesExtension)
+    public function __construct(string $compilationsFolder, string $templatePath, string $templatesExtension): void
     {
         $this->compilationPath = $compilationsFolder."/".$templatePath.".".$templatesExtension;
         $this->checksumPath = $compilationsFolder."/checksums/".crc32($templatePath).".crc";
@@ -32,7 +32,7 @@ class ViewCompilation
     /**
      * Checks if any of compilation components have changed since last update.
      */
-    public function hasChanged()
+    public function hasChanged(): void
     {
         $compilation = new File($this->compilationPath);
         if (!empty($this->components)) {
@@ -57,7 +57,7 @@ class ViewCompilation
      *
      * @param string $path Path to component.
      */
-    public function addComponent($path)
+    public function addComponent(string $path): void
     {
         $this->components[] = $path;
     }
@@ -67,7 +67,7 @@ class ViewCompilation
      *
      * @return integer Greater than zero if all components found, -1 if at least one component is not found.
      */
-    private function getLatestModificationTime()
+    private function getLatestModificationTime(): int
     {
         $latestDate = 0;
         foreach ($this->components as $file) {
@@ -88,7 +88,7 @@ class ViewCompilation
      *
      * @param string $outputStream
      */
-    public function save($outputStream)
+    public function save(string $outputStream): void
     {
         // saves checksum
         $file = new File($this->checksumPath);
@@ -104,7 +104,7 @@ class ViewCompilation
      *
      * @return string
      */
-    public function getCompilationPath()
+    public function getCompilationPath(): string
     {
         return $this->compilationPath;
     }

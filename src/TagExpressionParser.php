@@ -12,7 +12,7 @@ class TagExpressionParser extends ExpressionParser
      * @param array $matches
      * @return string
      */
-    protected function parseCallback($matches)
+    protected function parseCallback(array $matches): string
     {
         return $this->convertToVariable($matches[0]);
     }

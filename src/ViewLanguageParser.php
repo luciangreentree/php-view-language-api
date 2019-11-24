@@ -27,7 +27,7 @@ class ViewLanguageParser
      * @param string $compilationsFolder Absolute path to compilations folder on disk
      * @param string $tagLibFolder Relative path to user-defined tag libraries folder.
      */
-    public function __construct($templatesFolder, $templatesExtension, $compilationsFolder, $tagLibFolder = "")
+    public function __construct(string $templatesFolder, string $templatesExtension, string $compilationsFolder, string $tagLibFolder = ""): void
     {
         $this->templatesFolder = $templatesFolder;
         $this->templatesExtension = $templatesExtension;
@@ -43,7 +43,7 @@ class ViewLanguageParser
      * @return string Compilation file name, containing response stream after view language constructs were parsed.
      * @throws ViewException If compilation fails
      */
-    public function compile($templatePath, $outputStream="")
+    public function compile(string $templatePath, string $outputStream=""): string
     {
         // opens existing compilation (if exists)
         $viewCompilation = new ViewCompilation($this->compilationsFolder, $templatePath, $this->templatesExtension);

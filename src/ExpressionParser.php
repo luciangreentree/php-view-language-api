@@ -17,7 +17,7 @@ class ExpressionParser
      * @param string $subject
      * @return string
      */
-    public function parse($subject)
+    public function parse(string $subject): string
     {
         if (strpos($subject, '${')===false) {
             return $subject;
@@ -31,7 +31,7 @@ class ExpressionParser
      * @param array $matches
      * @return string
      */
-    protected function parseCallback($matches)
+    protected function parseCallback(array $matches): string
     {
         $position = strpos($matches[1], "(");
         if ($position!==false) {
@@ -47,7 +47,7 @@ class ExpressionParser
      * @param string $dottedVariable
      * @return string
      */
-    protected function convertToVariable($dottedVariable)
+    protected function convertToVariable(string $dottedVariable): string
     {
         if (strpos($dottedVariable, ".")===false) {
             return str_replace(array("{","}"), "", $dottedVariable);

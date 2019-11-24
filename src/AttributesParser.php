@@ -13,7 +13,7 @@ class AttributesParser
      *
      * @param string[] $required Required attributes for tag.
      */
-    public function __construct($required=array())
+    public function __construct(array $required=array()): void
     {
         $this->required = $required;
     }
@@ -25,7 +25,7 @@ class AttributesParser
      * @throws ViewException If string doesn't included attributes required by tag
      * @return string[string] Attributes by name and value.
      */
-    public function parse($parameters)
+    public function parse(string $parameters): array
     {
         if (!$parameters || $parameters=="/") {
             if (empty($this->required)) {

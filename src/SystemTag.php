@@ -12,7 +12,7 @@ abstract class SystemTag
      * @param string $expression
      * @return boolean
      */
-    protected function isExpression($expression)
+    protected function isExpression(string $expression): bool
     {
         return (strpos($expression, '${')!==false?true:false);
     }
@@ -23,7 +23,7 @@ abstract class SystemTag
      * @param string $expression
      * @return string
      */
-    protected function parseExpression($expression)
+    protected function parseExpression(string $expression): string
     {
         $expressionObject = new TagExpressionParser();
         return $expressionObject->parse($expression);
@@ -36,7 +36,7 @@ abstract class SystemTag
      * @param string[] $requiredParameters
      * @throws ViewException If a required attribute is not found.
      */
-    protected function checkParameters($parameters, $requiredParameters)
+    protected function checkParameters(array $parameters, array $requiredParameters): void
     {
         foreach ($requiredParameters as $name) {
             if (!isset($parameters[$name])) {

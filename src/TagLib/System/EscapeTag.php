@@ -18,7 +18,7 @@ class EscapeTag
      * @param string $subject
      * @return string
      */
-    public function backup($subject)
+    public function backup(string $subject): string
     {
         return preg_replace_callback("/\<escape\>(.*?)\<\/escape\>/si", function ($matches) {
             $this->matches[] = $matches[1];
@@ -33,7 +33,7 @@ class EscapeTag
      * @param string $subject
      * @return string
      */
-    public function restore($subject)
+    public function restore(string $subject): string
     {
         // if no escape tags were found, do not continue
         if ($this->counter == 0) {

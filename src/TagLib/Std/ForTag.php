@@ -13,10 +13,13 @@ use Lucinda\Templating\SystemTag;
 class ForTag extends SystemTag implements StartEndTag
 {
     /**
-     * {@inheritDoc}
-     * @see StartEndTag::parseStartTag()
+     * Parses start tag.
+     *
+     * @param string[string] $parameters
+     * @return string
+     * @throws ViewException If required parameters aren't supplied
      */
-    public function parseStartTag($parameters=array())
+    public function parseStartTag(array $parameters=array()): string
     {
         $this->checkParameters($parameters, array("var", "start", "end"));
         return '<?php for($'.$parameters['var'].'='.$this->parseCounter($parameters['start'])
@@ -25,10 +28,11 @@ class ForTag extends SystemTag implements StartEndTag
     }
 
     /**
-     * {@inheritDoc}
-     * @see StartEndTag::parseEndTag()
+     * Parses end tag.
+     *
+     * @return string
      */
-    public function parseEndTag()
+    public function parseEndTag(): string
     {
         return '<?php } ?>';
     }
@@ -39,7 +43,7 @@ class ForTag extends SystemTag implements StartEndTag
      * @param string $expression
      * @return integer
      */
-    private function parseCounter($expression)
+    private function parseCounter(string $expression): int
     {
         if (is_numeric($expression)) {
             return $expression;

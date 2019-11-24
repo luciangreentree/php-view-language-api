@@ -11,7 +11,7 @@ class SystemTagParser
     /**
      * Constructor instancing attributes parser
      */
-    public function __construct()
+    public function __construct(): void
     {
         $this->attributesParser = new AttributesParser();
     }
@@ -22,7 +22,7 @@ class SystemTagParser
      * @param string $subject
      * @return string
      */
-    public function parse($subject)
+    public function parse(string $subject): string
     {
         // match start & end tags
         $subject = preg_replace_callback("/<:([a-z]+)\s*((.*)\s*=\s*\"(.*)\"\s*)?\/?>/", function ($matches) {
@@ -40,7 +40,7 @@ class SystemTagParser
      * @param array $matches
      * @return StartEndTag
      */
-    private function getTagInstance($matches)
+    private function getTagInstance(array $matches): StartEndTag
     {
         $className = __NAMESPACE__."\\TagLib\\Std\\".ucwords($matches[1])."Tag";
         return new $className();

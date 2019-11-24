@@ -3,6 +3,7 @@ namespace Lucinda\Templating\TagLib\Std;
 
 use Lucinda\Templating\SystemTag;
 use Lucinda\Templating\StartEndTag;
+use Lucinda\Templating\ViewException;
 
 /**
  * Implements how a WHILE clause is translated into a tag.
@@ -13,20 +14,24 @@ use Lucinda\Templating\StartEndTag;
 class WhileTag extends SystemTag implements StartEndTag
 {
     /**
-     * {@inheritDoc}
-     * @see StartEndTag::parseStartTag()
+     * Parses start tag.
+     *
+     * @param string[string] $parameters
+     * @return string
+     * @throws ViewException If required parameters aren't supplied
      */
-    public function parseStartTag($parameters=array())
+    public function parseStartTag(array $parameters=array()): string
     {
         $this->checkParameters($parameters, array("test"));
         return '<?php while('.$this->parseExpression($parameters['test']).') { ?>';
     }
     
     /**
-     * {@inheritDoc}
-     * @see StartEndTag::parseEndTag()
+     * Parses end tag.
+     *
+     * @return string
      */
-    public function parseEndTag()
+    public function parseEndTag(): string
     {
         return '<?php } ?>';
     }

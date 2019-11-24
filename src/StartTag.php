@@ -12,5 +12,5 @@ interface StartTag
      * @param string[string] $parameters
      * @return string
      */
-    public function parseStartTag($parameters=array());
+    public function parseStartTag(array $parameters=array()): string;
 }

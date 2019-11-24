@@ -22,7 +22,7 @@ class UserTagParser
      * @param string $tagExtension Extension of user-defined tags.
      * @param ViewCompilation $viewCompilation Object that collects components that take part in view.
      */
-    public function __construct(NamespaceTag $namespaces, $tagExtension, ViewCompilation $viewCompilation)
+    public function __construct(NamespaceTag $namespaces, string $tagExtension, ViewCompilation $viewCompilation): void
     {
         $this->namespaces = $namespaces;
         $this->tagExtension = $tagExtension;
@@ -37,7 +37,7 @@ class UserTagParser
      * @param EscapeTag $escaper
      * @return string
      */
-    public function parse($subject, EscapeTag $escaper)
+    public function parse(string $subject, EscapeTag $escaper): string
     {
         // match start & end tags
         $subject = preg_replace_callback("/<([a-zA-Z0-9\-_.]+)\:([a-zA-Z0-9\-_.]+)\s*([^>]+)?>/", function ($matches) {
@@ -60,7 +60,7 @@ class UserTagParser
      * @throws ViewException
      * @return UserTag
      */
-    private function getTagInstance($matches)
+    private function getTagInstance(array $matches): UserTag
     {
         $libraryName = strtolower($matches[1]);
         $tagName = strtolower($matches[2]);

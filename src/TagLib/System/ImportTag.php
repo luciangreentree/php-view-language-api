@@ -23,7 +23,7 @@ class ImportTag
      * @param string $templatesExtension
      * @param ViewCompilation $viewCompilation
      */
-    public function __construct($templatesFolder, $templatesExtension, ViewCompilation $viewCompilation)
+    public function __construct(string $templatesFolder, string $templatesExtension, ViewCompilation $viewCompilation): void
     {
         $this->templatesFolder = $templatesFolder;
         $this->templatesExtension = $templatesExtension;
@@ -38,7 +38,7 @@ class ImportTag
      * @param string $outputStream
      * @return string
      */
-    public function parse($templateFile, EscapeTag $escaper, $outputStream="")
+    public function parse(string $templateFile, EscapeTag $escaper, string $outputStream=""): string
     {
         $path = ($this->templatesFolder?$this->templatesFolder."/":"").$templateFile.".".$this->templatesExtension;
         $file = new File($path);
