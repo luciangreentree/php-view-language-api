@@ -1,5 +1,8 @@
 <?php
-namespace Lucinda\Templating;
+namespace Lucinda\Templating\TagLib\Std;
+
+use Lucinda\Templating\StartTag;
+use Lucinda\Templating\SystemTag;
 
 /**
  * Implements a CONTINUE operation in a loop.
@@ -7,7 +10,7 @@ namespace Lucinda\Templating;
  * Tag syntax:
  * <:continue/>
  */
-class StdContinueTag extends SystemTag implements StartTag
+class ContinueTag extends SystemTag implements StartTag
 {
     /**
      * {@inheritDoc}

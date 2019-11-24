@@ -5,6 +5,14 @@
     "keywords": ["templating","views","jstl"],
     "homepage": "http://www.lucinda-framework.com/view-language",
     "license": "MIT",
+    "require": {
+        "php": "^7.1"
+    },
+    "autoload": {
+    	"psr-4": {
+        	"Lucinda\\Templating\\": "src/"
+    	}
+    },
     "authors": [
         {
             "name": "Lucian Popescu",

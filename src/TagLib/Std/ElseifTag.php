@@ -1,5 +1,8 @@
 <?php
-namespace Lucinda\Templating;
+namespace Lucinda\Templating\TagLib\Std;
+
+use Lucinda\Templating\StartTag;
+use Lucinda\Templating\SystemTag;
 
 /**
  * Implements how an ELSE IF clause is translated into a tag.
@@ -7,7 +10,7 @@ namespace Lucinda\Templating;
 * Tag syntax:
 * <:elseif test="EXPRESSION">BODY
 */
-class StdElseifTag extends SystemTag implements StartTag
+class ElseifTag extends SystemTag implements StartTag
 {
     /**
      * {@inheritDoc}

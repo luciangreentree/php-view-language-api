@@ -1,12 +1,9 @@
 <?php
 namespace Lucinda\Templating;
 
-require("ViewCompilation.php");
-require("AttributesParser.php");
-require("ExpressionParser.php");
-require("taglib/System/loader.php");
-require("UserTagParser.php");
-require("SystemTagParser.php");
+use Lucinda\Templating\TagLib\System\EscapeTag;
+use Lucinda\Templating\TagLib\System\ImportTag;
+use Lucinda\Templating\TagLib\System\NamespaceTag;
 
 /**
  * Compiles a ViewLanguage template recursively into a PHP file on disk based on:
@@ -57,13 +54,13 @@ class ViewLanguageParser
         }
         
         // instantiate template escaping logic
-        $escapeTag = new SystemEscapeTag();
+        $escapeTag = new EscapeTag();
         
         // includes dependant tree of templates
-        $importTag = new SystemImportTag($this->templatesFolder, $this->templatesExtension, $viewCompilation);
+        $importTag = new ImportTag($this->templatesFolder, $this->templatesExtension, $viewCompilation);
         $outputStream = $importTag->parse($templatePath, $escapeTag, $outputStream);
         
-        $namespaceTag = new SystemNamespaceTag($this->tagLibFolder);
+        $namespaceTag = new NamespaceTag($this->tagLibFolder);
         $outputStream = $namespaceTag->parse($outputStream);
         
         // run user tag parser

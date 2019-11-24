@@ -1,5 +1,8 @@
 <?php
-namespace Lucinda\Templating;
+namespace Lucinda\Templating\TagLib\System;
+
+use Lucinda\Templating\AttributesParser;
+use Lucinda\Templating\ViewException;
 
 /**
  * Implements a tag that tracks location of user defined tag libraries.
@@ -7,7 +10,7 @@ namespace Lucinda\Templating;
  * Tag syntax:
  * <namespace taglib="NAME" folder="FOLDERPATH">
  */
-class SystemNamespaceTag
+class NamespaceTag
 {
     private $taglibFolder;
     private $namespaces = array();

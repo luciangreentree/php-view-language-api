@@ -1,5 +1,8 @@
 <?php
-namespace Lucinda\Templating;
+namespace Lucinda\Templating\TagLib\Std;
+
+use Lucinda\Templating\SystemTag;
+use Lucinda\Templating\StartEndTag;
 
 /**
  * Implements how an IF clause is translated into a tag.
@@ -7,7 +10,7 @@ namespace Lucinda\Templating;
 * Tag syntax:
 * <:if test="EXPRESSION">BODY</:if>
 */
-class StdIfTag extends SystemTag implements StartEndTag
+class IfTag extends SystemTag implements StartEndTag
 {
     /**
      * {@inheritDoc}

@@ -1,5 +1,8 @@
 <?php
-namespace Lucinda\Templating;
+namespace Lucinda\Templating\TagLib\Std;
+
+use Lucinda\Templating\SystemTag;
+use Lucinda\Templating\StartEndTag;
 
 /**
  * Implements how a WHILE clause is translated into a tag.
@@ -7,7 +10,7 @@ namespace Lucinda\Templating;
  * Tag syntax:
  * <:while test="EXPRESSION">BODY</:while>
  */
-class StdWhileTag extends SystemTag implements StartEndTag
+class WhileTag extends SystemTag implements StartEndTag
 {
     /**
      * {@inheritDoc}

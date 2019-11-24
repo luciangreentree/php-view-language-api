@@ -1,8 +1,6 @@
 <?php
 namespace Lucinda\Templating;
 
-require("File.php");
-
 /**
  * Abstracts view compilation logic.
 */

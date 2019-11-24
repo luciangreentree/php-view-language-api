@@ -1,10 +1,6 @@
 <?php
 namespace Lucinda\Templating;
 
-require_once("StartTag.php");
-require("StartEndTag.php");
-require("TagExpressionParser.php");
-
 /**
  * Implements operations common to all parsable (non-system) tags. All parsable tag classes must extend it.
  */

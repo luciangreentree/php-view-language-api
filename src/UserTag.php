@@ -1,8 +1,6 @@
 <?php
 namespace Lucinda\Templating;
 
-require_once("StartTag.php");
-
 /**
  * Defines a generic class to parse all user-defined procedural tags.
  */

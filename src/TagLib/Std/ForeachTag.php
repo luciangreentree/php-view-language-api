@@ -1,5 +1,9 @@
 <?php
-namespace Lucinda\Templating;
+namespace Lucinda\Templating\TagLib\Std;
+
+use Lucinda\Templating\StartEndTag;
+use Lucinda\Templating\SystemTag;
+use Lucinda\Templating\ViewException;
 
 /**
 * Implements how a FOREACH clause is translated into a tag.
@@ -7,7 +11,7 @@ namespace Lucinda\Templating;
 * Tag syntax:
 * <:foreach var="EXPRESSION" key="KEYNAME" val="VALUENAME">BODY</:foreach>
 */
-class StdForeachTag extends SystemTag implements StartEndTag
+class ForeachTag extends SystemTag implements StartEndTag
 {
     /**
      * {@inheritDoc}

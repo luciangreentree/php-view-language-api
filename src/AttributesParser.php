@@ -34,6 +34,7 @@ class AttributesParser
                 throw new ViewException("Tag requires attributes: ".implode(",", $this->required));
             }
         }
+        $tmp = [];
         preg_match_all('/([a-zA-Z0-9\-_.]+)\s*=\s*"\s*([^"]+)\s*"/', $parameters, $tmp, PREG_SET_ORDER);
         $output=array();
         foreach ($tmp as $values) {

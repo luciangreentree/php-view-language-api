@@ -1,5 +1,8 @@
 <?php
-namespace Lucinda\Templating;
+namespace Lucinda\Templating\TagLib\Std;
+
+use Lucinda\Templating\SystemTag;
+use Lucinda\Templating\StartTag;
 
 /**
  * Implements how setting an internal variable is translated into a tag.
@@ -7,7 +10,7 @@ namespace Lucinda\Templating;
 * Tag syntax:
 * <:unset var="VARNAME"/>
 */
-class StdUnsetTag extends SystemTag implements StartTag
+class UnsetTag extends SystemTag implements StartTag
 {
     /**
      * {@inheritDoc}

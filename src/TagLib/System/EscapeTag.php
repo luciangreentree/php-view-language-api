@@ -1,5 +1,5 @@
 <?php
-namespace Lucinda\Templating;
+namespace Lucinda\Templating\TagLib\System;
 
 /**
  * Implements a tag whose body is not parsable (into other tags or expressions).
@@ -7,7 +7,7 @@ namespace Lucinda\Templating;
  * Tag syntax:
  * <escape>BODY</:escape>
  */
-class SystemEscapeTag
+class EscapeTag
 {
     private $matches=array();
     private $counter=0;

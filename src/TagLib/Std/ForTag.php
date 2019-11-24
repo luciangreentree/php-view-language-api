@@ -1,5 +1,8 @@
 <?php
-namespace Lucinda\Templating;
+namespace Lucinda\Templating\TagLib\Std;
+
+use Lucinda\Templating\StartEndTag;
+use Lucinda\Templating\SystemTag;
 
 /**
  * Implements how a FOR clause is translated into a tag.
@@ -7,7 +10,7 @@ namespace Lucinda\Templating;
 * Tag syntax:
 * <:for var="VARNAME" start="EXPRESSION|INTEGER" end="EXPRESSION|INTEGER" step="INTEGER">BODY</:for>
 */
-class StdForTag extends SystemTag implements StartEndTag
+class ForTag extends SystemTag implements StartEndTag
 {
     /**
      * {@inheritDoc}

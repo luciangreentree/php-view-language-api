@@ -1,5 +1,8 @@
 <?php
-namespace Lucinda\Templating;
+namespace Lucinda\Templating\TagLib\System;
+
+use Lucinda\Templating\ViewCompilation;
+use Lucinda\Templating\File;
 
 /**
  * Implements a tag whose only attribute value points to a PHP (template) file whose sources are loaded.
@@ -7,7 +10,7 @@ namespace Lucinda\Templating;
  * Tag syntax:
  * <import file="FILEPATH"/>
  */
-class SystemImportTag
+class ImportTag
 {
     private $viewCompilation;
     private $templatesFolder;
@@ -31,11 +34,11 @@ class SystemImportTag
      * Parses template source file for import tags recursively. For each template file loaded, modification time is adjusted to confirm to the latest.
      *
      * @param string $templateFile
-     * @param SystemEscapeTag $escaper
+     * @param EscapeTag $escaper
      * @param string $outputStream
      * @return string
      */
-    public function parse($templateFile, SystemEscapeTag $escaper, $outputStream="")
+    public function parse($templateFile, EscapeTag $escaper, $outputStream="")
     {
         $path = ($this->templatesFolder?$this->templatesFolder."/":"").$templateFile.".".$this->templatesExtension;
         $file = new File($path);

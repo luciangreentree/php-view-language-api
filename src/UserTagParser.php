@@ -1,7 +1,8 @@
 <?php
 namespace Lucinda\Templating;
 
-require("UserTag.php");
+use Lucinda\Templating\TagLib\System\EscapeTag;
+use Lucinda\Templating\TagLib\System\NamespaceTag;
 
 /**
  * Parses user-defined tags and appends them to compilation
@@ -16,12 +17,12 @@ class UserTagParser
     /**
      * Creates a tag parser instance.
      *
-     * @param SystemNamespaceTag $namespaces Object that encapsulates location of user-defined tag libraries.
+     * @param NamespaceTag $namespaces Object that encapsulates location of user-defined tag libraries.
      * @param string $tagLibFolder Folder containing user-defined taglibs.
      * @param string $tagExtension Extension of user-defined tags.
      * @param ViewCompilation $viewCompilation Object that collects components that take part in view.
      */
-    public function __construct(SystemNamespaceTag $namespaces, $tagExtension, ViewCompilation $viewCompilation)
+    public function __construct(NamespaceTag $namespaces, $tagExtension, ViewCompilation $viewCompilation)
     {
         $this->namespaces = $namespaces;
         $this->tagExtension = $tagExtension;
@@ -33,10 +34,10 @@ class UserTagParser
      * Looks for tags in views and returns an answer where each found match is converted to PHP.
      *
      * @param string $subject
-     * @param SystemEscapeTag $escaper
+     * @param EscapeTag $escaper
      * @return string
      */
-    public function parse($subject, SystemEscapeTag $escaper)
+    public function parse($subject, EscapeTag $escaper)
     {
         // match start & end tags
         $subject = preg_replace_callback("/<([a-zA-Z0-9\-_.]+)\:([a-zA-Z0-9\-_.]+)\s*([^>]+)?>/", function ($matches) {
