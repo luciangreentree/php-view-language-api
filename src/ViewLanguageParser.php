@@ -27,7 +27,7 @@ class ViewLanguageParser
      * @param string $compilationsFolder Absolute path to compilations folder on disk
      * @param string $tagLibFolder Relative path to user-defined tag libraries folder.
      */
-    public function __construct(string $templatesFolder, string $templatesExtension, string $compilationsFolder, string $tagLibFolder = ""): void
+    public function __construct(string $templatesFolder, string $templatesExtension, string $compilationsFolder, string $tagLibFolder = "")
     {
         $this->templatesFolder = $templatesFolder;
         $this->templatesExtension = $templatesExtension;

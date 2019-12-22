@@ -13,7 +13,7 @@ class File
      *
      * @param string $name Complete path of file.
      */
-    public function __construct(string $name): void
+    public function __construct(string $name)
     {
         $this->path = $name;
     }

@@ -22,7 +22,7 @@ class UserTagParser
      * @param string $tagExtension Extension of user-defined tags.
      * @param ViewCompilation $viewCompilation Object that collects components that take part in view.
      */
-    public function __construct(NamespaceTag $namespaces, string $tagExtension, ViewCompilation $viewCompilation): void
+    public function __construct(NamespaceTag $namespaces, string $tagExtension, ViewCompilation $viewCompilation)
     {
         $this->namespaces = $namespaces;
         $this->tagExtension = $tagExtension;

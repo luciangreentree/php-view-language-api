@@ -20,7 +20,7 @@ class NamespaceTag
      * Creates an instance with default user defined tag library location. This will be used if no <:namespace> declaration is declared for that tag library
      * @param string $taglibFolder Default location of tag libraries on disk.
      */
-    public function __construct(string $taglibFolder): void
+    public function __construct(string $taglibFolder)
     {
         $this->taglibFolder = $taglibFolder;
         $this->attributesParser = new AttributesParser(array("taglib", "folder"));

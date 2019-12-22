@@ -23,7 +23,7 @@ class ImportTag
      * @param string $templatesExtension
      * @param ViewCompilation $viewCompilation
      */
-    public function __construct(string $templatesFolder, string $templatesExtension, ViewCompilation $viewCompilation): void
+    public function __construct(string $templatesFolder, string $templatesExtension, ViewCompilation $viewCompilation)
     {
         $this->templatesFolder = $templatesFolder;
         $this->templatesExtension = $templatesExtension;

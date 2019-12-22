@@ -17,7 +17,7 @@ class ViewCompilation
      * @param string $templatePath
      * @param string $templatesExtension
      */
-    public function __construct(string $compilationsFolder, string $templatePath, string $templatesExtension): void
+    public function __construct(string $compilationsFolder, string $templatePath, string $templatesExtension)
     {
         $this->compilationPath = $compilationsFolder."/".$templatePath.".".$templatesExtension;
         $this->checksumPath = $compilationsFolder."/checksums/".crc32($templatePath).".crc";

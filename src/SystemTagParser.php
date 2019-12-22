@@ -11,7 +11,7 @@ class SystemTagParser
     /**
      * Constructor instancing attributes parser
      */
-    public function __construct(): void
+    public function __construct()
     {
         $this->attributesParser = new AttributesParser();
     }

@@ -13,7 +13,7 @@ class UserTag implements StartTag
      *
      * @param string $filePath Location of tag procedural file.
      */
-    public function __construct(string $filePath): void
+    public function __construct(string $filePath)
     {
         $this->filePath = $filePath;
     }
