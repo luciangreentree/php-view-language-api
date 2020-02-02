@@ -61,7 +61,7 @@ class Wrapper
     
     /**
      * Loads compilation file, binds it to data and returns HTML to be rendered
-     * 
+     *
      * @param array $data
      * @return string
      */

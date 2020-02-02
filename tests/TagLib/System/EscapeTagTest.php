@@ -1,6 +1,6 @@
 <?php
 namespace Test\Lucinda\Templating\TagLib\System;
-    
+
 use Lucinda\Templating\TagLib\System\EscapeTag;
 use Lucinda\UnitTest\Result;
 
@@ -24,6 +24,4 @@ class EscapeTagTest
     {
         return new Result($this->object->restore("asd <bkp>0</bkp> fgh")=='asd ${qwe} fgh');
     }
-        
-
 }

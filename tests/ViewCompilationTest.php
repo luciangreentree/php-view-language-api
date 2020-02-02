@@ -1,6 +1,6 @@
 <?php
 namespace Test\Lucinda\Templating;
-    
+
 use Lucinda\Templating\ViewCompilation;
 use Lucinda\UnitTest\Result;
 
@@ -36,6 +36,4 @@ class ViewCompilationTest
     {
         return new Result(!$this->object->hasChanged());
     }
-        
-
 }

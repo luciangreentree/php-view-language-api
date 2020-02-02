@@ -1,12 +1,11 @@
 <?php
 namespace Test\Lucinda\Templating\TagLib\Std;
-    
+
 use Lucinda\Templating\TagLib\Std\IfTag;
 use Lucinda\UnitTest\Result;
 
 class IfTagTest
 {
-
     public function parseStartTag()
     {
         $object = new IfTag();
@@ -19,6 +18,4 @@ class IfTagTest
         $object = new IfTag();
         return new Result($object->parseEndTag()=='<?php } ?>');
     }
-        
-
 }

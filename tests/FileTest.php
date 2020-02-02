@@ -1,6 +1,6 @@
 <?php
 namespace Test\Lucinda\Templating;
-    
+
 use Lucinda\Templating\File;
 use Lucinda\UnitTest\Result;
 
@@ -36,6 +36,4 @@ class FileTest
     {
         return new Result($this->object->getModificationTime()==time());
     }
-        
-
 }

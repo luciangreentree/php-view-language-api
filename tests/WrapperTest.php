@@ -1,12 +1,11 @@
 <?php
 namespace Test\Lucinda\Templating;
-    
+
 use Lucinda\Templating\Wrapper;
 use Lucinda\UnitTest\Result;
 
 class WrapperTest
 {
-
     public function compile()
     {
         $object = new Wrapper(\simplexml_load_string('
@@ -19,6 +18,4 @@ class WrapperTest
         <li>Jane Doe</li>
     </ul>');
     }
-        
-
 }

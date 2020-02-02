@@ -1,12 +1,11 @@
 <?php
 namespace Test\Lucinda\Templating\TagLib\Std;
-    
+
 use Lucinda\Templating\TagLib\Std\ForeachTag;
 use Lucinda\UnitTest\Result;
 
 class ForeachTagTest
 {
-
     public function parseStartTag()
     {
         $object = new ForeachTag();
@@ -18,6 +17,4 @@ class ForeachTagTest
         $object = new ForeachTag();
         return new Result($object->parseEndTag()=='<?php } ?>');
     }
-        
-
 }

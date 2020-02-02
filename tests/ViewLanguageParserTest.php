@@ -1,12 +1,11 @@
 <?php
 namespace Test\Lucinda\Templating;
-    
+
 use Lucinda\Templating\ViewLanguageParser;
 use Lucinda\UnitTest\Result;
 
 class ViewLanguageParserTest
 {
-
     public function compile()
     {
         $object = new ViewLanguageParser(__DIR__."/views", "html", __DIR__."/compilations", __DIR__."/tags");
@@ -18,6 +17,4 @@ class ViewLanguageParserTest
     <?php } ?>
 </ul>');
     }
-        
-
 }

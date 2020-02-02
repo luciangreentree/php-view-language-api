@@ -1,12 +1,11 @@
 <?php
 namespace Test\Lucinda\Templating;
-    
+
 use Lucinda\Templating\SystemTagParser;
 use Lucinda\UnitTest\Result;
 
 class SystemTagParserTest
 {
-
     public function parse()
     {
         $results = [];
@@ -18,6 +17,4 @@ class SystemTagParserTest
         
         return $results;
     }
-        
-
 }

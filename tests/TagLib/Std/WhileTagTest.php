@@ -1,12 +1,11 @@
 <?php
 namespace Test\Lucinda\Templating\TagLib\Std;
-    
+
 use Lucinda\Templating\TagLib\Std\WhileTag;
 use Lucinda\UnitTest\Result;
 
 class WhileTagTest
 {
-    
     public function parseStartTag()
     {
         $object = new WhileTag();
@@ -19,6 +18,4 @@ class WhileTagTest
         $object = new WhileTag();
         return new Result($object->parseEndTag()=='<?php } ?>');
     }
-        
-
 }
