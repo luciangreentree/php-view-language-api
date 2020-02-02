@@ -37,7 +37,7 @@ class File
                 }
             }
         }
-        $response = @file_put_contents($this->path, $content);
+        $response = file_put_contents($this->path, $content);
         if (!$response) {
             throw new ViewException("Could not write to file: ".$this->path);
         }

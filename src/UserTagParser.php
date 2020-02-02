@@ -62,8 +62,8 @@ class UserTagParser
      */
     private function getTagInstance(array $matches): UserTag
     {
-        $libraryName = strtolower($matches[1]);
-        $tagName = strtolower($matches[2]);
+        $libraryName = $matches[1];
+        $tagName = $matches[2];
         $tagFolder = $this->namespaces->get($libraryName);
         $fileLocation = $tagFolder."/".$libraryName."/".$tagName.".".$this->tagExtension;
         if (!file_exists($fileLocation)) {

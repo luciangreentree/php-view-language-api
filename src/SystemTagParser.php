@@ -38,9 +38,9 @@ class SystemTagParser
      * Detects tag class from tag declaration.
      *
      * @param array $matches
-     * @return StartEndTag
+     * @return StartTag
      */
-    private function getTagInstance(array $matches): StartEndTag
+    private function getTagInstance(array $matches): StartTag
     {
         $className = __NAMESPACE__."\\TagLib\\Std\\".ucwords($matches[1])."Tag";
         return new $className();

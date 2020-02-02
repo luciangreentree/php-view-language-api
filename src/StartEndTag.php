@@ -4,17 +4,8 @@ namespace Lucinda\Templating;
 /**
  * Implements the blueprint of a tag that expects both start & end tags.
  */
-interface StartEndTag
+interface StartEndTag extends StartTag
 {
-    /**
-     * Parses start tag.
-     *
-     * @param string[string] $parameters
-     * @return string
-     * @throws ViewException If required parameters aren't supplied
-     */
-    public function parseStartTag(array $parameters=array()): string;
-    
     /**
      * Parses end tag.
      *

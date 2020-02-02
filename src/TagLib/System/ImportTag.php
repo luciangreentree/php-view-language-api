@@ -35,14 +35,13 @@ class ImportTag
      *
      * @param string $templateFile
      * @param EscapeTag $escaper
-     * @param string $outputStream
      * @return string
      */
-    public function parse(string $templateFile, EscapeTag $escaper, string $outputStream=""): string
+    public function parse(string $templateFile, EscapeTag $escaper): string
     {
         $path = ($this->templatesFolder?$this->templatesFolder."/":"").$templateFile.".".$this->templatesExtension;
         $file = new File($path);
-        $subject = ($outputStream==""?$file->getContents():$outputStream);
+        $subject = $file->getContents();
         $subject = $escaper->backup($subject);
         $this->viewCompilation->addComponent($path);
         

@@ -22,7 +22,7 @@ class ForTag extends SystemTag implements StartEndTag
     public function parseStartTag(array $parameters=array()): string
     {
         $this->checkParameters($parameters, array("var", "start", "end"));
-        return '<?php for($'.$parameters['var'].'='.$this->parseCounter($parameters['start'])
+        return '<?php for ($'.$parameters['var'].'='.$this->parseCounter($parameters['start'])
         .'; $'.$parameters['var'].'<='.$this->parseCounter($parameters['end'])
         .'; $'.$parameters['var'].(isset($parameters['step'])?($parameters['step']>0?"+":"-")."=".$parameters['step']:"++").') { ?>';
     }

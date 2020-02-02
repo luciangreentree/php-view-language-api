@@ -28,28 +28,15 @@ class ViewCompilation
             $this->components = explode(",", $contents);
         }
     }
-
+    
     /**
-     * Checks if any of compilation components have changed since last update.
+     * Gets compilation file path.
+     *
+     * @return string
      */
-    public function hasChanged(): void
+    public function getCompilationPath(): string
     {
-        $compilation = new File($this->compilationPath);
-        if (!empty($this->components)) {
-            if ($compilation->exists()) {
-                $latestModificationTime = $this->getLatestModificationTime();
-                if ($latestModificationTime==-1) {
-                    $this->components = array();
-                    return true;
-                }
-                if ($compilation->getModificationTime() >= $latestModificationTime) {
-                    return false;
-                }
-            }
-            // reset components
-            $this->components = array();
-        }
-        return true;
+        return $this->compilationPath;
     }
 
     /**
@@ -98,14 +85,29 @@ class ViewCompilation
         $compilation = new File($this->compilationPath);
         $compilation->putContents($outputStream);
     }
-
+    
     /**
-     * Gets compilation file path.
+     * Checks if any of compilation components have changed since last update.
      *
-     * @return string
+     * @return boolean
      */
-    public function getCompilationPath(): string
+    public function hasChanged(): bool
     {
-        return $this->compilationPath;
+        $compilation = new File($this->compilationPath);
+        if (!empty($this->components)) {
+            if ($compilation->exists()) {
+                $latestModificationTime = $this->getLatestModificationTime();
+                if ($latestModificationTime==-1) {
+                    $this->components = array();
+                    return true;
+                }
+                if ($compilation->getModificationTime() >= $latestModificationTime) {
+                    return false;
+                }
+            }
+            // reset components
+            $this->components = array();
+        }
+        return true;
     }
 }

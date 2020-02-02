@@ -23,7 +23,7 @@ class WhileTag extends SystemTag implements StartEndTag
     public function parseStartTag(array $parameters=array()): string
     {
         $this->checkParameters($parameters, array("test"));
-        return '<?php while('.$this->parseExpression($parameters['test']).') { ?>';
+        return '<?php while ('.$this->parseExpression($parameters['test']).') { ?>';
     }
     
     /**

@@ -13,7 +13,7 @@ class AttributesParser
      *
      * @param string[] $required Required attributes for tag.
      */
-    public function __construct(array $required=array()): void
+    public function __construct(array $required=array())
     {
         $this->required = $required;
     }

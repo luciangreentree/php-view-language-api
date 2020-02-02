@@ -39,11 +39,10 @@ class ViewLanguageParser
      * Compiles ViewLanguage instructions in input file/string into PHP, saves global view into a compilation file, then returns location to that file.
      *
      * @param string $templatePath Relative path to template file that needs to be compiled within templates folder (without extension).
-     * @param string $outputStream Response stream contents before view language constructs were parsed.
      * @return string Compilation file name, containing response stream after view language constructs were parsed.
      * @throws ViewException If compilation fails
      */
-    public function compile(string $templatePath, string $outputStream=""): string
+    public function compile(string $templatePath): string
     {
         // opens existing compilation (if exists)
         $viewCompilation = new ViewCompilation($this->compilationsFolder, $templatePath, $this->templatesExtension);
@@ -58,7 +57,7 @@ class ViewLanguageParser
         
         // includes dependant tree of templates
         $importTag = new ImportTag($this->templatesFolder, $this->templatesExtension, $viewCompilation);
-        $outputStream = $importTag->parse($templatePath, $escapeTag, $outputStream);
+        $outputStream = $importTag->parse($templatePath, $escapeTag);
         
         $namespaceTag = new NamespaceTag($this->tagLibFolder);
         $outputStream = $namespaceTag->parse($outputStream);

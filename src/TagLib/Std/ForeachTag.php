@@ -23,7 +23,7 @@ class ForeachTag extends SystemTag implements StartEndTag
     public function parseStartTag(array $parameters=array()): string
     {
         $this->checkParameters($parameters, array("var","val"));
-        return '<?php foreach('.$this->parseExpression($parameters['var']).' as '.(!empty($parameters['key'])?'$'.$parameters['key'].'=>':'').'$'.$parameters['val'].') { ?>';
+        return '<?php foreach ('.$this->parseExpression($parameters['var']).' as '.(!empty($parameters['key'])?'$'.$parameters['key'].'=>':'').'$'.$parameters['val'].') { ?>';
     }
 
     /**
@@ -49,6 +49,5 @@ class ForeachTag extends SystemTag implements StartEndTag
         if (!$this->isExpression($parameters['var'])) {
             throw new ViewException("Value of 'var' attribute must be an expression");
         }
-        return true;
     }
 }
