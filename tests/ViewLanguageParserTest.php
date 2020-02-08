@@ -12,7 +12,7 @@ class ViewLanguageParserTest
         $compilationPath = $object->compile("test");
         return new Result(file_get_contents($compilationPath)=='<h1>Hello, Lucian!</h1>
 <ul>
-    <?php foreach($data["users"] as $user) { ?>
+    <?php foreach ($data["users"] as $user) { ?>
     <li><?php echo $user; ?></li>
     <?php } ?>
 </ul>');

@@ -45,7 +45,7 @@ class ViewLanguageParser
     public function compile(string $templatePath): string
     {
         // opens existing compilation (if exists)
-        $viewCompilation = new ViewCompilation($this->compilationsFolder, $templatePath, $this->templatesExtension);
+        $viewCompilation = new ViewCompilation($this->compilationsFolder, $templatePath);
         
         // if compilation components haven't changed, do not go further
         if (!$viewCompilation->hasChanged()) {

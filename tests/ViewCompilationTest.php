@@ -15,7 +15,7 @@ class ViewCompilationTest
     
     public function getCompilationPath()
     {
-        return new Result($this->object->getCompilationPath()==__DIR__."/compilations/index.html");
+        return new Result($this->object->getCompilationPath()==__DIR__."/compilations/index.php");
     }
         
 

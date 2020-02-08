@@ -15,11 +15,10 @@ class ViewCompilation
      *
      * @param string $compilationsFolder
      * @param string $templatePath
-     * @param string $templatesExtension
      */
-    public function __construct(string $compilationsFolder, string $templatePath, string $templatesExtension)
+    public function __construct(string $compilationsFolder, string $templatePath)
     {
-        $this->compilationPath = $compilationsFolder."/".$templatePath.".".$templatesExtension;
+        $this->compilationPath = $compilationsFolder."/".$templatePath.".php";
         $this->checksumPath = $compilationsFolder."/checksums/".crc32($templatePath).".crc";
         // preset components referenced in checksum
         $file = new File($this->checksumPath);
