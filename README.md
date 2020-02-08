@@ -1,9 +1,11 @@
 # View Language API
 
+*Documentation below refers to latest API version, available in branch [v3.0.0](https://github.com/aherne/php-view-language-api/tree/v3.0.0)! For older version in master branch, please check [Lucinda Framework](https://www.lucinda-framework.com/view-language).*
+
 This API is the PHP compiler for ViewLanguage templating engine, a markup language inspired by JSP&JSTL @ Java that acts like an extension of HTML standard, designed to completely eliminate the need for scripting in views by:
 
 - interfacing variables through **[expressions](https://www.lucinda-framework.com/view-language/expressions)**.
-- interfacing logics (control structures, repeating html segments) through **[tags](https://www.lucinda-framework.com/view-language/tags)** 
+- interfacing logics (control structures, repeating html segments) through **[tags](https://www.lucinda-framework.com/view-language/tags)**
 
 In order to achieve its goals, following steps need to be observed:
 
@@ -14,6 +16,8 @@ API is fully PSR-4 compliant, only requiring PHP7.1+ interpreter and SimpleXML e
 
 - **[installation](#installation)**: describes how to install API on your computer, in light of steps above
 - **[unit tests](#unit-tests)**: API has 100% Unit Test coverage, using [UnitTest API](https://github.com/aherne/unit-testing) instead of PHPUnit for greater flexibility
+- **[expressions](https://www.lucinda-framework.com/view-language/expressions)**: shows how to define variables in ViewLanguage and how are they resolved to PHP
+- **[tags](https://www.lucinda-framework.com/view-language/tags)**: shows how to use control structures and extend HTML standard with parameterized tags
 - **[examples](#examples)**: shows an example how to template with ViewLanguage, including explanations for each step
 
 ## Configuration
@@ -133,7 +137,7 @@ Let's create a *application/views/index.html* template with following body:
 Hello, dear ${data.author}! Author of:
 <ul>
     <:foreach var="${data.apis}" key="name" val="url">
-    <my:api name="${name}" url="${url}"/>
+    <my:api id="${name}" link="${url}"/>
     </:foreach>
 </ul>
 <import file="footer"/>
@@ -160,7 +164,7 @@ Contents of *application/views/header.html* file:
 Contents of *application/taglib/my/api.html* file:
 
 ```html
-<li><a href="$[url]">$[name]</a></li>
+<li><a href="$[id]">$[link]</a></li>
 ```
 
 Contents of *application/views/footer.html*:
@@ -189,7 +193,7 @@ $html = $wrapper->compile("index", $data);
 
 First, ViewLanguage base template is compiled into PHP, results saved in a **compilations/index.php** file (in case it doesn't exist already) with following body:
 
-```php
+```html
 <html>
     <head>
         <title>View Language API Tutorial</title>
