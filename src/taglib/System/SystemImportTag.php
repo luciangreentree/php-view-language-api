@@ -39,12 +39,18 @@ class SystemImportTag
     {
         $path = ($this->templatesFolder?$this->templatesFolder."/":"").$templateFile.".".$this->templatesExtension;
         $file = new File($path);
+        if(!$file->exists()) {
+            throw new ViewException("Invalid value of 'file' attribute @ 'import' tag: ".$templateFile);
+        }
         $subject = ($outputStream==""?$file->getContents():$outputStream);
         $subject = $escaper->backup($subject);
         $this->viewCompilation->addComponent($path);
         
-        return preg_replace_callback("/<import\s+file\s*\=\s*\"(.*?)\"\s*\/\>/", function ($matches) use ($escaper) {
-            return $this->parse($matches[1], $escaper);
+        return preg_replace_callback("/<import\s*(file\s*\=\s*\"(.*?)\")?\s*\/?>/", function ($matches) use ($escaper) {
+            if (empty($matches[2])) {
+                throw new ViewException("Tag 'import' requires attribute: file");
+            }
+            return $this->parse($matches[2], $escaper);
         }, $subject);
     }
 }

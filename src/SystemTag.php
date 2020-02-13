@@ -44,7 +44,9 @@ abstract class SystemTag
     {
         foreach ($requiredParameters as $name) {
             if (!isset($parameters[$name])) {
-                throw new ViewException("Tag requires attribute: ".$name);
+                $tagName = get_class($this);
+                preg_match("/Std(.*)Tag/", get_class($this), $matches);
+                throw new ViewException("Tag '".strtolower($matches[1])."' requires attribute: ".$name);
             }
         }
     }

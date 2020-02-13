@@ -28,7 +28,7 @@ class SystemTagParser
     public function parse($subject)
     {
         // match start & end tags
-        $subject = preg_replace_callback("/<:([a-z]+)\s*((.*)\s*=\s*\"(.*)\"\s*)?\/?>/", function ($matches) {
+        $subject = preg_replace_callback("/<:([a-z]+)(\s*(.*)\s*=\s*\"(.*)\"\s*)?\/?>/", function ($matches) {
             return $this->getTagInstance($matches)->parseStartTag(isset($matches[2])?$this->attributesParser->parse($matches[2]):array());
         }, $subject);
         $subject = preg_replace_callback("/<\/:([a-z]+)>/", function ($matches) {

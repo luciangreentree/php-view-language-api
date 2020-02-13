@@ -31,7 +31,10 @@ class AttributesParser
             if (empty($this->required)) {
                 return array();
             } else {
-                throw new ViewException("Tag requires attributes: ".implode(",", $this->required));
+                $trace = debug_backtrace();
+                preg_match("/([a-zA-Z]+)\/([a-zA-Z]+)Tag.php$/", $trace[0]["file"], $matches);
+                $tagName = ($matches[1]=="Std"?":":"").strtolower(str_replace($matches[1], "", $matches[2]));
+                throw new ViewException("Tag '".$tagName."' requires attributes: ".implode(", ", $this->required));
             }
         }
         preg_match_all('/([a-zA-Z0-9\-_.]+)\s*=\s*"\s*([^"]+)\s*"/', $parameters, $tmp, PREG_SET_ORDER);
@@ -41,7 +44,10 @@ class AttributesParser
         }
         foreach ($this->required as $attributeName) {
             if (!isset($output[$attributeName])) {
-                throw new ViewException("Tag requires attribute: ".$attributeName);
+                $trace = debug_backtrace();
+                preg_match("/([a-zA-Z]+)\/([a-zA-Z]+)Tag.php$/", $trace[0]["file"], $matches);
+                $tagName = ($matches[1]=="Std"?":":"").strtolower(str_replace($matches[1], "", $matches[2]));
+                throw new ViewException("Tag '".$tagName."' requires attribute: ".$attributeName);
             }
         }
         return $output;
