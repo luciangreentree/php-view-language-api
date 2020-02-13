@@ -35,10 +35,10 @@ class NamespaceTag
      */
     public function parse(string $outputStream): string
     {
-        return preg_replace_callback("/<namespace\s+(.*)\s*\/?>/", function ($matches) {
+        return preg_replace_callback("/<namespace\s*(.*)\s*\/?>/", function ($matches) {
             $parameters = $this->attributesParser->parse($matches[1]);
             if (!file_exists($parameters["folder"])) {
-                throw new ViewException("File not found: ".$parameters["folder"]);
+                throw new ViewException("Invalid value of 'folder' attribute @ 'namespace' tag: ".$parameters["folder"]);
             }
             $this->namespaces[$parameters["taglib"]] = $parameters["folder"];
             return "";

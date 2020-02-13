@@ -3,6 +3,7 @@ namespace Lucinda\Templating\TagLib\System;
 
 use Lucinda\Templating\ViewCompilation;
 use Lucinda\Templating\File;
+use Lucinda\Templating\ViewException;
 
 /**
  * Implements a tag whose only attribute value points to a PHP (template) file whose sources are loaded.
@@ -41,12 +42,18 @@ class ImportTag
     {
         $path = ($this->templatesFolder?$this->templatesFolder."/":"").$templateFile.".".$this->templatesExtension;
         $file = new File($path);
+        if(!$file->exists()) {
+            throw new ViewException("Invalid value of 'file' attribute @ 'import' tag: ".$templateFile);
+        }
         $subject = $file->getContents();
         $subject = $escaper->backup($subject);
         $this->viewCompilation->addComponent($path);
         
-        return preg_replace_callback("/<import\s+file\s*\=\s*\"(.*?)\"\s*\/\>/", function ($matches) use ($escaper) {
-            return $this->parse($matches[1], $escaper);
+        return preg_replace_callback("/<import\s*(file\s*\=\s*\"(.*?)\")?\s*\/?>/", function ($matches) use ($escaper) {
+            if (empty($matches[2])) {
+                throw new ViewException("Tag 'import' requires attribute: file");
+            }
+            return $this->parse($matches[2], $escaper);
         }, $subject);
     }
 }

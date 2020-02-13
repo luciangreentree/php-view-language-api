@@ -31,7 +31,7 @@ class AttributesParser
             if (empty($this->required)) {
                 return array();
             } else {
-                throw new ViewException("Tag requires attributes: ".implode(",", $this->required));
+                throw new ViewException("Tag '".$this->getTagName()."' requires attributes: ".implode(", ", $this->required));
             }
         }
         $tmp = [];
@@ -42,9 +42,22 @@ class AttributesParser
         }
         foreach ($this->required as $attributeName) {
             if (!isset($output[$attributeName])) {
-                throw new ViewException("Tag requires attribute: ".$attributeName);
+                throw new ViewException("Tag '".$this->getTagName()."' requires attribute: ".$attributeName);
             }
         }
         return $output;
+    }
+    
+    /**
+     * Gets current tag name
+     * 
+     * @return string
+     */
+    private function getTagName()
+    {
+        $matches = [];
+        $trace = debug_backtrace();
+        preg_match("/([a-zA-Z]+)\/([a-zA-Z]+)Tag.php$/", $trace[1]["file"], $matches);
+        return ($matches[1]=="Std"?":":"").strtolower($matches[2]);
     }
 }

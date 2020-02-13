@@ -39,7 +39,7 @@ class File
         }
         $response = file_put_contents($this->path, $content);
         if (!$response) {
-            throw new ViewException("Could not write to file: ".$this->path);
+            throw new ViewException("Could not write compilation: ".$this->path);
         }
     }
     
@@ -51,9 +51,6 @@ class File
      */
     public function getContents(): string
     {
-        if (!$this->exists()) {
-            throw new ViewException("File not found: ".$this->path);
-        }
         return file_get_contents($this->path);
     }
     

@@ -47,7 +47,7 @@ class ForeachTag extends SystemTag implements StartEndTag
     {
         parent::checkParameters($parameters, $requiredParameters);
         if (!$this->isExpression($parameters['var'])) {
-            throw new ViewException("Value of 'var' attribute must be an expression");
+            throw new ViewException("Invalid value of 'var' attribute @ ':foreach' tag: ".$parameters['var']);
         }
     }
 }

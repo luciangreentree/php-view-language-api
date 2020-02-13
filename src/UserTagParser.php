@@ -67,7 +67,7 @@ class UserTagParser
         $tagFolder = $this->namespaces->get($libraryName);
         $fileLocation = $tagFolder."/".$libraryName."/".$tagName.".".$this->tagExtension;
         if (!file_exists($fileLocation)) {
-            throw new ViewException("Tag not found: ".$libraryName."/".$tagName);
+            throw new ViewException("User tag not found: ".$libraryName."/".$tagName);
         }
         $this->viewCompilation->addComponent($fileLocation);
         return new UserTag($fileLocation);
