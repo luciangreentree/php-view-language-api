@@ -60,7 +60,7 @@ class ViewLanguageParser
         $escapeTag = new SystemEscapeTag();
 
         // if main template not found, throw exception
-        $baseTemplate = $this->templatesFolder."/".$templatePath.".".$this->templatesExtension;
+        $baseTemplate = ($this->templatesFolder?$this->templatesFolder."/":"").$templatePath.".".$this->templatesExtension;
         if (!file_exists($baseTemplate)) {
             throw new ViewException("Base template not found: ".$baseTemplate);
         }
