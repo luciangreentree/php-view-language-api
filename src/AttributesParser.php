@@ -53,7 +53,7 @@ class AttributesParser
      * 
      * @return string
      */
-    private function getTagName()
+    private function getTagName(): string
     {
         $matches = [];
         $trace = debug_backtrace();
