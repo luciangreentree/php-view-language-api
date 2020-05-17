@@ -1,0 +1,69 @@
+<p>This API is the PHP compiler for <i>ViewLanguage</i>, a markup language that acts like an extension of HTML standard, designed to <a href="/blog/php-templating-explained">completely eliminate the need for scripting in views</a>. Latter performs its templating goals by:</p>
+<ul>
+    <li>interfacing scripting variables through <a href="/view-language/expressions">expressions</a>.</li>
+    <li>interfacing logics, through <a href="/view-language/tags">tags</a>.
+</ul>
+
+<h2>How does it work?</h2>
+
+<img src="/public/images/view-language.svg" class="autofit"/>
+     <p>The entire logic of this API is "bootstrapped" by <a href="/view-language/reference-guide#ViewLanguageParser">ViewLanguageParser</a> class. As far as developers are concerned, this is likely the only relevant section since everything else are classes it depends on. It performs its job in two steps:</p>
+
+    <ol>
+        <li>
+            <strong>instantiation</strong>: defines general compilation settings via <i>__construct</i> method and following arguments:
+            <ul>
+                <li><i>templates folder</i>: folder in which all template files (view parts) are stored</li>
+                <li><i>template extension</i>: extension of all template files above without dot</li>
+                <li><i>compilations folder</i>: folder in which compilations will be saved or located from</li>
+                <li><i>tag libraries folder</i>: Folder in which user-defined tag libraries are stored</li>
+            </ul>
+        </li>
+        <li>
+            <strong>compilation</strong>: translates ViewLanguage template into PHP via <i>compile</i> method and following arguments:
+            <ul>
+                <li><i>template path</i>: template file path relative to templates folder to function as root of inclusion. This is the file that's going to be compiled.</li>
+                <li><i>output stream</i>: (optional) string to function as root of inclusion</li>
+            </ul>
+            and returns path to compiled file
+        </li>
+    </ol>
+    
+    <p>All classes inside API belong to namespace <strong>Lucinda\Templating</strong>. </p>
+<h2>What are the steps taken during compilation?</h2>
+
+    <p>Compilation involves following steps:</p>
+     <ol>
+        <li>If compilation exists, checks if elements in compilation have changed since it was last updated. If not, returns location of compilation file.</li>
+        <li>parses <a href="/view-language/macro-tags#import">&lt;import&gt;</a> tags recursively (backing-up <a href="/view-language/macro-tags#escape">&lt;escape&gt;</a> tag bodies in compilation file to be excluded from parsing) and appends results to compilation file</li>
+        <li>parses <a href="/view-language/macro-tags#namespace">&lt;namespace&gt;</a> tags defined in templates, to know where to locate user-defined tag libraries not defined in default taglib folder</li>
+        <li>parses <a href="/view-language/tags#libraries">library tags</a> recursively (backing-up <a href="/view-language/macro-tags#escape">&lt;escape&gt;</a> tag bodies in compilation file to be excluded from parsing) and replaces them with relevant PHP/HTML code in compilation file.</li>
+        <li>parses <a href="/view-language/expressions">expressions</a> and replaces them with relevant PHP code in compilation file.</li>
+        <li>restores backed up <a href="/view-language/macro-tags#escape">&lt;escape&gt;</a> tags bodies (if any) in compilation file</li>
+        <li>caches new compilation on disk along with a checksum of its parts (templates, tags) for future validations</li>
+        <li>returns location of compilation file</li>
+     </ol>
+     <p>The output of compilation is a PHP file that represents your whole aggregate view ready to be displayed. From that point on it is client's task to decide what to do next (typically require compilation file to complete output).</p>
+    <p>Because compilation is somewhat performance hungry, results are cached on disk and returned directly on next requests unless one of its components (template or tag) has changed. This makes View Language API able to compile in around 0.001 sec amortised time, thus bringing no performance taxation whatsoever but all the advantages of an elegant view!</p>
+<h2>Is template inheritance supported?</h2>
+
+<p>Thanks to its flexibility, ViewLanguageAPI can be used for obtain something similar to template inheritance while at the same time obeying its inception paradigm of working like an extension of HTML. Unlike other templating engines you cannot "extend" views, but you can dynamically load them via a recipe-ingredients principle. This works in a way similar to dependency injection: instead of EXTENSION (which brings up rigidity to the structure) you opt for INJECTION (which makes constituent structures light and maintainable). This way, an item can "inherit" many behaviors, which is actually a fundamental requirement in HTML templating.</p>
+
+<h3>How to create master templates?</h3>
+<escape>
+<p>Let's say for example you have an HTML application where every page shares a common header and footer while at the same time holding a body component that is page-specific. In that case, every view of that page should just present the recipe via a tag that glues constituents then add attributes that identify custom components. Homepage, for example, will only present a recipe:</p>
+<code class="xml">&lt;site:page body="site:homepage" ... /&gt;</code>
+<p>whose tag body is:</p>
+<code class="xml">&lt;site:header .../&gt;
+&lt;$[body] .../&gt;
+&lt;site:footer .../&gt;</code>
+<p>where $[body] on compilation will be replaced with site:homepage, whose tag body contains templating part specific to homepage.</p> 
+
+<p>Since compilation is recursive, the same "inheritance" principles can apply at infinite levels. You can have pages that contain MULTIPLE recipe tags, themselves composed of fixed (like site:header tag above) and mobile(like site:homepage tag above) tags, themselves pointing to recipes or implementations.</p>
+</escape>
+
+
+    <h2>How can I use it?</h2>
+    
+    <p>To learn how to install and use this API, follow this <a href="/view-language/tutorials">step-by-step guide</a>!</p>
+    

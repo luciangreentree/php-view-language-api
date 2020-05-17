@@ -1,0 +1,118 @@
+<h2 id="escape" class="tag">escape</h2>
+<p>Marks tag body to be ignored by ViewLanguage compiler.</p>
+<p>Syntax:</p>
+<p><code class="html">&lt;escape&gt;
+...
+&lt;/escape&gt;</code></p>
+<p>Examples how this tag is compiled into PHP:</p>
+<table class="compilation">
+    <tbody>
+    <tr>
+        <td>
+            <code class="html">&lt;escape&gt;
+${foo.bar}
+&lt;/escape&gt;</code>
+        </td>
+        <td>
+            <code class="php">&nbsp;<br/>${foo.bar}<br/>&nbsp;</code>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h2 id="import" class="tag">import</h2>
+<p>Includes another view language template into current one.</p>
+<p>Syntax:</p>
+<code class="html">&lt;import file="..."/&gt;</code>
+<p>Attributes:</p>
+<table>
+    <thead>
+
+    <tr>
+        <td>
+            <p>NAME</p>
+        </td>
+        <td>
+            <p>DESCRIPTION</p>
+        </td>
+        <td>
+            <p>MANDATORY</p>
+        </td>
+        <td>
+            <p>DATA TYPE</p>
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>
+            <p>file</p>
+        </td>
+        <td>
+            <p>Name of file whose sources should replace tag declaration. File will be located using extension & template folder supplied to compiler. When sources are parsed, same operation repeats recursively until no import tags are left.</p>
+        </td>
+        <td>
+            <p>Y</p>
+        </td>
+        <td>
+            <p>STRING</p>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<p>For examples how this tag is compiled into PHP, have a look <a href="/view-language/tutorials">here</a>! </p>
+ <h2 id="namespace" class="tag">namespace</h2>
+ <p>Marks custom location of user defined tag library.</p>
+ <p>Syntax:</p>
+<code class="html">&lt;namespace taglib="..." folder="..."/&gt;</code>
+ <p>Attributes:</p>
+ <table>
+     <thead>
+
+     <tr>
+         <td>
+             <p>NAME</p>
+         </td>
+         <td>
+             <p>DESCRIPTION</p>
+         </td>
+         <td>
+             <p>MANDATORY</p>
+         </td>
+         <td>
+             <p>DATA TYPE</p>
+         </td>
+     </tr>
+     </thead>
+     <tbody>
+     <tr>
+         <td>
+             <p>taglib</p>
+         </td>
+         <td>
+             <p>Name of tag library to look for.</p>
+         </td>
+         <td>
+             <p>Y</p>
+         </td>
+         <td>
+             <p>STRING</p>
+         </td>
+     </tr>
+     <tr>
+         <td>
+             <p>folder</p>
+         </td>
+         <td>
+             <p>Location on disk (absolute or relative to project) where to look for tags (files) in library.</p>
+         </td>
+         <td>
+             <p>Y</p>
+         </td>
+         <td>
+             <p>STRING</p>
+         </td>
+     </tr>
+     </tbody>
+ </table>
+<p>For examples how this tag is compiled into PHP, have a look <a href="/view-language/tutorials">here</a>! </p>

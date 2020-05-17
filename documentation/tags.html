@@ -1,0 +1,106 @@
+<h2 id="tags">How do they work?</h2>
+<p>A tag is a ViewLanguage representation of a <i>scripting logic</i>. All tags act like an extension of HTML standard and as such they have names and optionally attributes and bodies. There are two types of tags known by ViewLanguage:</p>
+<ul>
+    <li>
+        <a href="#macros"><i>macro tags</i></a>: api-defined tags to be processed before content is compiled.<br/>
+        Example: <code class="html">&lt;import file="header"/&gt;</code>which in PHP translates to:<br/><code class="php">file_get_contents('header.php')</code>
+        <br/>
+    </li>
+    <li>
+        <a href="#libraries"><i>library tags</i></a>: api/user-defined tags subject to compilation that belong to a library and have an unique name within that library.<br/>
+        Example: <code class="html">&lt;:foreach var="${foo}" val="bar"&gt; ${bar} &lt;/:foreach&gt;</code>which in PHP translates to:<br/><code class="php">foreach($foo as $bar) { echo $bar; }</code>
+    </li>
+</ul>
+
+<p>A very powerful feature is the <strong>ability of tags to be recursive</strong>: it is allowed to put View Language tags inside View Language tags. Whenever that happens, compiler goes progressively deeper until no tags are left.</p>
+
+<h2 id="macros">Macro Tags</h2>
+
+<p>These are tags that work in a way similar to C macros: before code is compiled, they are read and "expanded" so that compilation will run on a full source.</p>
+    <h3>What is their syntax?</h3>
+    <p>Syntax is identical to that of normal HTML tags:</p>
+<code class="html">&lt;name attribute="value" .../&gt;</code>
+    <p>Where:</p>
+
+    <ul>
+        <li>
+            <i>name</i>: name of tag that performs a single logical operation.
+        </li>
+        <li>
+            <i>attribute</i>: configures tag behavior
+        </li>
+    </ul>
+    <h3>What does API already include?</h3>
+    <p>API defines following macro tags:</p>
+<ul>
+    <li><a href="/view-language/macro-tags#escape">escape</a>: tag whose body will be ignored by compiler. This is necessary to mark content inside as not subject to parsing.</li>
+    <li><a href="/view-language/macro-tags#import">import</a>: tag whose declaration will be replaced by compiler with the body of file pointed by its "file" attribute. This is crucial for layouting/templating. </li>
+    <li><a href="/view-language/macro-tags#namespace">namespace</a>: tag whose declaration will inform compiler where to look for tag libraries not found in default folder. </li>
+</ul>
+    <h3>How can developers create their own macro tags?</h3>
+
+    <p>At the moment, it is not possible for users to define their own macro tags!</p>
+<h2 id="libraries">Library Tags</h2>
+<p>Library tags are compilable api/user-defined HTML snippets expected to implement scripting logic in a View Language application. They are
+    <i>non-static repeating snippets of template (html) code that depend on variables</i> and thus can't be loaded using <i>&lt;include&gt;</i>.
+ </p>
+    <h3>What is their syntax?</h3>
+    <p>Their syntax also extends HTML standard:</p>
+<code class="html">&lt;library:name attribute="value" ...&gt;...&lt;/library:tag&gt;</code>
+<p>or, if they have no body:</p>
+<code class="html">&lt;library:name attribute="value" .../&gt;</code>
+<p>Where:</p>
+<ul>
+    <li>
+        <i>library</i>: namespace that contains related logical operations to perform on a template. Rules:
+        <ol>
+            <li>Value must be lowercase and alphanumeric.</li>
+            <li>"-" sign is allowed as well to replace spaces in multi-word values</li>
+        </ol>
+    </li>
+    <li>
+        <i>name</i>: name of tag that performs a single logical operation.Rules:
+        <ol>
+            <li>Value must be lowercase and alphanumeric.</li>
+            <li>"-" sign is allowed as well to replace spaces in multi-word values</li>
+        </ol>
+    </li>
+    <li>
+        <i>attribute</i>: configures tag behavior. Rules:
+        <ol>
+            <li>Name must be lowercase and alphanumeric.</li>
+            <li>"_" sign is allowed as well to replace spaces in multi-word names</li>
+            <li>Value can only be primitive (string or number) or ViewLanguage expressions.</li>
+            <li>Unlike standard HTML, attributes cannot be multilined currently.</li>
+        </ol>
+    </li>
+</ul>
+
+    <h3>What does API already include?</h3>
+<p>API includes a <strong>standard</strong> library containing tags for programming language instructions where library name is always empty:</p>
+
+<ul>
+    <li><a href="/view-language/standard-tags#:for">:for</a>: iterates numerically through a list</li>
+    <li><a href="/view-language/standard-tags#:foreach">:foreach</a>: iterates through a dictionary by key and value</li>
+    <li><a href="/view-language/standard-tags#:if">:if</a>: evaluates body fitting condition</li>
+    <li><a href="/view-language/standard-tags#:elseif">:elseif</a>: evaluates body fitting condition that did not met previous if/elseif.</li>
+    <li><a href="/view-language/standard-tags#:else">:else</a>: evaluates body that did not met previous if/else if</li>
+    <li><a href="/view-language/standard-tags#:set">:set</a>: creates a variable and/or sets a value for it.</li>
+    <li><a href="/view-language/standard-tags#:unset">:unset</a>: unsets a variable.</li>
+    <li><a href="/view-language/standard-tags#:while">:while</a>: performs a loop on condition.</li>
+    <li><a href="/view-language/standard-tags#:break">:break</a>: ends loop.</li>
+    <li><a href="/view-language/standard-tags#:continue">:continue</a>: skips evaluating the rest of current loop and moves to next iteration.</li>
+</ul>
+
+<h3>How can developers create their own tag libraries?</h3>
+<p>In order to break up HTML response into discrete units, developers must <a href="/view-language/standard-tags#user-defined">create their own libraries & tags</a>.
+</p>
+
+<p>User defined tags are found on disk according to these rules:</p>
+<ol>
+    <li>library name must correspond to a folder found inside tag library folder supplied on compilation.</li>
+    <li>
+        tag body is automatically matched to a procedural PHP file found inside folder above, whose name equals that of tag.
+        <br/>Example: tag &lt;test:foo .../&gt; => file test/foo.php
+    </li>
+</ol>

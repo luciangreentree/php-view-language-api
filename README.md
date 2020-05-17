@@ -1,7 +1,5 @@
 # View Language API
 
-*Documentation below refers to latest API version, available in branch [v3.0.0](https://github.com/aherne/php-view-language-api/tree/v3.0.0)! For older version in master branch, please check [Lucinda Framework](https://www.lucinda-framework.com/view-language).*
-
 This API is the PHP compiler for ViewLanguage templating engine, a markup language inspired by JSP&JSTL @ Java that acts like an extension of HTML standard, designed to completely eliminate the need for scripting in views by:
 
 - interfacing variables through **[expressions](https://www.lucinda-framework.com/view-language/expressions)**.
